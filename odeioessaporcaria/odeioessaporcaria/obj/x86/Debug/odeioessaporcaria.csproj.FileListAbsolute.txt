@@ -1,0 +1,6 @@
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/bin/Debug/odeioessaporcaria.exe
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/bin/Debug/odeioessaporcaria.pdb
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/obj/x86/Debug/odeioessaporcaria.csprojAssemblyReference.cache
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/obj/x86/Debug/odeioessaporcaria.csproj.CoreCompileInputs.cache
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/obj/x86/Debug/odeioessaporcaria.exe
+/home/msb/Projects/odeioessaporcaria/odeioessaporcaria/obj/x86/Debug/odeioessaporcaria.pdb

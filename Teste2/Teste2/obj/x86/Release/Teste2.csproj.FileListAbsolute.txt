@@ -1,0 +1,4 @@
+/home/msb/Projects/Teste2/Teste2/bin/Release/Teste2.exe
+/home/msb/Projects/Teste2/Teste2/obj/x86/Release/Teste2.csproj.CoreCompileInputs.cache
+/home/msb/Projects/Teste2/Teste2/obj/x86/Release/Teste2.exe
+/home/msb/Projects/Teste2/Teste2/obj/x86/Release/Teste2.csprojAssemblyReference.cache
