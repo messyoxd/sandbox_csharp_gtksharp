@@ -1,0 +1,6 @@
+/home/messyo/Projects/Bazinga/Bazinga/bin/Debug/Bazinga.exe
+/home/messyo/Projects/Bazinga/Bazinga/bin/Debug/Bazinga.pdb
+/home/messyo/Projects/Bazinga/Bazinga/obj/x86/Debug/Bazinga.csprojAssemblyReference.cache
+/home/messyo/Projects/Bazinga/Bazinga/obj/x86/Debug/Bazinga.csproj.CoreCompileInputs.cache
+/home/messyo/Projects/Bazinga/Bazinga/obj/x86/Debug/Bazinga.exe
+/home/messyo/Projects/Bazinga/Bazinga/obj/x86/Debug/Bazinga.pdb

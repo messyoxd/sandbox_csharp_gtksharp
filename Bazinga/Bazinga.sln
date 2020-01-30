@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bazinga", "Bazinga\Bazinga.csproj", "{3067F53D-73C9-4B1F-B42D-F656A9A34080}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3067F53D-73C9-4B1F-B42D-F656A9A34080}.Debug|x86.ActiveCfg = Debug|x86
+		{3067F53D-73C9-4B1F-B42D-F656A9A34080}.Debug|x86.Build.0 = Debug|x86
+		{3067F53D-73C9-4B1F-B42D-F656A9A34080}.Release|x86.ActiveCfg = Release|x86
+		{3067F53D-73C9-4B1F-B42D-F656A9A34080}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
