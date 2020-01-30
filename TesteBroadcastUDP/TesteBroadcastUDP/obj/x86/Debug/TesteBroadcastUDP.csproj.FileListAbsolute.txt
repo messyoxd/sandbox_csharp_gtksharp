@@ -1,0 +1,6 @@
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/bin/Debug/TesteBroadcastUDP.exe
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/bin/Debug/TesteBroadcastUDP.pdb
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/obj/x86/Debug/TesteBroadcastUDP.csprojAssemblyReference.cache
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/obj/x86/Debug/TesteBroadcastUDP.csproj.CoreCompileInputs.cache
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/obj/x86/Debug/TesteBroadcastUDP.exe
+/home/messyo/Projects/TesteBroadcastUDP/TesteBroadcastUDP/obj/x86/Debug/TesteBroadcastUDP.pdb
