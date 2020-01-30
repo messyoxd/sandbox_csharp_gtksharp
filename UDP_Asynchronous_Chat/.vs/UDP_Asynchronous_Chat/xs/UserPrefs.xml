@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{9C2CDD66-2E4E-46DA-AAF6-A5599A5789CE}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UPDAsynchoronousChatServer/Class1.cs">
+    <Files>
+      <File FileName="UDPChatServerForm/Program.cs" Line="8" Column="10" />
+      <File FileName="UPDAsynchoronousChatServer/Class1.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="UDP_Asynchronous_Chat" expanded="True">
+            <Node name="UDPChatServerForm" expanded="True" />
+            <Node name="UPDAsynchoronousChatServer" expanded="True">
+              <Node name="Class1.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.UDPAsynchronousChatServer FirstBuild="True" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.UDPChatServerForm FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
