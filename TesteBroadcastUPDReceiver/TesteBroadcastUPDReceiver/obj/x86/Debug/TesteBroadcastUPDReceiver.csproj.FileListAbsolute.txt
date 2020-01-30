@@ -4,3 +4,9 @@
 /home/messyo/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.csproj.CoreCompileInputs.cache
 /home/messyo/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.exe
 /home/messyo/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.pdb
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/bin/Debug/TesteBroadcastUPDReceiver.exe
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/bin/Debug/TesteBroadcastUPDReceiver.pdb
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.csprojAssemblyReference.cache
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.csproj.CoreCompileInputs.cache
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.exe
+/home/msb/Projects/TesteBroadcastUPDReceiver/TesteBroadcastUPDReceiver/obj/x86/Debug/TesteBroadcastUPDReceiver.pdb

@@ -17,15 +17,17 @@ namespace TesteBroadcastUPDReceiver
             IPEndPoint ipepLocal = new IPEndPoint(IPAddress.Any, 23000);
 
             byte[] receiverBuffer = new byte[512];
-            int nCountReceived = 0;
+            string strBuffer = "";
+            int nCountedBytes=0;
             try
             {
                 sockBroadcastReceiver.Bind(ipepLocal);
                 while (true)
                 {
-                    nCountReceived += sockBroadcastReceiver.Receive(receiverBuffer);
-                    Console.WriteLine("Total number of bytes received: " + nCountReceived);
-                    Array.Clear(receiverBuffer,0,receiverBuffer.Length);
+                    nCountedBytes = sockBroadcastReceiver.Receive(receiverBuffer);
+                    strBuffer = Encoding.ASCII.GetString(receiverBuffer,0, nCountedBytes);
+                    Console.WriteLine(strBuffer);
+                    Array.Clear(receiverBuffer, 0, receiverBuffer.Length);
                 }
             }catch(Exception e)
             {
