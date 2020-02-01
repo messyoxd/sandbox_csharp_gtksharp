@@ -1,20 +1,21 @@
 ﻿<Properties StartupConfiguration="{9C2CDD66-2E4E-46DA-AAF6-A5599A5789CE}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="UDPChatServerForm/MainWindow.cs">
     <Files>
-      <File FileName="UPDAsynchoronousChatServer/UDPAsynchronousChatServer.cs" Line="61" Column="34" />
-      <File FileName="UDPChatServerForm/Program.cs" Line="8" Column="10" />
-      <File FileName="UDPChatServerForm/MainWindow.cs" Line="11" Column="45" />
+      <File FileName="UDPChatClientForm/MainWindow.cs" Line="6" Column="30" />
+      <File FileName="UDPChatServerForm/MainWindow.cs" Line="13" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UDP_Asynchronous_Chat" expanded="True">
+            <Node name="UDPChatClientForm" expanded="True" />
             <Node name="UDPChatServerForm" expanded="True" selected="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.UDPChatClientForm PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.UDPChatServerForm PreferredExecutionTarget="MonoDevelop.Default" />

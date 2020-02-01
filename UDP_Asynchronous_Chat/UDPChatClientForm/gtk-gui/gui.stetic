@@ -1,15 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+  </configuration>
   <import>
     <widget-library name="../bin/Debug/UDPChatClientForm.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="400 300">
+  <widget class="Gtk.Window" id="MainWindow" design-size="344 251">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="Title" translatable="yes">Client</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <placeholder />
+      <widget class="Gtk.Fixed" id="fixed1">
+        <property name="MemberName" />
+        <property name="HasWindow">False</property>
+        <child>
+          <widget class="Gtk.Label" id="label3">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Broadcast Text:</property>
+          </widget>
+          <packing>
+            <property name="X">5</property>
+            <property name="Y">112</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="tbBroadcastText">
+            <property name="MemberName" />
+            <property name="WidthRequest">209</property>
+            <property name="HeightRequest">70</property>
+            <property name="CanFocus">True</property>
+            <property name="Text" translatable="yes">&lt;DISCOVER&gt;</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">114</property>
+            <property name="Y">111</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="tbRemotePort">
+            <property name="MemberName" />
+            <property name="WidthRequest">209</property>
+            <property name="CanFocus">True</property>
+            <property name="Text" translatable="yes">23000</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">114</property>
+            <property name="Y">70</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="tbLocalPort">
+            <property name="MemberName" />
+            <property name="WidthRequest">209</property>
+            <property name="CanFocus">True</property>
+            <property name="Text" translatable="yes">23001</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">114</property>
+            <property name="Y">26</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label2">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Remote Port:</property>
+          </widget>
+          <packing>
+            <property name="X">20</property>
+            <property name="Y">75</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label1">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Local Port:</property>
+          </widget>
+          <packing>
+            <property name="X">36</property>
+            <property name="Y">31</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btnSendBroadcast">
+            <property name="MemberName" />
+            <property name="WidthRequest">114</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Send</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="btnSendBroadcast_Click" />
+          </widget>
+          <packing>
+            <property name="X">209</property>
+            <property name="Y">213</property>
+          </packing>
+        </child>
+      </widget>
     </child>
   </widget>
 </stetic-interface>

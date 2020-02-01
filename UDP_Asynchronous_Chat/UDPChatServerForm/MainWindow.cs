@@ -3,11 +3,11 @@ using Gtk;
 
 public partial class MainWindow : Gtk.Window
 {
-    UPDAsynchoronousChatServer.UDPAsynchronousChatServer mUDPChatServer;
+    UDPAsynchronousChatServer.UDPAsynchronousChatServer mUDPChatServer;
 
     public MainWindow() : base(Gtk.WindowType.Toplevel)
     {
-        mUDPChatServer = new UPDAsynchoronousChatServer.UDPAsynchronousChatServer();
+        mUDPChatServer = new UDPAsynchronousChatServer.UDPAsynchronousChatServer();
         mUDPChatServer.StartReceivingData();
         Build();
 
