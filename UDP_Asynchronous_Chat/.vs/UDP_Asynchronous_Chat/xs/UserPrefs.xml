@@ -1,15 +1,17 @@
-﻿<Properties StartupConfiguration="{9C2CDD66-2E4E-46DA-AAF6-A5599A5789CE}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="UDPChatServerForm/MainWindow.cs">
+﻿<Properties StartupConfiguration="{CEC5F2AA-0FAF-430D-B33F-7212B9EE7C28}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="UDPChatClientForm/MainWindow.cs">
     <Files>
-      <File FileName="UDPChatClientForm/MainWindow.cs" Line="6" Column="30" />
-      <File FileName="UDPChatServerForm/MainWindow.cs" Line="13" Column="9" />
+      <File FileName="UDPChatClientForm/MainWindow.cs" Line="24" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="UDP_Asynchronous_Chat" expanded="True">
-            <Node name="UDPChatClientForm" expanded="True" />
-            <Node name="UDPChatServerForm" expanded="True" selected="True" />
+            <Node name="UDPAsynchronousChatServer" expanded="True" />
+            <Node name="UDPChatClientForm" expanded="True">
+              <Node name="MainWindow.cs" selected="True" />
+            </Node>
+            <Node name="UDPChatServerForm" expanded="True" />
           </Node>
         </State>
       </Pad>

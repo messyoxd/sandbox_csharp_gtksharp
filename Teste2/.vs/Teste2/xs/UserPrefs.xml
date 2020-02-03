@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.ItemProperties.Teste2 PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Teste2/MainWindow.cs">
     <Files>
-      <File FileName="Teste2/MainWindow.cs" Line="26" Column="27" />
+      <File FileName="Teste2/MainWindow.cs" Line="25" Column="43" />
+      <File FileName="Teste2/WatchClock.cs" Line="16" Column="17" />
       <File FileName="Teste2/Program.cs" Line="1" Column="1" />
-      <File FileName="Teste2/WatchClock.cs" Line="95" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

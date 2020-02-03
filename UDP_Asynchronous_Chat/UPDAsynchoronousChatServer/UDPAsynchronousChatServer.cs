@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -10,6 +11,7 @@ namespace UDPAsynchronousChatServer
         Socket mSockBroadcastReceiver;
         IPEndPoint mIpepLocal;
         private int retryCount;
+        List<EndPoint> mListOfClients;
 
         public UDPAsynchronousChatServer()
         {
@@ -17,6 +19,8 @@ namespace UDPAsynchronousChatServer
             mIpepLocal = new IPEndPoint(IPAddress.Any, 23000);
 
             mSockBroadcastReceiver.EnableBroadcast = true;
+
+            mListOfClients = new List<EndPoint>();
         }
 
         public void StartReceivingData()
@@ -58,7 +62,35 @@ namespace UDPAsynchronousChatServer
             	$"Number of bytes received: {e.BytesTransferred}{Environment.NewLine}" +
             	$"Received data from: {e.RemoteEndPoint}{Environment.NewLine}"
                 );
+            if(textReceived == "<DISCOVER>")
+            {
+                if (!mListOfClients.Contains(e.RemoteEndPoint))
+                {
+                    mListOfClients.Add(e.RemoteEndPoint);
+                    Console.WriteLine("Total clients: " + mListOfClients.Count);
+                }
+                SendTextToEndPoint("<CONFIRMED>", e.RemoteEndPoint);
+            }
             StartReceivingData();
+        }
+
+        private void SendTextToEndPoint(string textToSend, EndPoint remoteEndPoint)
+        {
+            if(string.IsNullOrEmpty(textToSend) || remoteEndPoint == null)
+            {
+                return;
+            }
+            SocketAsyncEventArgs saea = new SocketAsyncEventArgs();
+            var dataBuffer = Encoding.ASCII.GetBytes(textToSend);
+            saea.SetBuffer(dataBuffer, 0, dataBuffer.Length);
+            saea.RemoteEndPoint = remoteEndPoint;
+            saea.Completed += SendCompletedCallback;
+            mSockBroadcastReceiver.SendToAsync(saea);
+        }
+
+        private void SendCompletedCallback(object sender, SocketAsyncEventArgs e)
+        {
+            Console.WriteLine($"Completed sending text to: {e.RemoteEndPoint}");
         }
     }
 }

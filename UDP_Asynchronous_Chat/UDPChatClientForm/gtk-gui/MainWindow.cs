@@ -19,6 +19,12 @@ public partial class MainWindow
 
 	private global::Gtk.Button btnSendBroadcast;
 
+	private global::Gtk.Label label4;
+
+	private global::Gtk.ScrolledWindow GtkScrolledWindow;
+
+	private global::Gtk.Entry tbSendMessage;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
@@ -32,6 +38,7 @@ public partial class MainWindow
 		this.fixed1.HasWindow = false;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.label3 = new global::Gtk.Label();
+		this.label3.WidthRequest = 107;
 		this.label3.Name = "label3";
 		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString("Broadcast Text:");
 		this.fixed1.Add(this.label3);
@@ -97,18 +104,51 @@ public partial class MainWindow
 		this.btnSendBroadcast.CanFocus = true;
 		this.btnSendBroadcast.Name = "btnSendBroadcast";
 		this.btnSendBroadcast.UseUnderline = true;
-		this.btnSendBroadcast.Label = global::Mono.Unix.Catalog.GetString("Send");
+		this.btnSendBroadcast.Label = global::Mono.Unix.Catalog.GetString("Broadcast");
 		this.fixed1.Add(this.btnSendBroadcast);
 		global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btnSendBroadcast]));
 		w7.X = 209;
 		w7.Y = 213;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.label4 = new global::Gtk.Label();
+		this.label4.WidthRequest = 209;
+		this.label4.Name = "label4";
+		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("Message Text:");
+		this.fixed1.Add(this.label4);
+		global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label4]));
+		w8.X = 428;
+		w8.Y = 85;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
+		this.GtkScrolledWindow.WidthRequest = 279;
+		this.GtkScrolledWindow.HeightRequest = 154;
+		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
+		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
+		global::Gtk.Viewport w9 = new global::Gtk.Viewport();
+		w9.ShadowType = ((global::Gtk.ShadowType)(0));
+		// Container child GtkViewport.Gtk.Container+ContainerChild
+		this.tbSendMessage = new global::Gtk.Entry();
+		this.tbSendMessage.WidthRequest = 267;
+		this.tbSendMessage.HeightRequest = 148;
+		this.tbSendMessage.CanFocus = true;
+		this.tbSendMessage.Name = "tbSendMessage";
+		this.tbSendMessage.IsEditable = true;
+		this.tbSendMessage.MaxLength = 1000;
+		this.tbSendMessage.InvisibleChar = '•';
+		w9.Add(this.tbSendMessage);
+		this.GtkScrolledWindow.Add(w9);
+		this.fixed1.Add(this.GtkScrolledWindow);
+		global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.GtkScrolledWindow]));
+		w12.X = 428;
+		w12.Y = 111;
 		this.Add(this.fixed1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 344;
-		this.DefaultHeight = 251;
+		this.DefaultWidth = 718;
+		this.DefaultHeight = 272;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.btnSendBroadcast.Clicked += new global::System.EventHandler(this.btnSendBroadcast_Click);

@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/UDPChatClientForm.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="344 251">
+  <widget class="Gtk.Window" id="MainWindow" design-size="680 460">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Client</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -18,6 +18,7 @@
         <child>
           <widget class="Gtk.Label" id="label3">
             <property name="MemberName" />
+            <property name="WidthRequest">107</property>
             <property name="LabelProp" translatable="yes">Broadcast Text:</property>
           </widget>
           <packing>
@@ -94,13 +95,103 @@
             <property name="WidthRequest">114</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Send</property>
+            <property name="Label" translatable="yes">Broadcast</property>
             <property name="UseUnderline">True</property>
             <signal name="Clicked" handler="btnSendBroadcast_Click" />
           </widget>
           <packing>
             <property name="X">209</property>
             <property name="Y">213</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btnSendMessage">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Send Mensage</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnBtnSendMessageClicked" />
+          </widget>
+          <packing>
+            <property name="X">530</property>
+            <property name="Y">213</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label5">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Console:</property>
+          </widget>
+          <packing>
+            <property name="X">14</property>
+            <property name="Y">258</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+            <property name="MemberName" />
+            <property name="WidthRequest">236</property>
+            <property name="HeightRequest">147</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.TextView" id="tbMessage">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="ShowScrollbars">True</property>
+                <property name="Text" translatable="yes">hello world</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">436</property>
+            <property name="Y">33</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label4">
+            <property name="MemberName" />
+            <property name="WidthRequest">209</property>
+            <property name="LabelProp" translatable="yes">Message Text:</property>
+          </widget>
+          <packing>
+            <property name="X">447</property>
+            <property name="Y">9</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+            <property name="MemberName" />
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.TextView" id="tbConsole">
+                <property name="MemberName" />
+                <property name="WidthRequest">660</property>
+                <property name="HeightRequest">155</property>
+                <property name="CanFocus">True</property>
+                <property name="ShowScrollbars">True</property>
+                <property name="Text" translatable="yes" />
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="X">7</property>
+            <property name="Y">292</property>
           </packing>
         </child>
       </widget>

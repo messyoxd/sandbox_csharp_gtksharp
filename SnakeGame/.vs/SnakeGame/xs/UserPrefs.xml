@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{EF1C332C-8DA4-486C-A79E-4AFD5837325C}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SnakeGame/MainWindow.cs">
+    <Files>
+      <File FileName="SnakeGame/MainWindow.cs" Line="68" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SnakeGame" expanded="True">
+            <Node name="SnakeGame" expanded="True">
+              <Node name="images" expanded="True" />
+              <Node name="MainWindow.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.SnakeGame PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

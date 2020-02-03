@@ -25,4 +25,11 @@ public partial class MainWindow : Gtk.Window
         }
         mChatClient.SendBroadcast(tbBroadcastText.Text);
     }
+
+    protected void OnBtnSendMessageClicked(object sender, EventArgs e)
+    {
+        Gtk.TextBuffer message = tbMessage.Buffer;
+
+        mChatClient.SendToKnownServer(message.Text);
+    }
 }
