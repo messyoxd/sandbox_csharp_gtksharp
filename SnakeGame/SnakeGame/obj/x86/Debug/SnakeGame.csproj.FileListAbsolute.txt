@@ -4,3 +4,9 @@
 /home/msb/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.csproj.CoreCompileInputs.cache
 /home/msb/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.exe
 /home/msb/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.pdb
+/home/messyo/Projects/SnakeGame/SnakeGame/bin/Debug/SnakeGame.exe
+/home/messyo/Projects/SnakeGame/SnakeGame/bin/Debug/SnakeGame.pdb
+/home/messyo/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.csprojAssemblyReference.cache
+/home/messyo/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.csproj.CoreCompileInputs.cache
+/home/messyo/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.exe
+/home/messyo/Projects/SnakeGame/SnakeGame/obj/x86/Debug/SnakeGame.pdb
