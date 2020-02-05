@@ -8,16 +8,23 @@ namespace Chat
     public class ChatSocketHandler
     {
         private Socket chatCom;
-        IPEndPoint localEP;
-        IPEndPoint remoteEP;
-        string textReceived;
-        public ChatSocketHandler(int localPort, string remoteAddress, int remotePort)
+        public IPEndPoint localEP;
+        public IPEndPoint remoteEP;
+        public string textReceived;
+        private Action<string> updateTextList;
+
+        public ChatSocketHandler(string localAddress,
+            int localPort,
+            string remoteAddress,
+            int remotePort,
+            Action<string> UpdateTextList
+            )
         {
             chatCom = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            localEP = new IPEndPoint(IPAddress.Any, localPort);
-            IPAddress remoteIP = IPAddress.Parse(remoteAddress);
-            remoteEP = new IPEndPoint(remoteIP, remotePort);
+            localEP = new IPEndPoint(IPAddress.Parse(localAddress), localPort);
+            remoteEP = new IPEndPoint(IPAddress.Parse(remoteAddress), remotePort);
             textReceived = string.Empty;
+            updateTextList = UpdateTextList;
         }
 
         public void StartReceiving()
@@ -49,8 +56,21 @@ namespace Chat
                 $"Number of bytes received: {e.BytesTransferred}{Environment.NewLine}" +
                 $"Received data from: {e.RemoteEndPoint}{Environment.NewLine}"
                 );
-            StartReceiving();
-            return;
+            if (textReceived.Equals("<DISCOVER>"))
+            {
+                Console.WriteLine($"received a <DISCOVER> from: {e.RemoteEndPoint}");
+                SendMessage("<CONFIRMED>");
+            }
+            else if (textReceived.Equals("<CONFIRMED>"))
+            {
+                Console.WriteLine($"received <CONFIRMED> from: {e.RemoteEndPoint}");
+            }
+            else
+            {
+                updateTextList(textReceived);
+                StartReceiving();
+                return;
+            }
         }
 
         public void SendMessage(string str)
@@ -75,6 +95,24 @@ namespace Chat
         {
             Console.WriteLine($"Sent to Server:{e.RemoteEndPoint}");
             return;
+        }
+
+        public void echo()
+        {
+            SendMessage("<DISCOVER>");
+        }
+
+        public static string GetLocalIP()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            return "Não foi possivel encontrar um adaptador com ipv4!";
         }
     }
 }

@@ -32,7 +32,7 @@
             <property name="MemberName" />
             <property name="ShadowType">In</property>
             <child>
-              <widget class="Gtk.TextView" id="textview1">
+              <widget class="Gtk.TextView" id="tvMensagemEnviar">
                 <property name="MemberName" />
                 <property name="WidthRequest">322</property>
                 <property name="HeightRequest">67</property>
@@ -48,20 +48,6 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Button" id="button1">
-            <property name="MemberName" />
-            <property name="WidthRequest">52</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Enviar</property>
-            <property name="UseUnderline">True</property>
-          </widget>
-          <packing>
-            <property name="X">348</property>
-            <property name="Y">249</property>
-          </packing>
-        </child>
-        <child>
           <placeholder />
         </child>
         <child>
@@ -72,7 +58,7 @@
             <property name="MemberName" />
             <property name="ShadowType">In</property>
             <child>
-              <widget class="Gtk.TextView" id="textview2">
+              <widget class="Gtk.TextView" id="tvMensagemReceber">
                 <property name="MemberName" />
                 <property name="WidthRequest">405</property>
                 <property name="HeightRequest">194</property>
@@ -86,6 +72,164 @@
           <packing>
             <property name="X">10</property>
             <property name="Y">10</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btEnviar">
+            <property name="MemberName" />
+            <property name="WidthRequest">52</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Enviar</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnSendMessage" />
+          </widget>
+          <packing>
+            <property name="X">348</property>
+            <property name="Y">263</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btConnect">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Conectar</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnConectar" />
+          </widget>
+          <packing>
+            <property name="X">349</property>
+            <property name="Y">224</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Window" id="Chat.TelaConectar" design-size="395 227">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">TelaConectar</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="BorderWidth">3</property>
+    <child>
+      <widget class="Gtk.Fixed" id="fixed1">
+        <property name="MemberName" />
+        <property name="HasWindow">False</property>
+        <child>
+          <widget class="Gtk.Entry" id="ePortaRemota">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">152</property>
+            <property name="Y">56</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="eIpRemoto">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">152</property>
+            <property name="Y">88</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="ePortaLocal">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">152</property>
+            <property name="Y">23</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="lbPortaLocal">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Porta local:</property>
+          </widget>
+          <packing>
+            <property name="X">69</property>
+            <property name="Y">29</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="lbPortaRemota">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Porta Remota:</property>
+          </widget>
+          <packing>
+            <property name="X">48</property>
+            <property name="Y">59</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="lbIpRemoto">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">IP remoto:</property>
+          </widget>
+          <packing>
+            <property name="X">74</property>
+            <property name="Y">91</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btCancelar">
+            <property name="MemberName" />
+            <property name="WidthRequest">90</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Cancelar</property>
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="X">85</property>
+            <property name="Y">153</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btOk">
+            <property name="MemberName" />
+            <property name="WidthRequest">90</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Ok</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnOkClicked" />
+          </widget>
+          <packing>
+            <property name="X">254</property>
+            <property name="Y">153</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label1">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">IP local:</property>
+          </widget>
+          <packing>
+            <property name="X">90</property>
+            <property name="Y">124</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="eIpLocal">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">False</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">152</property>
+            <property name="Y">120</property>
           </packing>
         </child>
       </widget>

@@ -7,13 +7,15 @@ public partial class MainWindow
 
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
 
-	private global::Gtk.TextView textview1;
-
-	private global::Gtk.Button button1;
+	private global::Gtk.TextView tvMensagemEnviar;
 
 	private global::Gtk.ScrolledWindow GtkScrolledWindow1;
 
-	private global::Gtk.TextView textview2;
+	private global::Gtk.TextView tvMensagemReceber;
+
+	private global::Gtk.Button btEnviar;
+
+	private global::Gtk.Button btConnect;
 
 	protected virtual void Build()
 	{
@@ -31,43 +33,53 @@ public partial class MainWindow
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-		this.textview1 = new global::Gtk.TextView();
-		this.textview1.WidthRequest = 322;
-		this.textview1.HeightRequest = 67;
-		this.textview1.CanFocus = true;
-		this.textview1.Name = "textview1";
-		this.GtkScrolledWindow.Add(this.textview1);
+		this.tvMensagemEnviar = new global::Gtk.TextView();
+		this.tvMensagemEnviar.WidthRequest = 322;
+		this.tvMensagemEnviar.HeightRequest = 67;
+		this.tvMensagemEnviar.CanFocus = true;
+		this.tvMensagemEnviar.Name = "tvMensagemEnviar";
+		this.GtkScrolledWindow.Add(this.tvMensagemEnviar);
 		this.fixed1.Add(this.GtkScrolledWindow);
 		global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.GtkScrolledWindow]));
 		w2.X = 6;
 		w2.Y = 217;
 		// Container child fixed1.Gtk.Fixed+FixedChild
-		this.button1 = new global::Gtk.Button();
-		this.button1.WidthRequest = 52;
-		this.button1.CanFocus = true;
-		this.button1.Name = "button1";
-		this.button1.UseUnderline = true;
-		this.button1.Label = global::Mono.Unix.Catalog.GetString("Enviar");
-		this.fixed1.Add(this.button1);
-		global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.button1]));
-		w3.X = 348;
-		w3.Y = 249;
-		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
 		this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 		this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
 		// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-		this.textview2 = new global::Gtk.TextView();
-		this.textview2.WidthRequest = 405;
-		this.textview2.HeightRequest = 194;
-		this.textview2.CanFocus = true;
-		this.textview2.Name = "textview2";
-		this.textview2.Editable = false;
-		this.GtkScrolledWindow1.Add(this.textview2);
+		this.tvMensagemReceber = new global::Gtk.TextView();
+		this.tvMensagemReceber.WidthRequest = 405;
+		this.tvMensagemReceber.HeightRequest = 194;
+		this.tvMensagemReceber.CanFocus = true;
+		this.tvMensagemReceber.Name = "tvMensagemReceber";
+		this.tvMensagemReceber.Editable = false;
+		this.GtkScrolledWindow1.Add(this.tvMensagemReceber);
 		this.fixed1.Add(this.GtkScrolledWindow1);
-		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.GtkScrolledWindow1]));
-		w5.X = 10;
-		w5.Y = 10;
+		global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.GtkScrolledWindow1]));
+		w4.X = 10;
+		w4.Y = 10;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.btEnviar = new global::Gtk.Button();
+		this.btEnviar.WidthRequest = 52;
+		this.btEnviar.CanFocus = true;
+		this.btEnviar.Name = "btEnviar";
+		this.btEnviar.UseUnderline = true;
+		this.btEnviar.Label = global::Mono.Unix.Catalog.GetString("Enviar");
+		this.fixed1.Add(this.btEnviar);
+		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btEnviar]));
+		w5.X = 348;
+		w5.Y = 263;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.btConnect = new global::Gtk.Button();
+		this.btConnect.CanFocus = true;
+		this.btConnect.Name = "btConnect";
+		this.btConnect.UseUnderline = true;
+		this.btConnect.Label = global::Mono.Unix.Catalog.GetString("Conectar");
+		this.fixed1.Add(this.btConnect);
+		global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btConnect]));
+		w6.X = 349;
+		w6.Y = 224;
 		this.Add(this.fixed1);
 		if ((this.Child != null))
 		{
@@ -77,5 +89,7 @@ public partial class MainWindow
 		this.DefaultHeight = 300;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
+		this.btEnviar.Clicked += new global::System.EventHandler(this.OnSendMessage);
+		this.btConnect.Clicked += new global::System.EventHandler(this.OnConectar);
 	}
 }
