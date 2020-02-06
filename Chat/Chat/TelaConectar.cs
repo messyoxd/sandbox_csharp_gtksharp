@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 namespace Chat
 {
@@ -14,7 +15,8 @@ namespace Chat
             eIpRemoto.Text = string.Empty;
             ePortaLocal.Text = string.Empty;
             ePortaRemota.Text = string.Empty;
-            eIpLocal.Text = Chat.ChatSocketHandler.GetLocalIP();
+            string externalip = new WebClient().DownloadString("https://api.ipify.org?format=json");
+            eIpLocal.Text = externalip.Split('"')[externalip.Split('"').Length - 2];
             setChat = SetChat;
             chat = ct;
             if (chat != null)

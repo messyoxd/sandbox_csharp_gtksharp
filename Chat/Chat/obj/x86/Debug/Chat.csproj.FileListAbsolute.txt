@@ -4,3 +4,9 @@
 /home/msb/Projects/Chat/Chat/obj/x86/Debug/Chat.csproj.CoreCompileInputs.cache
 /home/msb/Projects/Chat/Chat/obj/x86/Debug/Chat.exe
 /home/msb/Projects/Chat/Chat/obj/x86/Debug/Chat.pdb
+/home/messyo/Projects/Chat/Chat/bin/Debug/Chat.exe
+/home/messyo/Projects/Chat/Chat/bin/Debug/Chat.pdb
+/home/messyo/Projects/Chat/Chat/obj/x86/Debug/Chat.csprojAssemblyReference.cache
+/home/messyo/Projects/Chat/Chat/obj/x86/Debug/Chat.csproj.CoreCompileInputs.cache
+/home/messyo/Projects/Chat/Chat/obj/x86/Debug/Chat.exe
+/home/messyo/Projects/Chat/Chat/obj/x86/Debug/Chat.pdb
