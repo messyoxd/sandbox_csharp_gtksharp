@@ -22,7 +22,7 @@ public partial class MainWindow : Gtk.Window
 
     protected void OnConectar(object sender, EventArgs e)
     {
-        Chat.TelaConectar telaConectar = new Chat.TelaConectar("Conectar com outra instancia", SetChat);
+        Chat.TelaConectar telaConectar = new Chat.TelaConectar("Conectar com outra instancia", SetChat, chat);
         telaConectar.Show();
     }
 
@@ -56,5 +56,11 @@ public partial class MainWindow : Gtk.Window
             return;
         }
         chat.SendMessage(message.Text);
+    }
+
+    protected void OnTestCon(object sender, EventArgs e)
+    {
+        chat.SendMessage("<DISCOVER>");
+        Console.WriteLine("mandando um discovery");
     }
 }

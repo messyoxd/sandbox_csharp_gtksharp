@@ -140,6 +140,7 @@ namespace Chat
 			this.DefaultWidth = 395;
 			this.DefaultHeight = 227;
 			this.Show();
+			this.btCancelar.Clicked += new global::System.EventHandler(this.OnCancelar);
 			this.btOk.Clicked += new global::System.EventHandler(this.OnOkClicked);
 		}
 	}

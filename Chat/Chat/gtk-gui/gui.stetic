@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/Chat.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="433 300">
+  <widget class="Gtk.Window" id="MainWindow" design-size="530 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -103,6 +103,20 @@
             <property name="Y">224</property>
           </packing>
         </child>
+        <child>
+          <widget class="Gtk.Button" id="btTestCon">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">TestCon</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnTestCon" />
+          </widget>
+          <packing>
+            <property name="X">428</property>
+            <property name="Y">250</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>
@@ -189,6 +203,7 @@
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">Cancelar</property>
             <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnCancelar" />
           </widget>
           <packing>
             <property name="X">85</property>

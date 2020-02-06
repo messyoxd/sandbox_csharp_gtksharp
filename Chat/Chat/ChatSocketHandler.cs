@@ -97,11 +97,6 @@ namespace Chat
             return;
         }
 
-        public void echo()
-        {
-            SendMessage("<DISCOVER>");
-        }
-
         public static string GetLocalIP()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
