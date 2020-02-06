@@ -11,6 +11,7 @@ namespace Chat
         public IPEndPoint localEP;
         public IPEndPoint remoteEP;
         public string textReceived;
+        int retryCount;
         private Action<string> updateTextList;
 
         public ChatSocketHandler(string localAddress,
@@ -39,7 +40,15 @@ namespace Chat
                     chatCom.Bind(localEP);
                 }
                 saea.Completed += ReceiveCompleteCallback;
-                chatCom.ReceiveFromAsync(saea);
+                if (!chatCom.ReceiveFromAsync(saea))
+                {
+                    Console.WriteLine($"Failed to receive data - socket error: {saea.SocketError}");
+                    if (retryCount++ >= 10)
+                    {
+                        return;
+                    }
+                    StartReceiving();
+                }
             }
             catch (Exception e)
             {

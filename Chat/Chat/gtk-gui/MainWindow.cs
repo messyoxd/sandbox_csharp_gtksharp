@@ -17,6 +17,8 @@ public partial class MainWindow
 
 	private global::Gtk.Button btConnect;
 
+	private global::Gtk.Button btTestCon;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
@@ -80,16 +82,27 @@ public partial class MainWindow
 		global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btConnect]));
 		w6.X = 349;
 		w6.Y = 224;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.btTestCon = new global::Gtk.Button();
+		this.btTestCon.CanFocus = true;
+		this.btTestCon.Name = "btTestCon";
+		this.btTestCon.UseUnderline = true;
+		this.btTestCon.Label = global::Mono.Unix.Catalog.GetString("TestCon");
+		this.fixed1.Add(this.btTestCon);
+		global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.btTestCon]));
+		w7.X = 428;
+		w7.Y = 250;
 		this.Add(this.fixed1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 433;
+		this.DefaultWidth = 530;
 		this.DefaultHeight = 300;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.btEnviar.Clicked += new global::System.EventHandler(this.OnSendMessage);
 		this.btConnect.Clicked += new global::System.EventHandler(this.OnConectar);
+		this.btTestCon.Clicked += new global::System.EventHandler(this.OnTestCon);
 	}
 }
