@@ -2,9 +2,7 @@
   <MonoDevelop.Ide.ItemProperties.Chat PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Chat/ChatSocketHandler.cs">
     <Files>
-      <File FileName="Chat/TelaConectar.cs" Line="23" Column="42" />
-      <File FileName="Chat/MainWindow.cs" Line="9" Column="32" />
-      <File FileName="Chat/ChatSocketHandler.cs" Line="85" Column="44" />
+      <File FileName="Chat/ChatSocketHandler.cs" Line="73" Column="43" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
