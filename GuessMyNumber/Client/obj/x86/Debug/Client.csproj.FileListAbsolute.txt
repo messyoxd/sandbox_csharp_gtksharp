@@ -1,0 +1,9 @@
+/home/msb/Projects/GuessMyNumber/Client/bin/Debug/Client.exe
+/home/msb/Projects/GuessMyNumber/Client/bin/Debug/Client.pdb
+/home/msb/Projects/GuessMyNumber/Client/bin/Debug/Newtonsoft.Json.dll
+/home/msb/Projects/GuessMyNumber/Client/bin/Debug/Newtonsoft.Json.xml
+/home/msb/Projects/GuessMyNumber/Client/obj/x86/Debug/Client.csprojAssemblyReference.cache
+/home/msb/Projects/GuessMyNumber/Client/obj/x86/Debug/Client.csproj.CoreCompileInputs.cache
+/home/msb/Projects/GuessMyNumber/Client/obj/x86/Debug/Client.csproj.CopyComplete
+/home/msb/Projects/GuessMyNumber/Client/obj/x86/Debug/Client.exe
+/home/msb/Projects/GuessMyNumber/Client/obj/x86/Debug/Client.pdb
