@@ -459,7 +459,12 @@ namespace Bizingo
                         x_axis = k;
                     }
                 }
-                casa_selecionada = casas[x_axis, y_axis];
+                if(TriangleCollision(x,y,casas[x_axis, y_axis]) == 800)
+                    casa_selecionada = casas[x_axis, y_axis];
+                else
+                {
+                    return;
+                }
                 Console.WriteLine($"|casa:{casa_selecionada.casa} | x1:{casa_selecionada.t.a[0]} y1:{casa_selecionada.t.a[1]} | x2:{casa_selecionada.t.b[0]} y2:{casa_selecionada.t.b[1]} | x3:{casa_selecionada.t.c[0]} y3:{casa_selecionada.t.c[1]}|");
                 return;
             }
