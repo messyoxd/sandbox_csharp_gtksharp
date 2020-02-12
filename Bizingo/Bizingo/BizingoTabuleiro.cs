@@ -179,7 +179,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) - 20, 40 * i + 1);
+                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) - 20, 40 * (i + 1));
                             casas[(8 - aux) + (2 * j), i].casa = TabuleiroCasas.vermelho;
                             casas[(8 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -190,7 +190,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) + 20, 40 * i + 1);
+                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) + 20, 40 * (i + 1));
                             casas[(8 - aux) + (2 * j), i].casa = TabuleiroCasas.vermelho;
                             casas[(8 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -438,6 +438,7 @@ namespace Bizingo
             int aux;
             if (y_axis >= 0 && y_axis <= 10)
             {
+                //e se x não pertense a nenhum triangulo?
                 for (int i = 0; i < numero_de_triangulos_por_linha; i++)
                 {
                     if (y_axis == 8 || y_axis == 9)
