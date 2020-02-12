@@ -1,20 +1,21 @@
-﻿<Properties StartupConfiguration="{B4560B2A-7799-4BBA-B5EC-D63BE98FB340}|Default">
+﻿<Properties StartupConfiguration="{56FB0615-CBA3-4849-84A4-053DBCE02BA5}|Default">
   <MonoDevelop.Ide.ItemProperties.Server PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.Client FirstBuild="True" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Server/Program.cs">
+  <MonoDevelop.Ide.ItemProperties.Client PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Client/TcpGameClient.cs">
     <Files>
-      <File FileName="Client/TcpGameClient.cs" Line="211" Column="36" />
-      <File FileName="Client/Program.cs" Line="30" Column="10" />
+      <File FileName="Client/TcpGameClient.cs" Line="9" Column="2" />
+      <File FileName="Client/Program.cs" Line="19" Column="37" />
       <File FileName="Server/Program.cs" Line="24" Column="15" />
+      <File FileName="Server/TcpGamesServer.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="GuessMyNumber" expanded="True">
-            <Node name="Client" expanded="True" />
-            <Node name="Server" expanded="True">
-              <Node name="Program.cs" selected="True" />
+            <Node name="Client" expanded="True">
+              <Node name="TcpGameClient.cs" selected="True" />
             </Node>
+            <Node name="Server" expanded="True" />
           </Node>
         </State>
       </Pad>

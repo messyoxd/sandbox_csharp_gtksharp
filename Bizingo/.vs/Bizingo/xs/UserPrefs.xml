@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{B9120C5B-080E-43FC-B55F-2545504FC227}|Default">
+  <MonoDevelop.Ide.ItemProperties.Bizingo PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Bizingo/BizingoTabuleiro.cs">
+    <Files>
+      <File FileName="Bizingo/BizingoTabuleiro.cs" Line="462" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Bizingo" expanded="True">
+            <Node name="Bizingo" expanded="True">
+              <Node name="BizingoTabuleiro.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

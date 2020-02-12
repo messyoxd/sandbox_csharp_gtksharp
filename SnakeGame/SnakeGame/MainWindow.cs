@@ -109,8 +109,8 @@ public partial class MainWindow : Gtk.Window
 
         //GLib.Timeout.Add(1000, new GLib.TimeoutHandler(Bonus));
     }
-
     bool DrawBoard()
+
     {
         if (!isGameOver)
         {

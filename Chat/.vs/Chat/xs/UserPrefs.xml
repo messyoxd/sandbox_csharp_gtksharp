@@ -7,11 +7,7 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Chat" expanded="True">
-            <Node name="Chat" expanded="True">
-              <Node name="ChatSocketHandler.cs" selected="True" />
-            </Node>
-          </Node>
+          <Node name="Chat" expanded="True" />
         </State>
       </Pad>
     </Pads>
