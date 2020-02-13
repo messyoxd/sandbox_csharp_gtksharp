@@ -64,6 +64,8 @@ namespace Bizingo
         int y_selecionado;
         int ultimo_x_selecionado;
         int ultimo_y_selecionado;
+
+        int turno;
         public BizingoTabuleiro() :
                 base(Gtk.WindowType.Toplevel)
         {
@@ -92,9 +94,18 @@ namespace Bizingo
             y_selecionado = 0;
             ultimo_x_selecionado = 0;
             ultimo_y_selecionado = 0;
+
+            turno = 0;
+            lbTurno.Text = (turno+1).ToString();
         }
 
-        private Triangulo initTrianguloVermelho(int x, int y)
+        private void AddTurno()
+        {
+            turno++;
+            lbTurno.Text = (turno + 1).ToString();
+        }
+
+        private Triangulo InitTrianguloVermelho(int x, int y)
         {
             Triangulo t = new Triangulo();
             t.a = new int[2];
@@ -116,7 +127,7 @@ namespace Bizingo
             return t;
         }
 
-        private Triangulo initTrianguloBranco(int x, int y)
+        private Triangulo InitTrianguloBranco(int x, int y)
         {
             Triangulo t = new Triangulo();
             t.a = new int[2];
@@ -138,7 +149,7 @@ namespace Bizingo
             return t;
         }
 
-        private Triangulo initTrianguloVazio()
+        private Triangulo InitTrianguloVazio()
         {
             Triangulo t = new Triangulo();
             t.a = new int[2];
@@ -181,7 +192,7 @@ namespace Bizingo
                     }
                     for (int j = 0; j < triangulos; j++)
                     {
-                        casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j), 40 * (i + 1));
+                        casas[(8 - aux) + (2 * j), i].t = InitTrianguloVermelho(40 * (num + j), 40 * (i + 1));
                         casas[(8 - aux) + (2 * j), i].casa = TabuleiroCasas.vermelho;
                         casas[(8 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                     }
@@ -192,7 +203,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) - 20, 40 * (i + 1));
+                            casas[(8 - aux) + (2 * j), i].t = InitTrianguloVermelho(40 * (num + j) - 20, 40 * (i + 1));
                             casas[(8 - aux) + (2 * j), i].casa = TabuleiroCasas.vermelho;
                             casas[(8 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -203,7 +214,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j) + 20, 40 * (i + 1));
+                            casas[(8 - aux) + (2 * j), i].t = InitTrianguloVermelho(40 * (num + j) + 20, 40 * (i + 1));
                             casas[(8 - aux) + (2 * j), i].casa = TabuleiroCasas.vermelho;
                             casas[(8 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -252,7 +263,7 @@ namespace Bizingo
                     }
                     for (int j = 0; j < triangulos; j++)
                     {
-                        casas[(9 - aux) + (2 * j), i].t = initTrianguloBranco(40 * (num + j) + 20, 40 * i);
+                        casas[(9 - aux) + (2 * j), i].t = InitTrianguloBranco(40 * (num + j) + 20, 40 * i);
                         casas[(9 - aux) + (2 * j), i].casa = TabuleiroCasas.branco;
                         casas[(9 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                     }
@@ -263,7 +274,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(9 - aux) + (2 * j), i].t = initTrianguloBranco(40 * (num + j), 40 * i);
+                            casas[(9 - aux) + (2 * j), i].t = InitTrianguloBranco(40 * (num + j), 40 * i);
                             casas[(9 - aux) + (2 * j), i].casa = TabuleiroCasas.branco;
                             casas[(9 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -274,7 +285,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(9 - aux) + (2 * j), i].t = initTrianguloBranco(40 * (num + j), 40 * i);
+                            casas[(9 - aux) + (2 * j), i].t = InitTrianguloBranco(40 * (num + j), 40 * i);
                             casas[(9 - aux) + (2 * j), i].casa = TabuleiroCasas.branco;
                             casas[(9 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                         }
@@ -308,7 +319,7 @@ namespace Bizingo
                     if (casas[w, k].casa == TabuleiroCasas.vazio)
                     {
                         casas[w, k].peca = TabuleiroPecas.vazio;
-                        casas[w, k].t = initTrianguloVazio();
+                        casas[w, k].t = InitTrianguloVazio();
                     }
                     //Console.WriteLine($"linha: {k} coluna:{w} casa:{casas[w, k].casa} x:{casas[w, k].t.a[0]} y:{casas[w, k].t.a[1]}");
 
@@ -388,7 +399,7 @@ namespace Bizingo
 
         }
 
-        protected void OnTabuleiroExposeEvent(object o, Gtk.ExposeEventArgs args)
+        private void DesenhaTabuleiro()
         {
             // limpar o widget drawingArea de qualquer imagem
             daTabuleiro.GdkWindow.Clear();
@@ -627,6 +638,11 @@ namespace Bizingo
             }
         }
 
+        protected void OnTabuleiroExposeEvent(object o, Gtk.ExposeEventArgs args)
+        {
+            DesenhaTabuleiro();
+        }
+
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
             Application.Quit();
@@ -643,75 +659,92 @@ namespace Bizingo
 
             GetCasaTabuleiro(x, y);
 
-            Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
-            Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
-            // se for uma casa com alguma peça
-            if (casa_selecionada_atual.peca != TabuleiroPecas.vazio)
+            // se for o turno do primeiro jogador
+            if (turno % 2 == 0)
             {
-                encerrarSelecao();
-                pecaSelecionada();
+                if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
+                {
+                    EncerrarSelecao();
+                    PecaSelecionada();
+                }
+                else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
+                {
+                    //+13 -20
+                    //a casa atual é a que a peça deve se deslocar para
+                    // como ela esta selecionada deve-se pinta-la de branco
+
+                    Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
+                    casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
+                    ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
+                    ct.Paint();
+                    // coloca a peça na casa atual
+
+                    casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                    if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                        ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                    else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                        ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                    ct.Paint();
+                    // a ultima casa selecionada agora deve estar sem peças
+                    casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                    ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1] - 40);
+                    ct.Paint();
+
+                    casa_selecionada_atual = casas[0, 0];
+                    ultima_casa_selecionada = casas[0, 0];
+                    /*
+                    //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
+                    Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+                    */
+                    EncerrarSelecao();
+                    AddTurno();
+                }
+                else
+                {
+                    EncerrarSelecao();
+                }
             }
-            // se a casa clicada for uma casa branca selecionavel
-            else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
+            else if (turno%2==1)
             {
-                //a casa atual é a que a peça deve se deslocar para
-                // como ela esta selecionada deve-se pinta-la de branco
-                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
-                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
-                ct.Paint();
-                // coloca a peça na casa atual
-                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
-                    ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
-                    ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                ct.Paint();
-                // a ultima casa selecionada agora deve estar sem peças
-                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
-                ct.Paint();
+                if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.branco)
+                {
+                    EncerrarSelecao();
+                    PecaSelecionada();
+                }
+                else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
+                {
+                    //a casa atual é a que a peça deve se deslocar para
+                    // como ela esta selecionada deve-se pinta-la de branco
+                    casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
+                    ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
+                    ct.Paint();
+                    // coloca a peça na casa atual
+                    casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                    if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                        ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                    else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                        ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                    ct.Paint();
+                    // a ultima casa selecionada agora deve estar sem peças
+                    casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                    ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
+                    ct.Paint();
 
-                casa_selecionada_atual = casas[x_selecionado, y_selecionado];
-                ultima_casa_selecionada = casas[ultimo_x_selecionado, ultimo_y_selecionado];
-                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+                    casa_selecionada_atual = casas[0, 0];
+                    ultima_casa_selecionada = casas[0, 0];
+                    //Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
 
-                encerrarSelecao();
-            }
-            // se a casa clicada for uma casa vermelha selecionavel
-            else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
-            {
-                //+13 -20
-                //a casa atual é a que a peça deve se deslocar para
-                // como ela esta selecionada deve-se pinta-la de branco
-                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
-                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
-                ct.Paint();
-                // coloca a peça na casa atual
-                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
-                    ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
-                    ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                ct.Paint();
-                // a ultima casa selecionada agora deve estar sem peças
-                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
-                ct.Paint();
-
-                casa_selecionada_atual = casas[x_selecionado, y_selecionado];
-                ultima_casa_selecionada = casas[ultimo_x_selecionado, ultimo_y_selecionado];
-                //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
-                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
-
-                encerrarSelecao();
-            }
-            else
-            {
-                encerrarSelecao();
+                    EncerrarSelecao();
+                    AddTurno();
+                }
+                else
+                {
+                    EncerrarSelecao();
+                }
             }
         }
 
-        private void encerrarSelecao()
+        private void EncerrarSelecao()
         {
             Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
             for (int i = 0; i < 11; i++)
@@ -777,12 +810,35 @@ namespace Bizingo
                 }
                 if (TriangleCollision(x, y, casas[x_axis, y_axis]) == 800)
                 {
-                    ultimo_x_selecionado = x_selecionado;
-                    ultimo_y_selecionado = y_selecionado;
-                    x_selecionado = x_axis;
-                    y_selecionado = y_axis;
-                    ultima_casa_selecionada = casa_selecionada_atual;
-                    casa_selecionada_atual = casas[x_axis, y_axis];
+                    // se for o turno do primeiro jogador e ele tiver clicado numa
+                    // casa da cor vermelha ou vermelha selecionada, então permitir
+                    // que aquela casa seja selecionada
+                    if ((casas[x_axis, y_axis].casa == TabuleiroCasas.vermelho ||
+                        casas[x_axis, y_axis].casa == TabuleiroCasas.vermelho_selecionado
+                        ) && turno % 2 == 0)
+                    {
+                        ultimo_x_selecionado = x_selecionado;
+                        ultimo_y_selecionado = y_selecionado;
+                        x_selecionado = x_axis;
+                        y_selecionado = y_axis;
+                        ultima_casa_selecionada = casa_selecionada_atual;
+                        casa_selecionada_atual = casas[x_axis, y_axis];
+                    }
+                    // se for o turno do segundo jogador e ele tiver clicado numa
+                    // casa da cor branca ou branca selecionada, então permitir
+                    // que aquela casa seja selecionada
+                    else if ((casas[x_axis, y_axis].casa == TabuleiroCasas.branco ||
+                        casas[x_axis, y_axis].casa == TabuleiroCasas.branco_selecionado
+                        ) && turno%2 == 1)
+                    {
+                        ultimo_x_selecionado = x_selecionado;
+                        ultimo_y_selecionado = y_selecionado;
+                        x_selecionado = x_axis;
+                        y_selecionado = y_axis;
+                        ultima_casa_selecionada = casa_selecionada_atual;
+                        casa_selecionada_atual = casas[x_axis, y_axis];
+                    }
+
                 }
                 else
                 {
@@ -866,7 +922,7 @@ namespace Bizingo
             return area_t1 + area_t2 + area_t3;
         }
 
-        private void pecaSelecionada()
+        private void PecaSelecionada()
         {
             Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
             //Console.WriteLine($"x: {x_selecionado} y:{y_selecionado}");
@@ -1001,6 +1057,21 @@ namespace Bizingo
             if (casas[x, y].casa == casa_selecionada_atual.casa && casas[x, y].peca == TabuleiroPecas.vazio)
                 return true;
             return false;
+        }
+
+        protected void OnBtnResetClicked(object sender, EventArgs e)
+        {
+            PreencheVariaveisTabuleiro();
+            casa_selecionada_atual = casas[0, 0];
+            ultima_casa_selecionada = casas[0, 0];
+            x_selecionado = 0;
+            y_selecionado = 0;
+            ultimo_x_selecionado = 0;
+            ultimo_y_selecionado = 0;
+
+            turno = 0;
+            lbTurno.Text = (turno + 1).ToString();
+            DesenhaTabuleiro();
         }
     }
 }

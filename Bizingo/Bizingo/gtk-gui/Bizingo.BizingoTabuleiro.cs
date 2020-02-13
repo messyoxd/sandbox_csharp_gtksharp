@@ -8,6 +8,12 @@ namespace Bizingo
 
 		private global::Gtk.DrawingArea daTabuleiro;
 
+		private global::Gtk.Label label1;
+
+		private global::Gtk.Label lbTurno;
+
+		private global::Gtk.Button btnReset;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -31,6 +37,31 @@ namespace Bizingo
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.daTabuleiro]));
 			w1.X = 10;
 			w1.Y = 10;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.label1 = new global::Gtk.Label();
+			this.label1.Name = "label1";
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString("Turno:");
+			this.fixed4.Add(this.label1);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.label1]));
+			w2.X = 33;
+			w2.Y = 473;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.lbTurno = new global::Gtk.Label();
+			this.lbTurno.Name = "lbTurno";
+			this.fixed4.Add(this.lbTurno);
+			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.lbTurno]));
+			w3.X = 83;
+			w3.Y = 473;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.btnReset = new global::Gtk.Button();
+			this.btnReset.CanFocus = true;
+			this.btnReset.Name = "btnReset";
+			this.btnReset.UseUnderline = true;
+			this.btnReset.Label = global::Mono.Unix.Catalog.GetString("Resetar");
+			this.fixed4.Add(this.btnReset);
+			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.btnReset]));
+			w4.X = 152;
+			w4.Y = 465;
 			this.Add(this.fixed4);
 			if ((this.Child != null))
 			{
@@ -42,6 +73,7 @@ namespace Bizingo
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.daTabuleiro.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnTabuleiroExposeEvent);
 			this.daTabuleiro.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.OnDaTabuleiroButtonPressEvent);
+			this.btnReset.Clicked += new global::System.EventHandler(this.OnBtnResetClicked);
 		}
 	}
 }

@@ -171,6 +171,39 @@
         <child>
           <placeholder />
         </child>
+        <child>
+          <widget class="Gtk.Label" id="label1">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Turno:</property>
+          </widget>
+          <packing>
+            <property name="X">33</property>
+            <property name="Y">473</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="lbTurno">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="X">83</property>
+            <property name="Y">473</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="btnReset">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Resetar</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnBtnResetClicked" />
+          </widget>
+          <packing>
+            <property name="X">152</property>
+            <property name="Y">465</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>
