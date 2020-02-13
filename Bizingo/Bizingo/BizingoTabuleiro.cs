@@ -57,10 +57,13 @@ namespace Bizingo
         }
 
         // essa matriz guarda onde estao as pecas no tabuleiro
-        Casas casa_selecionada;
+        Casas casa_selecionada_atual;
+        Casas ultima_casa_selecionada;
         Casas[,] casas;
         int x_selecionado;
         int y_selecionado;
+        int ultimo_x_selecionado;
+        int ultimo_y_selecionado;
         public BizingoTabuleiro() :
                 base(Gtk.WindowType.Toplevel)
         {
@@ -83,9 +86,12 @@ namespace Bizingo
             // inicializacao de variaveis
             casas = new Casas[21, 11];
             PreencheVariaveisTabuleiro();
-            casa_selecionada = casas[0, 0];
+            casa_selecionada_atual = casas[0, 0];
+            ultima_casa_selecionada = casas[0, 0];
             x_selecionado = 0;
             y_selecionado = 0;
+            ultimo_x_selecionado = 0;
+            ultimo_y_selecionado = 0;
         }
 
         private Triangulo initTrianguloVermelho(int x, int y)
@@ -629,6 +635,7 @@ namespace Bizingo
 
         protected void OnDaTabuleiroButtonPressEvent(object o, ButtonPressEventArgs args)
         {
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
             int x, y;
             ModifierType state;
             args.Event.Window.GetPointer(out x, out y, out state);
@@ -636,12 +643,67 @@ namespace Bizingo
 
             GetCasaTabuleiro(x, y);
 
-            Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada.casa} |peça: {casa_selecionada.peca} | x1:{casa_selecionada.t.a[0]} y1:{casa_selecionada.t.a[1]} | x2:{casa_selecionada.t.b[0]} y2:{casa_selecionada.t.b[1]} | x3:{casa_selecionada.t.c[0]} y3:{casa_selecionada.t.c[1]}|");
-
-            if (casa_selecionada.peca != TabuleiroPecas.vazio)
+            Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
+            Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+            // se for uma casa com alguma peça
+            if (casa_selecionada_atual.peca != TabuleiroPecas.vazio)
             {
                 encerrarSelecao();
                 pecaSelecionada();
+            }
+            // se a casa clicada for uma casa branca selecionavel
+            else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
+            {
+                //a casa atual é a que a peça deve se deslocar para
+                // como ela esta selecionada deve-se pinta-la de branco
+                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
+                ct.Paint();
+                // coloca a peça na casa atual
+                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                ct.Paint();
+                // a ultima casa selecionada agora deve estar sem peças
+                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
+                ct.Paint();
+
+                casa_selecionada_atual = casas[x_selecionado, y_selecionado];
+                ultima_casa_selecionada = casas[ultimo_x_selecionado, ultimo_y_selecionado];
+                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+
+                encerrarSelecao();
+            }
+            // se a casa clicada for uma casa vermelha selecionavel
+            else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
+            {
+                //+13 -20
+                //a casa atual é a que a peça deve se deslocar para
+                // como ela esta selecionada deve-se pinta-la de branco
+                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
+                ct.Paint();
+                // coloca a peça na casa atual
+                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                ct.Paint();
+                // a ultima casa selecionada agora deve estar sem peças
+                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
+                ct.Paint();
+
+                casa_selecionada_atual = casas[x_selecionado, y_selecionado];
+                ultima_casa_selecionada = casas[ultimo_x_selecionado, ultimo_y_selecionado];
+                //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
+                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+
+                encerrarSelecao();
             }
             else
             {
@@ -715,21 +777,28 @@ namespace Bizingo
                 }
                 if (TriangleCollision(x, y, casas[x_axis, y_axis]) == 800)
                 {
+                    ultimo_x_selecionado = x_selecionado;
+                    ultimo_y_selecionado = y_selecionado;
                     x_selecionado = x_axis;
                     y_selecionado = y_axis;
-                    casa_selecionada = casas[x_axis, y_axis];
+                    ultima_casa_selecionada = casa_selecionada_atual;
+                    casa_selecionada_atual = casas[x_axis, y_axis];
                 }
                 else
                 {
                     x_selecionado = 0;
                     y_selecionado = 0;
-                    casa_selecionada = casas[0, 0];
+                    ultimo_x_selecionado = 0;
+                    ultimo_y_selecionado = 0;
+                    ultima_casa_selecionada = casas[0, 0];
+                    casa_selecionada_atual = casas[0, 0];
                     return;
                 }
 
                 return;
             }
-            casa_selecionada = casas[0, 0];
+            casa_selecionada_atual = casas[0, 0];
+            ultima_casa_selecionada = casas[0, 0];
             return;
         }
 
@@ -807,13 +876,13 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado - 2, y_selecionado))
                 {
                     Console.WriteLine($"x selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 2, y_selecionado].t.a[0], casas[x_selecionado - 2, y_selecionado].t.a[1]);
                         ct.Paint();
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 2, y_selecionado].t.a[0], casas[x_selecionado - 2, y_selecionado].t.a[1] - 40);
@@ -827,14 +896,14 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado + 2, y_selecionado))
                 {
                     Console.WriteLine($"x selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 2, y_selecionado].t.a[0], casas[x_selecionado + 2, y_selecionado].t.a[1]);
                         ct.Paint();
 
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 2, y_selecionado].t.a[0], casas[x_selecionado + 2, y_selecionado].t.a[1] - 40);
@@ -848,14 +917,14 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado + 1))
                 {
                     Console.WriteLine($"x: {x_selecionado - 1} x selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         Console.WriteLine(casas[x_selecionado - 1, y_selecionado + 1].t.a[0]);
                         casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1]);
                         ct.Paint();
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1] - 40);
@@ -868,13 +937,13 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado + 1))
                 {
                     Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 1, y_selecionado + 1].t.a[0], casas[x_selecionado + 1, y_selecionado + 1].t.a[1]);
                         ct.Paint();
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 1, y_selecionado + 1].t.a[0], casas[x_selecionado + 1, y_selecionado + 1].t.a[1] - 40);
@@ -888,13 +957,13 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado - 1))
                 {
                     Console.WriteLine($"x selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado - 1].t.a[0], casas[x_selecionado - 1, y_selecionado - 1].t.a[1]);
                         ct.Paint();
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 1, y_selecionado - 1].t.a[0], casas[x_selecionado - 1, y_selecionado - 1].t.a[1] - 40);
@@ -907,13 +976,13 @@ namespace Bizingo
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado - 1))
                 {
                     Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[1]}");
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 1, y_selecionado - 1].t.a[0], casas[x_selecionado + 1, y_selecionado - 1].t.a[1]);
                         ct.Paint();
                     }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.vermelho_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 1, y_selecionado - 1].t.a[0], casas[x_selecionado + 1, y_selecionado - 1].t.a[1] - 40);
@@ -926,10 +995,10 @@ namespace Bizingo
         private bool Check_movimento_valido(int x, int y)
         {
             // se não for uma casa valida
-            if (casa_selecionada.casa == TabuleiroCasas.vazio)
+            if (casa_selecionada_atual.casa == TabuleiroCasas.vazio)
                 return false;
             //se for uma casa da mesma cor e não tiver uma peça nela
-            if (casas[x, y].casa == casa_selecionada.casa && casas[x, y].peca == TabuleiroPecas.vazio)
+            if (casas[x, y].casa == casa_selecionada_atual.casa && casas[x, y].peca == TabuleiroPecas.vazio)
                 return true;
             return false;
         }
