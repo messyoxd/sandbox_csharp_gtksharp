@@ -169,7 +169,10 @@ namespace Bizingo
                 if (i % 2 == 0)
                 {
                     if (i == 10)
+                    {
                         num++;
+                        //Console.WriteLine($"aux: {aux} num:{num}");
+                    }
                     for (int j = 0; j < triangulos; j++)
                     {
                         casas[(8 - aux) + (2 * j), i].t = initTrianguloVermelho(40 * (num + j), 40 * (i + 1));
@@ -237,7 +240,10 @@ namespace Bizingo
                 if (i % 2 == 0)
                 {
                     if (i == 10)
-                        num++;
+                    {
+                        //num++;
+                        Console.WriteLine($"aux: {aux} num:{num}");
+                    }
                     for (int j = 0; j < triangulos; j++)
                     {
                         casas[(9 - aux) + (2 * j), i].t = initTrianguloBranco(40 * (num + j) + 20, 40 * i);
@@ -298,10 +304,11 @@ namespace Bizingo
                         casas[w, k].peca = TabuleiroPecas.vazio;
                         casas[w, k].t = initTrianguloVazio();
                     }
-                    Console.WriteLine($"linha: {k} coluna:{w} casa:{casas[w, k].casa} x:{casas[w, k].t.a[0]} y:{casas[w, k].t.a[1]}");
+                    //Console.WriteLine($"linha: {k} coluna:{w} casa:{casas[w, k].casa} x:{casas[w, k].t.a[0]} y:{casas[w, k].t.a[1]}");
 
                 }
             }
+
             //colocando as peças
             int m = 2;
             int n = 8;
@@ -398,6 +405,7 @@ namespace Bizingo
                         num++;
                     for (int j = 0; j < triangulos; j++)
                     {
+                        //Console.WriteLine($"{40 * (num + j)} {40 * (i)}");
                         if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                             ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j), 40 * i);
                         else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -411,6 +419,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
+                            //Console.WriteLine($"{40 * (num + j) - 20} {40 * (i)}");
                             if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                                 ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j) - 20, 40 * i);
                             else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -424,6 +433,7 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
+                            //Console.WriteLine($"{40 * (num + j) + 20} {40 * (i)}");
                             if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                                 ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j) + 20, 40 * i);
                             else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -452,8 +462,8 @@ namespace Bizingo
                     aux++;
                 }
             }
-            // triangulos brancos
 
+            // desenhar triangulos brancos
             num = 4;
             // começa com 3 triangulos vermelhos
             triangulos = 2;
@@ -493,9 +503,6 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            casas[(9 - aux) + (2 * j), i].t = initTrianguloBranco(40 * (num + j), 40 * i);
-                            casas[(9 - aux) + (2 * j), i].casa = TabuleiroCasas.branco;
-                            casas[(9 - aux) + (2 * j), i].peca = TabuleiroPecas.vazio;
                             if (casas[(9 - aux) + (2 * j), i].casa == TabuleiroCasas.branco_selecionado)
                                 ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], 40 * (num + j), 40 * i);
                             else if (casas[(9 - aux) + (2 * j), i].casa == TabuleiroCasas.branco)
@@ -600,7 +607,7 @@ namespace Bizingo
                         for (int p = 0; p < num_de_pecas_na_linha; p++)
                         {
 
-                            Console.WriteLine($"x: {n + (p * 2) } y: {m}");
+                            //Console.WriteLine($"x: {n + (p * 2) } y: {m}");
 
                             ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[n + (p * 2), m].t.a[0] + 13, casas[n + (p * 2), m].t.a[1] + 8);
                             ct.Paint();
@@ -625,23 +632,45 @@ namespace Bizingo
             int x, y;
             ModifierType state;
             args.Event.Window.GetPointer(out x, out y, out state);
-            Console.WriteLine($"x: {x} y:{y} state: {state}");
+            //Console.WriteLine($"x: {x} y:{y} state: {state}");
 
             GetCasaTabuleiro(x, y);
 
-            //Console.WriteLine($"|casa:{casa_selecionada.casa} |peça: {casa_selecionada.peca} | x1:{casa_selecionada.t.a[0]} y1:{casa_selecionada.t.a[1]} | x2:{casa_selecionada.t.b[0]} y2:{casa_selecionada.t.b[1]} | x3:{casa_selecionada.t.c[0]} y3:{casa_selecionada.t.c[1]}|");
+            Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada.casa} |peça: {casa_selecionada.peca} | x1:{casa_selecionada.t.a[0]} y1:{casa_selecionada.t.a[1]} | x2:{casa_selecionada.t.b[0]} y2:{casa_selecionada.t.b[1]} | x3:{casa_selecionada.t.c[0]} y3:{casa_selecionada.t.c[1]}|");
 
             if (casa_selecionada.peca != TabuleiroPecas.vazio)
+            {
+                encerrarSelecao();
                 pecaSelecionada();
+            }
             else
             {
-                //encerrarSelecao();
+                encerrarSelecao();
             }
         }
 
         private void encerrarSelecao()
         {
-            throw new NotImplementedException();
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+            for (int i = 0; i < 11; i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    if (casas[j, i].casa == TabuleiroCasas.branco_selecionado)
+                    {
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[j, i].t.a[0], casas[j, i].t.a[1]);
+                        ct.Paint();
+                        casas[j, i].casa = TabuleiroCasas.branco;
+                    }
+                    else if (casas[j, i].casa == TabuleiroCasas.vermelho_selecionado)
+                    {
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[j, i].t.a[0], casas[j, i].t.a[1] - 40);
+                        ct.Paint();
+                        casas[j, i].casa = TabuleiroCasas.vermelho;
+                    }
+
+                }
+            }
         }
 
         protected void GetCasaTabuleiro(int x, int y)
@@ -692,6 +721,9 @@ namespace Bizingo
                 }
                 else
                 {
+                    x_selecionado = 0;
+                    y_selecionado = 0;
+                    casa_selecionada = casas[0, 0];
                     return;
                 }
 
@@ -767,115 +799,137 @@ namespace Bizingo
 
         private void pecaSelecionada()
         {
-            if (x_selecionado > 2)
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+            //Console.WriteLine($"x: {x_selecionado} y:{y_selecionado}");
+            //Console.WriteLine($"x selecionado: {casas[x_selecionado, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado, y_selecionado].t.a[1]}");
+            if (x_selecionado > 1)
             {
-                if (Check_movimento_valido(y_selecionado, x_selecionado - 2))
+                if (Check_movimento_valido(x_selecionado - 2, y_selecionado))
                 {
+                    Console.WriteLine($"x selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada.casa == TabuleiroCasas.branco)
                     {
-                        casas[x_selecionado, y_selecionado - 2].casa = TabuleiroCasas.branco_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado, y_selecionado - 2].casa} |peça: {casas[x_selecionado, y_selecionado - 2].peca} | x1:{casas[x_selecionado, y_selecionado - 2].t.a[0]} y1:{casas[x_selecionado, y_selecionado - 2].t.a[1]} | x2:{casas[x_selecionado, y_selecionado - 2].t.b[0]} y2:{casas[x_selecionado, y_selecionado - 2].t.b[1]} | x3:{casas[x_selecionado, y_selecionado - 2].t.c[0]} y3:{casas[x_selecionado, y_selecionado - 2].t.c[1]}|");
+                        casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 2, y_selecionado].t.a[0], casas[x_selecionado - 2, y_selecionado].t.a[1]);
+                        ct.Paint();
                     }
                     else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
                     {
-                        casas[x_selecionado, y_selecionado - 2].casa = TabuleiroCasas.vermelho_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado, y_selecionado - 2].casa} |peça: {casas[x_selecionado, y_selecionado - 2].peca} | x1:{casas[x_selecionado, y_selecionado - 2].t.a[0]} y1:{casas[x_selecionado, y_selecionado - 2].t.a[1]} | x2:{casas[x_selecionado, y_selecionado - 2].t.b[0]} y2:{casas[x_selecionado, y_selecionado - 2].t.b[1]} | x3:{casas[x_selecionado, y_selecionado - 2].t.c[0]} y3:{casas[x_selecionado, y_selecionado - 2].t.c[1]}|");
+                        casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.vermelho_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 2, y_selecionado].t.a[0], casas[x_selecionado - 2, y_selecionado].t.a[1] - 40);
+                        ct.Paint();
                     }
                 }
             }
             if (x_selecionado < 19)
             {
 
-                if (Check_movimento_valido(y_selecionado, x_selecionado + 2))
+                if (Check_movimento_valido(x_selecionado + 2, y_selecionado))
                 {
+                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado + 2, y_selecionado].casa} |peça: {casas[x_selecionado + 2, y_selecionado].peca} | x1:{casas[x_selecionado + 2, y_selecionado].t.a[0]} y1:{casas[x_selecionado + 2, y_selecionado].t.a[1]} | x2:{casas[x_selecionado + 2, y_selecionado].t.b[0]} y2:{casas[x_selecionado + 2, y_selecionado].t.b[1]} | x3:{casas[x_selecionado + 2, y_selecionado].t.c[0]} y3:{casas[x_selecionado + 2, y_selecionado].t.c[1]}|");
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 2, y_selecionado].t.a[0], casas[x_selecionado + 2, y_selecionado].t.a[1]);
+                        ct.Paint();
+
                     }
                     else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.vermelho_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado + 2, y_selecionado].casa} |peça: {casas[x_selecionado + 2, y_selecionado].peca} | x1:{casas[x_selecionado + 2, y_selecionado].t.a[0]} y1:{casas[x_selecionado + 2, y_selecionado].t.a[1]} | x2:{casas[x_selecionado + 2, y_selecionado].t.b[0]} y2:{casas[x_selecionado + 2, y_selecionado].t.b[1]} | x3:{casas[x_selecionado + 2, y_selecionado].t.c[0]} y3:{casas[x_selecionado + 2, y_selecionado].t.c[1]}|");
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 2, y_selecionado].t.a[0], casas[x_selecionado + 2, y_selecionado].t.a[1] - 40);
+                        ct.Paint();
                     }
                 }
             }
-            if (y_selecionado > 0 && x_selecionado > 0)
+            if (x_selecionado > 0 && y_selecionado < 10)
             {
 
-                if (Check_movimento_valido(y_selecionado - 1, x_selecionado - 1))
+                if (Check_movimento_valido(x_selecionado - 1, y_selecionado + 1))
                 {
+                    Console.WriteLine($"x: {x_selecionado - 1} x selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[1]}");
+                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    {
+                        Console.WriteLine(casas[x_selecionado - 1, y_selecionado + 1].t.a[0]);
+                        casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1]);
+                        ct.Paint();
+                    }
+                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    {
+                        casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1] - 40);
+                        ct.Paint();
+                    }
+                }
+            }
+            if (x_selecionado < 20 && y_selecionado < 10)
+            {
+                if (Check_movimento_valido(x_selecionado + 1, y_selecionado + 1))
+                {
+                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[1]}");
+                    if (casa_selecionada.casa == TabuleiroCasas.branco)
+                    {
+                        casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 1, y_selecionado + 1].t.a[0], casas[x_selecionado + 1, y_selecionado + 1].t.a[1]);
+                        ct.Paint();
+                    }
+                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
+                    {
+                        casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 1, y_selecionado + 1].t.a[0], casas[x_selecionado + 1, y_selecionado + 1].t.a[1] - 40);
+                        ct.Paint();
+                    }
+                }
+            }
+            if (x_selecionado > 0 && y_selecionado > 0)
+            {
+
+                if (Check_movimento_valido(x_selecionado - 1, y_selecionado - 1))
+                {
+                    Console.WriteLine($"x selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado - 1, y_selecionado - 1].casa} |peça: {casas[x_selecionado - 1, y_selecionado - 1].peca} | x1:{casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} y1:{casas[x_selecionado - 1, y_selecionado - 1].t.a[1]} | x2:{casas[x_selecionado - 1, y_selecionado - 1].t.b[0]} y2:{casas[x_selecionado - 1, y_selecionado - 1].t.b[1]} | x3:{casas[x_selecionado - 1, y_selecionado - 1].t.c[0]} y3:{casas[x_selecionado - 1, y_selecionado - 1].t.c[1]}|");
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado - 1].t.a[0], casas[x_selecionado - 1, y_selecionado - 1].t.a[1]);
+                        ct.Paint();
                     }
                     else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.vermelho_selecionado;
-                        Console.WriteLine($"|casa:{casas[x_selecionado - 1, y_selecionado - 1].casa} |peça: {casas[x_selecionado - 1, y_selecionado - 1].peca} | x1:{casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} y1:{casas[x_selecionado - 1, y_selecionado - 1].t.a[1]} | x2:{casas[x_selecionado - 1, y_selecionado - 1].t.b[0]} y2:{casas[x_selecionado - 1, y_selecionado - 1].t.b[1]} | x3:{casas[x_selecionado - 1, y_selecionado - 1].t.c[0]} y3:{casas[x_selecionado - 1, y_selecionado - 1].t.c[1]}|");
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado - 1, y_selecionado - 1].t.a[0], casas[x_selecionado - 1, y_selecionado - 1].t.a[1] - 40);
+                        ct.Paint();
                     }
                 }
             }
-            if (y_selecionado > 0 && x_selecionado < 19)
+            if (x_selecionado < 20 && y_selecionado > 0)
             {
-                if (Check_movimento_valido(y_selecionado - 1, x_selecionado + 1))
+                if (Check_movimento_valido(x_selecionado + 1, y_selecionado - 1))
                 {
+                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada.casa == TabuleiroCasas.branco)
                     {
-
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado + 1, y_selecionado - 1].t.a[0], casas[x_selecionado + 1, y_selecionado - 1].t.a[1]);
+                        ct.Paint();
                     }
                     else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
                     {
-
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.vermelho_selecionado;
-                    }
-                }
-            }
-            if (y_selecionado < 10 && x_selecionado < 20)
-            {
-
-                if (Check_movimento_valido(y_selecionado + 1, x_selecionado + 1))
-                {
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
-                    {
-
-                        casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
-                    }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
-                    {
-
-                        casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
-                    }
-                }
-            }
-            if (y_selecionado < 10 && x_selecionado > 0)
-            {
-
-                if (Check_movimento_valido(y_selecionado + 1, x_selecionado - 1))
-                {
-                    if (casa_selecionada.casa == TabuleiroCasas.branco)
-                    {
-
-                        casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
-                    }
-                    else if (casa_selecionada.casa == TabuleiroCasas.vermelho)
-                    {
-
-                        casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.vermelho_selecionado;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], casas[x_selecionado + 1, y_selecionado - 1].t.a[0], casas[x_selecionado + 1, y_selecionado - 1].t.a[1] - 40);
+                        ct.Paint();
                     }
                 }
             }
         }
 
-        private bool Check_movimento_valido(int i, int j)
+        private bool Check_movimento_valido(int x, int y)
         {
             // se não for uma casa valida
             if (casa_selecionada.casa == TabuleiroCasas.vazio)
                 return false;
             //se for uma casa da mesma cor e não tiver uma peça nela
-            if (casas[j, i].casa == casa_selecionada.casa && casas[j, i].peca == TabuleiroPecas.vazio)
+            if (casas[x, y].casa == casa_selecionada.casa && casas[x, y].peca == TabuleiroPecas.vazio)
                 return true;
             return false;
         }
