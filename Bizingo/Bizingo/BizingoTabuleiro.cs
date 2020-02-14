@@ -65,7 +65,12 @@ namespace Bizingo
         int ultimo_x_selecionado;
         int ultimo_y_selecionado;
 
+
+        int num_pecas_jogador_1;
+        int num_pecas_jogador_2;
         int turno;
+
+        bool gameOver;
         public BizingoTabuleiro() :
                 base(Gtk.WindowType.Toplevel)
         {
@@ -96,13 +101,57 @@ namespace Bizingo
             ultimo_y_selecionado = 0;
 
             turno = 0;
-            lbTurno.Text = (turno+1).ToString();
+            lbTurno.Text = (turno + 1).ToString();
+
+            num_pecas_jogador_1 = 18;
+            num_pecas_jogador_2 = 18;
+            gameOver = false;
         }
 
         private void AddTurno()
         {
             turno++;
             lbTurno.Text = (turno + 1).ToString();
+        }
+
+        private int DecrementaNumPecas(int jogador)
+        {
+            if (jogador == 1)
+            {
+                if (num_pecas_jogador_1 > 2)
+                {
+                    num_pecas_jogador_1--;
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                if (num_pecas_jogador_2 > 2)
+                {
+                    num_pecas_jogador_2--;
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        private void GameOver(int jogador)
+        {
+            gameOver = true;
+            Dialog dialog = new MessageDialog(this,
+                                  DialogFlags.Modal | DialogFlags.DestroyWithParent,
+                                  MessageType.Info,
+                                  ButtonsType.Ok,
+                                  $"Jogador {jogador} perdeu!");
+            dialog.Run();
+            dialog.Hide();
         }
 
         private Triangulo InitTrianguloVermelho(int x, int y)
@@ -662,6 +711,7 @@ namespace Bizingo
             // se for o turno do primeiro jogador
             if (turno % 2 == 0)
             {
+                // mostrar caminhos possiveis da peça
                 if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
                 {
                     EncerrarSelecao();
@@ -704,7 +754,7 @@ namespace Bizingo
                     EncerrarSelecao();
                 }
             }
-            else if (turno%2==1)
+            else if (turno % 2 == 1)
             {
                 if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.branco)
                 {
@@ -741,6 +791,188 @@ namespace Bizingo
                 {
                     EncerrarSelecao();
                 }
+            }
+        }
+
+        private bool CheckCasaVermelhaBorda(int x, int y)
+        {
+            if (y > 8 || y < 0 || x > 21 || x < 0)
+            {
+                return false;
+            }
+            else if (x + y == 8 || x - y == 12)
+                return true;
+            else
+                return false;
+        }
+
+        private bool CheckCasaBrancaBorda(int x, int y)
+        {
+            if (y < 8 || y > 10 || x > 21 || x < 0)
+            {
+                return false;
+            }
+            else if (y == 9)
+            {
+                if (x + (y - 1) == 8 || x - (y - 1) == 12)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                //y == 10
+                if (x + (y - 3) == 8 || x - (y - 3) == 12)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        private bool CheckPecaCercada()
+        {
+            // usar as variaveis x_selecionado e y_selecionado
+            // para achar as pecas em volta daquela
+            if (casas[x_selecionado, y_selecionado].casa == TabuleiroCasas.branco)
+            {
+                // se a peça não for de borda
+                if (!CheckCasaBrancaBorda(x_selecionado, y_selecionado))
+                {
+                    // se não for, então precisa estar cercada por 3 peças
+
+                    //checar se a peça é um capitão
+                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        // so pode ser cercada se houver pelo menos um captao
+                        // adversario no cerco
+                        if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
+                            casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
+                            casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                        {
+
+                            // checar se as outras casas tem peças
+                            if (
+                                (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                ) ||
+                                (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                ) ||
+                                (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                                )
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        // se for uma peca normal, então basta estar cercada
+                        if (
+                                (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1
+                                ) &&
+                                (
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1
+                                ) &&
+                                (
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                                )
+                        {
+                            // se tem peças cercando então aquela peça tem que ser excluida
+                            return true;
+                        }
+                    }
+
+                }
+                else
+                {
+                    // se for, então bastam 2 peças para cerca-la
+
+                    // checar se esta na borda da esquerda
+                    if (x_selecionado == 0)
+                    {
+                        if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                        {
+                            // so pode ser cercada se houver pelo menos um captao
+                            // adversario no cerco
+                            if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                            {
+
+                                // checar se as outras casas tem peças
+                                if (
+                                    (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
+                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                    ) ||
+                                    (
+                                    casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                    ) ||
+                                    (
+                                    casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                                    )
+                                {
+                                    // se tem peças cercando então aquela peça tem que ser excluida
+                                    if (DecrementaNumPecas(2) == 0)
+                                    {
+                                        GameOver(2);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ExcluiPeca(int x, int y)
+        {
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+            // se for uma casa branca com alguma peça
+            if (casas[x, y].casa == TabuleiroCasas.branco &&
+                (
+                casas[x, y].peca == TabuleiroPecas.captao_time_2 ||
+                casas[x, y].peca == TabuleiroPecas.peca_time_2
+                )
+                )
+            {
+                // se tem peças cercando então aquela peça tem que ser excluida
+                if (DecrementaNumPecas(2) == 0)
+                {
+                    GameOver(2);
+                }
+                casas[x, y].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x, y].t.a[0], casas[x, y].t.a[1]);
+                ct.Paint();
+
+            }
+            else if(casas[x, y].casa == TabuleiroCasas.vermelho &&
+                (
+                casas[x, y].peca == TabuleiroPecas.captao_time_1 ||
+                casas[x, y].peca == TabuleiroPecas.peca_time_1
+                )
+                )
+            {
+                // se tem peças cercando então aquela peça tem que ser excluida
+                if (DecrementaNumPecas(1) == 0)
+                {
+                    GameOver(1);
+                }
+                casas[x, y].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x, y].t.a[0], casas[x, y].t.a[1]);
+                ct.Paint();
+
             }
         }
 
@@ -829,7 +1061,7 @@ namespace Bizingo
                     // que aquela casa seja selecionada
                     else if ((casas[x_axis, y_axis].casa == TabuleiroCasas.branco ||
                         casas[x_axis, y_axis].casa == TabuleiroCasas.branco_selecionado
-                        ) && turno%2 == 1)
+                        ) && turno % 2 == 1)
                     {
                         ultimo_x_selecionado = x_selecionado;
                         ultimo_y_selecionado = y_selecionado;
