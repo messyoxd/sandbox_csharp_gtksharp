@@ -308,7 +308,7 @@ namespace Bizingo
                     if (i == 10)
                     {
                         //num++;
-                        Console.WriteLine($"aux: {aux} num:{num}");
+                        //Console.WriteLine($"aux: {aux} num:{num}");
                     }
                     for (int j = 0; j < triangulos; j++)
                     {
@@ -706,94 +706,236 @@ namespace Bizingo
             args.Event.Window.GetPointer(out x, out y, out state);
             //Console.WriteLine($"x: {x} y:{y} state: {state}");
 
-            GetCasaTabuleiro(x, y);
-
-            // se for o turno do primeiro jogador
-            if (turno % 2 == 0)
+            if (!gameOver)
             {
-                // mostrar caminhos possiveis da peça
-                if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
-                {
-                    EncerrarSelecao();
-                    PecaSelecionada();
-                }
-                else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
-                {
-                    //+13 -20
-                    //a casa atual é a que a peça deve se deslocar para
-                    // como ela esta selecionada deve-se pinta-la de branco
+                GetCasaTabuleiro(x, y);
 
-                    Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
-                    casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
-                    ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
-                    ct.Paint();
-                    // coloca a peça na casa atual
-
-                    casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                    if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
-                        ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                    else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_1)
-                        ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                    ct.Paint();
-                    // a ultima casa selecionada agora deve estar sem peças
-                    casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                    ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1] - 40);
-                    ct.Paint();
-
-                    casa_selecionada_atual = casas[0, 0];
-                    ultima_casa_selecionada = casas[0, 0];
-                    /*
-                    //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
-                    Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
-                    */
-                    EncerrarSelecao();
-                    AddTurno();
-                }
-                else
+                // se for o turno do primeiro jogador
+                if (turno % 2 == 0)
                 {
-                    EncerrarSelecao();
-                }
-            }
-            else if (turno % 2 == 1)
-            {
-                if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.branco)
-                {
-                    EncerrarSelecao();
-                    PecaSelecionada();
-                }
-                else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
-                {
-                    //a casa atual é a que a peça deve se deslocar para
-                    // como ela esta selecionada deve-se pinta-la de branco
-                    casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
-                    ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
-                    ct.Paint();
-                    // coloca a peça na casa atual
-                    casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                    if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
-                        ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                    else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
-                        ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                    ct.Paint();
-                    // a ultima casa selecionada agora deve estar sem peças
-                    casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                    ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
-                    ct.Paint();
+                    // mostrar caminhos possiveis da peça
+                    if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
+                    {
+                        EncerrarSelecao();
+                        PecaSelecionada();
+                    }
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
+                    {
+                        //+13 -20
+                        //a casa atual é a que a peça deve se deslocar para
+                        // como ela esta selecionada deve-se pinta-la de branco
 
-                    casa_selecionada_atual = casas[0, 0];
-                    ultima_casa_selecionada = casas[0, 0];
-                    //Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+                        //Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
+                        casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
+                        ct.Paint();
+                        // coloca a peça na casa atual
 
-                    EncerrarSelecao();
-                    AddTurno();
+                        casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                        if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                            ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                        else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                        ct.Paint();
+                        // a ultima casa selecionada agora deve estar sem peças
+                        casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1] - 40);
+                        ct.Paint();
+
+                        casa_selecionada_atual = casas[0, 0];
+                        ultima_casa_selecionada = casas[0, 0];
+                        /*
+                        //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
+                        Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+                        */
+                        Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
+                        EncerrarSelecao();
+                        List<int> pecaEliminada;
+                        pecaEliminada = CheckPecaVermelhaCercada();
+
+                        if (pecaEliminada.Any())
+                        {
+                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                            {
+                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                            }
+                        }
+                        pecaEliminada.Clear();
+                        pecaEliminada = CheckVermelhaEliminou();
+                        if (pecaEliminada.Any())
+                        {
+                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                            {
+                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                            }
+                        }
+
+                        pecaEliminada.Clear();
+                        AddTurno();
+                    }
+                    else
+                    {
+                        EncerrarSelecao();
+                    }
                 }
-                else
+                else if (turno % 2 == 1)
                 {
-                    EncerrarSelecao();
+                    if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.branco)
+                    {
+                        EncerrarSelecao();
+                        PecaSelecionada();
+                    }
+                    else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
+                    {
+                        //a casa atual é a que a peça deve se deslocar para
+                        // como ela esta selecionada deve-se pinta-la de branco
+                        casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
+                        ct.Paint();
+                        // coloca a peça na casa atual
+                        casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                        if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                            ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                        else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                        ct.Paint();
+                        // a ultima casa selecionada agora deve estar sem peças
+                        casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
+                        ct.Paint();
+
+                        casa_selecionada_atual = casas[0, 0];
+                        ultima_casa_selecionada = casas[0, 0];
+                        Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
+
+                        EncerrarSelecao();
+
+                        List<int> pecaEliminada;
+                        pecaEliminada = CheckPecaBrancaCercada();
+
+                        if (pecaEliminada.Any())
+                        {
+                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                            {
+                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                            }
+                        }
+                        pecaEliminada.Clear();
+                        pecaEliminada = CheckBrancaEliminou();
+                        if (pecaEliminada.Any())
+                        {
+                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                            {
+                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                            }
+                        }
+
+                        pecaEliminada.Clear();
+                        AddTurno();
+                    }
+                    else
+                    {
+                        EncerrarSelecao();
+                    }
                 }
             }
         }
-
+        private bool Capitao1Cercado3(int x, int y)
+        {
+            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y + 1].peca}");
+            if (
+                (
+                    casas[x, y].peca == TabuleiroPecas.captao_time_2 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.peca_time_2 &&
+                    casas[x + 1, y + 1].peca == TabuleiroPecas.peca_time_2
+                )
+                ||
+                (
+                    casas[x, y].peca == TabuleiroPecas.peca_time_2 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.captao_time_2 &&
+                    casas[x + 1, y + 1].peca == TabuleiroPecas.peca_time_2
+                )
+                ||
+                (
+                    casas[x, y].peca == TabuleiroPecas.peca_time_2 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.peca_time_2 &&
+                    casas[x + 1, y + 1].peca == TabuleiroPecas.captao_time_2
+                )
+            )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool Capitao2Cercado3(int x, int y)
+        {
+            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
+            if (
+                (
+                    casas[x, y].peca == TabuleiroPecas.captao_time_1 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.peca_time_1 &&
+                    casas[x + 1, y - 1].peca == TabuleiroPecas.peca_time_1
+                )
+                ||
+                (
+                    casas[x, y].peca == TabuleiroPecas.peca_time_1 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.captao_time_1 &&
+                    casas[x + 1, y - 1].peca == TabuleiroPecas.peca_time_1
+                )
+                ||
+                (
+                    casas[x, y].peca == TabuleiroPecas.peca_time_1 &&
+                    casas[x + 2, y].peca == TabuleiroPecas.peca_time_1 &&
+                    casas[x + 1, y - 1].peca == TabuleiroPecas.captao_time_1
+                )
+            )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool PecaVermelhaCercado3(int x, int y)
+        {
+            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
+            if (
+                casas[x, y].peca != TabuleiroPecas.vazio &&
+                casas[x + 2, y].peca != TabuleiroPecas.vazio &&
+                casas[x + 1, y + 1].peca != TabuleiroPecas.vazio
+                )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool PecaBrancaCercado3(int x, int y)
+        {
+            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
+            if (
+                casas[x, y].peca != TabuleiroPecas.vazio &&
+                casas[x + 2, y].peca != TabuleiroPecas.vazio &&
+                casas[x + 1, y - 1].peca != TabuleiroPecas.vazio
+                )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private bool CheckCasaVermelhaBorda(int x, int y)
         {
             if (y > 8 || y < 0 || x > 21 || x < 0)
@@ -823,116 +965,892 @@ namespace Bizingo
             {
                 //y == 10
                 if (x + (y - 3) == 8 || x - (y - 3) == 12)
+                {
+                    Console.WriteLine("lool");
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
         }
 
-        private bool CheckPecaCercada()
+        private List<int> CheckBrancaEliminou()
         {
-            // usar as variaveis x_selecionado e y_selecionado
-            // para achar as pecas em volta daquela
-            if (casas[x_selecionado, y_selecionado].casa == TabuleiroCasas.branco)
-            {
-                // se a peça não for de borda
-                if (!CheckCasaBrancaBorda(x_selecionado, y_selecionado))
-                {
-                    // se não for, então precisa estar cercada por 3 peças
+            //checar se a peça branca cercou alguem
+            List<int> pecaEliminada = new List<int>();
 
-                    //checar se a peça é um capitão
-                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+            // se a casa atual não é de borda, então há pelo menos uma casa a direita ou esquerda,
+            // que será uma casa adversaria. Porém se essa casa adversaria é de borda, então
+            // bastam duas peças para cerca-la
+
+            // checar se peça a direita é de borda
+            if (CheckCasaVermelhaBorda(x_selecionado + 1, y_selecionado))
+            {
+                // se for, então há duas possibilidades para cerco. Ou a casa a direita foi cercada
+                // ou a casa à cima foi cercada. Mas antes disso, checar se há peças nelas
+
+                if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
                     {
-                        // so pode ser cercada se houver pelo menos um captao
-                        // adversario no cerco
-                        if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
-                            casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
-                            casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                        // se a peça da borda da direita é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2 ||
+                            casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado + 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        // se a peça da borda da direita é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado + 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else if (casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1)
+                    {
+                        // se a peça da borda da direita é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2 ||
+                            casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado - 1);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        // se a peça da borda da direita é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado - 1);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    return pecaEliminada;
+                }
+            }
+            // checar se peça a esquerda é de borda
+            else if (CheckCasaVermelhaBorda(x_selecionado - 1, y_selecionado))
+            {
+                // se for, então há duas possibilidades para cerco. Ou a casa a esquerda foi cercada
+                // ou a casa à cima foi cercada. Mas antes disso, checar se há peças nelas
+                if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                    {
+                        // se a peça da borda da direita é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2 ||
+                            casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado - 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        // se a peça da borda da direita é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado - 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else if (casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1)
+                    {
+                        // se a peça da borda da direita é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2 ||
+                            casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado - 1);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        // se a peça da borda da direita é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado - 1);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    return pecaEliminada;
+                }
+            }
+
+            else
+            {
+
+
+                // se não esta perto de bordas, checar se há alguma peça adversaria em volta.
+                // (supondo que dá para eliminar mais de uma peça adversaria numa só jogada)
+
+                // checar se é borda
+                if (CheckCasaBrancaBorda(x_selecionado, y_selecionado))
+                {
+                    //esquerda
+                    if ((x_selecionado == 0 && y_selecionado == 9)
+                    ||
+                    (x_selecionado == 1 && y_selecionado == 10))
+                    {
+                        if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                        {
+                            // checar qual peça é
+                            if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            {
+                                //checar as condições 
+                                if (PecaVermelhaCercado3(x_selecionado, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado + 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                            else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                            {
+                                //condições
+                                if (Capitao1Cercado3(x_selecionado, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado + 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                        }
+                    }
+                    //direita
+                    else if ((x_selecionado == 20 && y_selecionado == 9)
+                    ||
+                    (x_selecionado == 19 && y_selecionado == 10))
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                        {
+                            if(casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            {
+                                if (PecaVermelhaCercado3(x_selecionado - 2, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado - 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                            else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                            {
+                                if (Capitao1Cercado3(x_selecionado - 2, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado - 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+
+                            }
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    //direita
+                    if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                    {
+                        // checar qual peça é
+                        if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                        {
+                            //checar as condições 
+                            if (PecaVermelhaCercado3(x_selecionado, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado + 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                        else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                        {
+                            //condições
+                            if (Capitao1Cercado3(x_selecionado, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado + 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                    }
+                    // em cima
+                    if (casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                    {
+                        if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1)
+                        {
+                            if (PecaVermelhaCercado3(x_selecionado - 1, y_selecionado - 1))
+                            {
+                                pecaEliminada.Add(x_selecionado);
+                                pecaEliminada.Add(y_selecionado - 1);
+                            }
+
+                        }
+                        else if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
+                        {
+                            if (Capitao1Cercado3(x_selecionado - 1, y_selecionado - 1))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado - 1);
+                            }
+                        }
+                    }
+
+                    //esquerda
+                    if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                        {
+                            if (PecaVermelhaCercado3(x_selecionado - 2, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                        else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                        {
+                            if (Capitao1Cercado3(x_selecionado - 2, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+
+                        }
+                    }
+                    return pecaEliminada;
+                }
+            }
+        }
+
+        private List<int> CheckVermelhaEliminou()
+        {
+            //checar se a peça branca cercou alguem
+            List<int> pecaEliminada = new List<int>();
+
+            // se a casa atual não é de borda, então há pelo menos uma casa a direita ou esquerda,
+            // que será uma casa adversaria. Porém se essa casa adversaria é de borda, então
+            // bastam duas peças para cerca-la
+
+            // checar se peça a direita é de borda
+            if (CheckCasaBrancaBorda(x_selecionado + 1, y_selecionado))
+            {
+                // se for, então há duas possibilidades para cerco. Ou a casa a direita foi cercada
+                // ou a casa à baixo foi cercada. Mas antes disso, checar se há peças nelas
+
+                if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        // se a peça da borda da direita é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1 ||
+                            casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado + 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        // se a peça da borda da direita é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado + 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else if (casas[x_selecionado, y_selecionado + 1].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        // se a peça abaixo é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_1 ||
+                            casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado + 1);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        // se a peça abaixo é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_1
+                                ||
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_1
+                                ||
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado + 1);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    return pecaEliminada;
+                }
+            }
+            // checar se peça a esquerda é de borda
+            else if (CheckCasaBrancaBorda(x_selecionado - 1, y_selecionado))
+            {
+                // se for, então há duas possibilidades para cerco. Ou a casa a esquerda foi cercada
+                // ou a casa à baixo foi cercada. Mas antes disso, checar se há peças nelas
+                if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        // se a peça da borda da esquerda é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1 ||
+                            casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado - 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        // se a peça da borda da esquerda é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado - 1);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else if (casas[x_selecionado, y_selecionado + 1].peca != TabuleiroPecas.vazio)
+                {
+                    if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        // se a peça abaixo é uma peça comum, checar se há uma peça
+                        // aliada a cercando
+                        if (casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_1 ||
+                            casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado + 1);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        // se a peça abaixo é um capitão, checar se as condições para
+                        // eliminação dessa peça foram consedidas
+
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.peca_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado + 1].peca == TabuleiroPecas.captao_time_1
+                                &&
+                                casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                            )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado - 1);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    return pecaEliminada;
+                }
+            }
+
+            else
+            {
+                // checar se é borda
+                if (CheckCasaVermelhaBorda(x_selecionado, y_selecionado))
+                {
+                    //esquerda
+                    if (x_selecionado + y_selecionado == 8)
+                    {
+                        if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                        {
+                            // checar qual peça é
+                            if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            {
+                                //checar as condições 
+                                if (PecaBrancaCercado3(x_selecionado, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado + 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                            else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                            {
+                                //condições
+                                if (Capitao2Cercado3(x_selecionado, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado + 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                        }
+                    }
+                    //direita
+                    else if (x_selecionado - y_selecionado == 12)
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                        {
+                            if(casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                            {
+                                if (PecaBrancaCercado3(x_selecionado - 2, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado - 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                            else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                            {
+                                if (Capitao1Cercado3(x_selecionado - 2, y_selecionado))
+                                {
+                                    pecaEliminada.Add(x_selecionado - 1);
+                                    pecaEliminada.Add(y_selecionado);
+                                }
+                            }
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                else
+                {
+                    // se não esta perto de bordas, checar se há alguma peça adversaria em volta.
+                    // (supondo que dá para eliminar mais de uma peça adversaria numa só jogada)
+
+                    //direita
+                    if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                    {
+                        // checar qual peça é
+                        if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                        {
+                            //checar as condições 
+                            if (PecaBrancaCercado3(x_selecionado, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado + 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                        else if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                        {
+                            //condições
+                            if (Capitao2Cercado3(x_selecionado, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado + 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                    }
+                    // em cima
+                    if (casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                    {
+                        if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2)
                         {
 
-                            // checar se as outras casas tem peças
-                            if (
-                                (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
-                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
-                                ) ||
-                                (
-                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
-                                ) ||
-                                (
-                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
-                                )
+                            if (PecaBrancaCercado3(x_selecionado - 1, y_selecionado - 1))
                             {
-                                return true;
+                                pecaEliminada.Add(x_selecionado);
+                                pecaEliminada.Add(y_selecionado - 1);
                             }
+                        }
+                        else if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2)
+                        {
+                            if (Capitao2Cercado3(x_selecionado - 1, y_selecionado - 1))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado - 1);
+                            }
+
+                        }
+                    }
+
+                    //esquerda
+                    if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio)
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                        {
+
+                            if (PecaBrancaCercado3(x_selecionado - 2, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                        else if (casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                        {
+                            if (Capitao2Cercado3(x_selecionado - 2, y_selecionado))
+                            {
+                                pecaEliminada.Add(x_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado);
+                            }
+                        }
+                    }
+                    return pecaEliminada;
+                }
+            }
+        }
+
+        private List<int> CheckPecaBrancaCercada()
+        {
+            /*
+                // essa função será usada no momento em que qualquer peça do
+                // tabuleiro se desloque para verificar se tal peça será eliminada
+                // ou se eliminou alguma peça
+                retorno:
+                List<int> com os endereços x e y da peça que deve ser eliminada
+                em decorrencia da ultima atualização da posição das peças do tabuleiro
+                List<int> terá length multiplo de 2, pois mais de uma peça pode ser
+                eliminada
+            */
+            List<int> pecaEliminada = new List<int>();
+            // se a peça não for de borda
+
+            if (!CheckCasaBrancaBorda(x_selecionado, y_selecionado))
+            {
+                // checar se a peça foi cercada
+
+                //checar se a peça é um capitão
+                if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                {
+                    // checar as condições
+                    if (Capitao2Cercado3(x_selecionado - 1, y_selecionado))
+                    {
+                        pecaEliminada.Add(x_selecionado);
+                        pecaEliminada.Add(y_selecionado);
+                    }
+                }
+                else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                {
+                    // se for uma peca normal, então basta estar cercada
+                    //Console.WriteLine($"checando se a peça ta cercada por 3: {PecaCercado3(x_selecionado - 1, y_selecionado)}");
+                    if (PecaBrancaCercado3(x_selecionado - 1, y_selecionado))
+                    {
+                        // se tem peças cercando então aquela peça tem que ser excluida
+                        pecaEliminada.Add(x_selecionado);
+                        pecaEliminada.Add(y_selecionado);
+                    }
+                }
+                return pecaEliminada;
+
+            }
+            else
+            {
+                //se for uma casa branca da borda esquerda
+                if (
+                    (x_selecionado == 0 && y_selecionado == 9)
+                    ||
+                    (x_selecionado == 1 && y_selecionado == 10)
+                  )
+                {
+                    // checar qual peça é
+                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    {
+                        //checar condições
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
                         }
                     }
                     else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
                     {
-                        // se for uma peca normal, então basta estar cercada
-                        if (
-                                (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
-                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1
-                                ) &&
-                                (
-                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1
-                                ) &&
-                                (
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1 &&
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
-                                )
+                        if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio &&
+                            casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
                         {
-                            // se tem peças cercando então aquela peça tem que ser excluida
-                            return true;
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
                         }
                     }
-
+                    return pecaEliminada;
                 }
-                else
+                //se for uma casa branca da borda direita
+                else if (
+                    (x_selecionado == 20 && y_selecionado == 9)
+                    ||
+                    (x_selecionado == 19 && y_selecionado == 10)
+                  )
                 {
-                    // se for, então bastam 2 peças para cerca-la
-
-                    // checar se esta na borda da esquerda
-                    if (x_selecionado == 0)
+                    // checar qual peça é
+                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
                     {
-                        if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                        //checar condições
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1
+                            )
+                        )
                         {
-                            // so pode ser cercada se houver pelo menos um captao
-                            // adversario no cerco
-                            if (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 ||
-                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
-                            {
-
-                                // checar se as outras casas tem peças
-                                if (
-                                    (casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_1 &&
-                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
-                                    ) ||
-                                    (
-                                    casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_1
-                                    ) ||
-                                    (
-                                    casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_1 &&
-                                    casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_1)
-                                    )
-                                {
-                                    // se tem peças cercando então aquela peça tem que ser excluida
-                                    if (DecrementaNumPecas(2) == 0)
-                                    {
-                                        GameOver(2);
-                                    }
-                                }
-                            }
-
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio &&
+                            casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
                         }
                     }
                 }
+                return pecaEliminada;
+            }
+        }
+
+        private List<int> CheckPecaVermelhaCercada()
+        {
+            /*
+                // essa função será usada no momento em que qualquer peça do
+                // tabuleiro se desloque para verificar se tal peça será eliminada
+                // ou se eliminou alguma peça
+                retorno:
+                List<int> com os endereços x e y da peça que deve ser eliminada
+                em decorrencia da ultima atualização da posição das peças do tabuleiro
+                List<int> terá length multiplo de 2, pois mais de uma peça pode ser
+                eliminada
+            */
+            List<int> pecaEliminada = new List<int>();
+            // se a peça não for de borda
+
+            if (!CheckCasaVermelhaBorda(x_selecionado, y_selecionado))
+            {
+                // checar se a peça foi cercada
+
+                //checar se a peça é um capitão
+                if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                {
+                    // checar as condições
+                    if (Capitao1Cercado3(x_selecionado - 1, y_selecionado))
+                    {
+                        pecaEliminada.Add(x_selecionado);
+                        pecaEliminada.Add(y_selecionado);
+                    }
+                }
+                else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                {
+                    // se for uma peca normal, então basta estar cercada
+                    //Console.WriteLine($"checando se a peça ta cercada por 3: {PecaCercado3(x_selecionado - 1, y_selecionado)}");
+                    if (PecaVermelhaCercado3(x_selecionado - 1, y_selecionado))
+                    {
+                        // se tem peças cercando então aquela peça tem que ser excluida
+                        pecaEliminada.Add(x_selecionado);
+                        pecaEliminada.Add(y_selecionado);
+                    }
+                }
+                return pecaEliminada;
+
+            }
+            else
+            {
+                //se for uma casa vermelha da borda esquerda
+                if (x_selecionado + y_selecionado == 8)
+                {
+                    // checar qual peça é
+                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        //checar condições
+                        if (
+                            (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.captao_time_2 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado + 1, y_selecionado].peca == TabuleiroPecas.peca_time_2 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                    {
+                        if (casas[x_selecionado + 1, y_selecionado].peca != TabuleiroPecas.vazio &&
+                            casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    return pecaEliminada;
+                }
+                //se for uma casa branca da borda direita
+                else if (x_selecionado - y_selecionado == 12)
+                {
+                    // checar qual peça é
+                    if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                    {
+                        //checar condições
+                        if (
+                            (
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.captao_time_2 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2
+                            )
+                            ||
+                            (
+                                casas[x_selecionado - 1, y_selecionado].peca == TabuleiroPecas.peca_time_2 &&
+                                casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2
+                            )
+                        )
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                    else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                    {
+                        if (casas[x_selecionado - 1, y_selecionado].peca != TabuleiroPecas.vazio &&
+                            casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                        {
+                            pecaEliminada.Add(x_selecionado);
+                            pecaEliminada.Add(y_selecionado);
+                        }
+                    }
+                }
+                return pecaEliminada;
             }
         }
 
@@ -940,12 +1858,14 @@ namespace Bizingo
         {
             Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
             // se for uma casa branca com alguma peça
-            if (casas[x, y].casa == TabuleiroCasas.branco &&
+            if (
+                casas[x, y].casa == TabuleiroCasas.branco
+                &&
                 (
-                casas[x, y].peca == TabuleiroPecas.captao_time_2 ||
-                casas[x, y].peca == TabuleiroPecas.peca_time_2
+                    casas[x, y].peca == TabuleiroPecas.captao_time_2 ||
+                    casas[x, y].peca == TabuleiroPecas.peca_time_2
                 )
-                )
+            )
             {
                 // se tem peças cercando então aquela peça tem que ser excluida
                 if (DecrementaNumPecas(2) == 0)
@@ -957,7 +1877,7 @@ namespace Bizingo
                 ct.Paint();
 
             }
-            else if(casas[x, y].casa == TabuleiroCasas.vermelho &&
+            else if (casas[x, y].casa == TabuleiroCasas.vermelho &&
                 (
                 casas[x, y].peca == TabuleiroPecas.captao_time_1 ||
                 casas[x, y].peca == TabuleiroPecas.peca_time_1
@@ -970,7 +1890,7 @@ namespace Bizingo
                     GameOver(1);
                 }
                 casas[x, y].peca = TabuleiroPecas.vazio;
-                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x, y].t.a[0], casas[x, y].t.a[1]);
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x, y].t.a[0], casas[x, y].t.a[1] - 40);
                 ct.Paint();
 
             }
@@ -1163,7 +2083,7 @@ namespace Bizingo
             {
                 if (Check_movimento_valido(x_selecionado - 2, y_selecionado))
                 {
-                    Console.WriteLine($"x selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[1]}");
+                    //Console.WriteLine($"x selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
@@ -1183,7 +2103,7 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado + 2, y_selecionado))
                 {
-                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[1]}");
+                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
@@ -1204,10 +2124,10 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado + 1))
                 {
-                    Console.WriteLine($"x: {x_selecionado - 1} x selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[1]}");
+                    //Console.WriteLine($"x: {x_selecionado - 1} x selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
-                        Console.WriteLine(casas[x_selecionado - 1, y_selecionado + 1].t.a[0]);
+                        //Console.WriteLine(casas[x_selecionado - 1, y_selecionado + 1].t.a[0]);
                         casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1]);
                         ct.Paint();
@@ -1224,7 +2144,7 @@ namespace Bizingo
             {
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado + 1))
                 {
-                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[1]}");
+                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
@@ -1244,7 +2164,7 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado - 1))
                 {
-                    Console.WriteLine($"x selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[1]}");
+                    //Console.WriteLine($"x selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
@@ -1263,7 +2183,7 @@ namespace Bizingo
             {
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado - 1))
                 {
-                    Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[1]}");
+                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
@@ -1301,6 +2221,7 @@ namespace Bizingo
             ultimo_x_selecionado = 0;
             ultimo_y_selecionado = 0;
 
+            gameOver = true;
             turno = 0;
             lbTurno.Text = (turno + 1).ToString();
             DesenhaTabuleiro();
