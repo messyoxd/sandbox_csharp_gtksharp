@@ -1,17 +1,12 @@
 ﻿<Properties StartupConfiguration="{3175B299-FD30-4201-B446-FC6362BB0A8D}|Default">
   <MonoDevelop.Ide.ItemProperties.Teste2 PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Teste2/MainWindow.cs">
-    <Files>
-      <File FileName="Teste2/MainWindow.cs" Line="25" Column="43" />
-      <File FileName="Teste2/WatchClock.cs" Line="16" Column="17" />
-      <File FileName="Teste2/Program.cs" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Teste2" expanded="True">
             <Node name="Teste2" expanded="True">
-              <Node name="MainWindow.cs" selected="True" />
+              <Node name="Program.cs" selected="True" />
             </Node>
           </Node>
         </State>

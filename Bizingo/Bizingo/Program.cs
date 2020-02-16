@@ -8,7 +8,7 @@ namespace Bizingo
         public static void Main(string[] args)
         {
             Application.Init();
-            BizingoTabuleiro win = new BizingoTabuleiro();
+            MainWindow win = new MainWindow();
             win.Show();
             Application.Run();
         }

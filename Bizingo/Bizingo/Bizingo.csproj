@@ -53,6 +53,9 @@
     </Reference>
     <Reference Include="Mono.Posix" />
     <Reference Include="Mono.Cairo" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -69,6 +72,10 @@
     <Compile Include="gtk-gui\Bizingo.CriarJogoWindow.cs" />
     <Compile Include="BizingoTabuleiro.cs" />
     <Compile Include="gtk-gui\Bizingo.BizingoTabuleiro.cs" />
+    <Compile Include="Comunicacao.cs" />
+    <Compile Include="Pacote.cs" />
+    <Compile Include="ConectarComPlayer.cs" />
+    <Compile Include="gtk-gui\Bizingo.ConectarComPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
@@ -82,6 +89,7 @@
     <None Include="images\peça_time_2.png" />
     <None Include="images\triangulo_branco.png" />
     <None Include="images\triangulo_branco_selecionado.png" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

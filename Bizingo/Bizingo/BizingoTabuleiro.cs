@@ -71,12 +71,14 @@ namespace Bizingo
         int turno;
 
         bool gameOver;
-        public BizingoTabuleiro() :
+
+        Comunicacao com;
+
+        public BizingoTabuleiro(int portaLocal, string endereco, int jogador) :
                 base(Gtk.WindowType.Toplevel)
         {
             // constroi os widgets e a tela
             this.Build();
-
             // pegar o path das imagens
             string currentPath = Regex.Split(AppDomain.CurrentDomain.BaseDirectory, "bin")[0];
             var strs = Directory.GetFiles(currentPath + "images/").OrderBy(f => f);
@@ -106,6 +108,20 @@ namespace Bizingo
             num_pecas_jogador_1 = 18;
             num_pecas_jogador_2 = 18;
             gameOver = false;
+
+            // comunicacao socket
+            com = new Comunicacao(portaLocal, AppendMessage);
+            if(jogador == 1)
+            {
+                // quando se inicia o jogo
+                com.Comecar();
+            }
+            else
+            {
+                //quando conecta-se com alguem
+                com.ConectaComPlayer(endereco);
+            }
+
         }
 
         private void AddTurno()
@@ -694,8 +710,10 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
+            com.Disconnect();
             Application.Quit();
             args.RetVal = true;
+            this.Destroy();
         }
 
         protected void OnDaTabuleiroButtonPressEvent(object o, ButtonPressEventArgs args)
@@ -2221,10 +2239,32 @@ namespace Bizingo
             ultimo_x_selecionado = 0;
             ultimo_y_selecionado = 0;
 
-            gameOver = true;
+            gameOver = false;
             turno = 0;
             lbTurno.Text = (turno + 1).ToString();
             DesenhaTabuleiro();
         }
+
+        protected void OnBtnSendMessageClicked(object sender, EventArgs e)
+        {
+            if(eMensagem.Text != "")
+            {
+                Gtk.Label l = new Gtk.Label("voce -> "+eMensagem.Text);
+                l.UseMarkup = true;
+                vbox2.PackStart(l, false, false, 0);
+                ShowAll();
+                com.ChatSender(eMensagem.Text);
+                eMensagem.Text = "";
+            }
+        }
+
+        private void AppendMessage(string message)
+        {
+            Gtk.Label l = new Gtk.Label(message);
+            l.UseMarkup = true;
+            vbox2.PackStart(l, false, false, 0);
+            ShowAll();
+        }
+
     }
 }

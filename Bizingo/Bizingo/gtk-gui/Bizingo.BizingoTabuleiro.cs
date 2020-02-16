@@ -14,6 +14,18 @@ namespace Bizingo
 
 		private global::Gtk.Button btnReset;
 
+		private global::Gtk.VBox vbox1;
+
+		private global::Gtk.ScrolledWindow scrolledwindow1;
+
+		private global::Gtk.VBox vbox2;
+
+		private global::Gtk.HBox hbox1;
+
+		private global::Gtk.Entry eMensagem;
+
+		private global::Gtk.Button btnSendMessage;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -62,6 +74,62 @@ namespace Bizingo
 			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.btnReset]));
 			w4.X = 152;
 			w4.Y = 465;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.vbox1 = new global::Gtk.VBox();
+			this.vbox1.WidthRequest = 300;
+			this.vbox1.HeightRequest = 450;
+			this.vbox1.Name = "vbox1";
+			this.vbox1.Spacing = 6;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.scrolledwindow1 = new global::Gtk.ScrolledWindow();
+			this.scrolledwindow1.CanFocus = true;
+			this.scrolledwindow1.Name = "scrolledwindow1";
+			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow1.Gtk.Container+ContainerChild
+			global::Gtk.Viewport w5 = new global::Gtk.Viewport();
+			w5.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.vbox2 = new global::Gtk.VBox();
+			this.vbox2.Name = "vbox2";
+			this.vbox2.Spacing = 6;
+			w5.Add(this.vbox2);
+			this.scrolledwindow1.Add(w5);
+			this.vbox1.Add(this.scrolledwindow1);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.scrolledwindow1]));
+			w8.Position = 1;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.hbox1 = new global::Gtk.HBox();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.eMensagem = new global::Gtk.Entry();
+			this.eMensagem.CanFocus = true;
+			this.eMensagem.Name = "eMensagem";
+			this.eMensagem.IsEditable = true;
+			this.eMensagem.InvisibleChar = '•';
+			this.hbox1.Add(this.eMensagem);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.eMensagem]));
+			w9.Position = 1;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.btnSendMessage = new global::Gtk.Button();
+			this.btnSendMessage.CanFocus = true;
+			this.btnSendMessage.Name = "btnSendMessage";
+			this.btnSendMessage.UseUnderline = true;
+			this.btnSendMessage.Label = global::Mono.Unix.Catalog.GetString("Mandar");
+			this.hbox1.Add(this.btnSendMessage);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.btnSendMessage]));
+			w10.Position = 2;
+			w10.Expand = false;
+			w10.Fill = false;
+			this.vbox1.Add(this.hbox1);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+			w11.Position = 2;
+			w11.Expand = false;
+			w11.Fill = false;
+			this.fixed4.Add(this.vbox1);
+			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.vbox1]));
+			w12.X = 470;
+			w12.Y = 10;
 			this.Add(this.fixed4);
 			if ((this.Child != null))
 			{
@@ -74,6 +142,7 @@ namespace Bizingo
 			this.daTabuleiro.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnTabuleiroExposeEvent);
 			this.daTabuleiro.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.OnDaTabuleiroButtonPressEvent);
 			this.btnReset.Clicked += new global::System.EventHandler(this.OnBtnResetClicked);
+			this.btnSendMessage.Clicked += new global::System.EventHandler(this.OnBtnSendMessageClicked);
 		}
 	}
 }

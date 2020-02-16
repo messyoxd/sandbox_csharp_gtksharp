@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+
 namespace Server
 {
     public class Packet

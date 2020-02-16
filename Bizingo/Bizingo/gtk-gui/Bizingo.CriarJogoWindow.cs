@@ -97,6 +97,9 @@ namespace Bizingo
 			this.DefaultWidth = 381;
 			this.DefaultHeight = 213;
 			this.Show();
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
+			this.btnCancelar.Clicked += new global::System.EventHandler(this.OnBtnCancelarClicked);
+			this.btnCriar.Clicked += new global::System.EventHandler(this.OnBtnCriarClicked);
 		}
 	}
 }
