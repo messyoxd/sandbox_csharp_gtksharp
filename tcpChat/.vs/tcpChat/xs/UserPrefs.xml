@@ -1,13 +1,17 @@
 ﻿<Properties StartupConfiguration="{9B246FA6-545A-4D74-AB28-A460DA12F721}|Default">
   <MonoDevelop.Ide.ItemProperties.tcpChatClientSender PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="tcpChat/TcpChatServer.cs">
+    <Files>
+      <File FileName="tcpChatClient/TcpChatClientSender.cs" Line="1" Column="1" />
+      <File FileName="tcpChat/TcpChatServer.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="tcpChat" expanded="True">
             <Node name="tcpChatClientSender" expanded="True" />
             <Node name="tcpChatServer" expanded="True">
-              <Node name="Program.cs" selected="True" />
+              <Node name="TcpChatServer.cs" selected="True" />
             </Node>
           </Node>
         </State>

@@ -21,8 +21,18 @@ namespace Bizingo
         private readonly Dictionary<string, Func<string, Task>> _commandHandlers;
 
         Action<string> appendMessage;
+        Action<int, int> moveAsPecas;
+        Action<bool> setGameOver;
+        Action<int> conexaoFechada;
+        Action<int> gameOver;
 
-        public Comunicacao(int porta, Action<string> AppendMessage)
+        public Comunicacao(int porta, 
+            Action<string> AppendMessage, 
+            Action<int,int> MoveAsPecas,
+            Action<bool> SetGameOver,
+            Action<int> ConexaoFechada,
+            Action<int> GameOver
+            )
         {
             _port = porta;
             _listener = new TcpListener(IPAddress.Any, _port);
@@ -32,8 +42,19 @@ namespace Bizingo
             _commandHandlers["tchau"] = _handleCloseConnection;
             _commandHandlers["comando"] = _handleCommand;
             _commandHandlers["mensagem"] = _handleMessage;
+            _commandHandlers["gameOver"] = _handleGameOver;
 
             appendMessage = AppendMessage;
+            moveAsPecas = MoveAsPecas;
+            setGameOver = SetGameOver;
+            conexaoFechada = ConexaoFechada;
+            gameOver = GameOver;
+        }
+
+        private Task _handleGameOver(string arg)
+        {
+            gameOver(int.Parse(arg));
+            return Task.FromResult(0);
         }
 
         private Task _handleMessage(string arg)
@@ -46,7 +67,12 @@ namespace Bizingo
 
         private async Task _handleCommand(string arg)
         {
-            Console.Write(arg);
+            int x = int.Parse(arg.Split(',')[0]);
+            int y = int.Parse(arg.Split(',')[1]);
+
+            Console.Write($"{arg} x: {x} y: {y}{Environment.NewLine}");
+
+            moveAsPecas(x, y);
             // ler mensagem à ser enviado pelo chat
             //string responseMsg = Console.ReadLine();
 
@@ -59,6 +85,8 @@ namespace Bizingo
         {
             // o adversario está se desconectando e mandou uma
             // mensagem avisando
+            Disconnect();
+            conexaoFechada(1);
             return Task.FromResult(0);
         }
 
@@ -77,13 +105,32 @@ namespace Bizingo
 
         }
 
+        public async void FimDeJogo(int jogador)
+        {
+            Pacote pct = new Pacote(comando: "gameOver", mensagem: jogador.ToString());
+            await MandarPacote(pct);
+        }
+
+        public async void JogadaSend(int x, int y)
+        {
+
+            Pacote pct = new Pacote(comando: "comando", mensagem: x.ToString() + "," + y.ToString());
+            await MandarPacote(pct);
+        }
+
+        public async void ArregarSend()
+        {
+            Pacote pct = new Pacote(comando: "tchau", mensagem:"");
+            await MandarPacote(pct);
+        }
+
         public async void ChatSender(string mensagem)
         {
             Pacote pct = new Pacote(comando: "mensagem", mensagem: mensagem);
             await MandarPacote(pct);
         }
 
-        private void ChatReceiver()
+        private void Receiver()
         {
             while (running)
             {
@@ -95,8 +142,8 @@ namespace Bizingo
 
         public void Run()
         {
-            Thread chat = new Thread(new ThreadStart(ChatReceiver));
-            chat.Start();
+            Thread receiver = new Thread(new ThreadStart(Receiver));
+            receiver.Start();
             /*
             while (true)
             {
@@ -120,6 +167,7 @@ namespace Bizingo
             {
                 _adversarioAddress = _adversario.Client.RemoteEndPoint.ToString();
                 appendMessage($"Conectado com {_adversario.Client.RemoteEndPoint}");
+                setGameOver(false);
                 Run();
             }
             else
@@ -138,6 +186,7 @@ namespace Bizingo
             Console.WriteLine($"conectado com {_adversario.Client.RemoteEndPoint}");
             appendMessage($"player conectado de {_adversario.Client.RemoteEndPoint}");
             players = 2;
+            setGameOver(false);
             Run();
 
         }
@@ -204,7 +253,7 @@ namespace Bizingo
         {
             running = false;
             _listener.Stop();
-            _adversario.Close();
+            FecharConexao();
         }
     }
 }

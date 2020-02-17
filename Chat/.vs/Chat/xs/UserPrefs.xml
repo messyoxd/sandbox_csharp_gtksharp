@@ -9,9 +9,7 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Chat" expanded="True">
-            <Node name="Chat" expanded="True">
-              <Node name="TelaConectar.cs" selected="True" />
-            </Node>
+            <Node name="Chat" expanded="True" />
           </Node>
         </State>
       </Pad>

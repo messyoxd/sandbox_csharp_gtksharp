@@ -69,8 +69,9 @@ namespace Bizingo
         int num_pecas_jogador_1;
         int num_pecas_jogador_2;
         int turno;
+        int player;
 
-        bool gameOver;
+        bool gameOver = true;
 
         Comunicacao com;
 
@@ -107,21 +108,27 @@ namespace Bizingo
 
             num_pecas_jogador_1 = 18;
             num_pecas_jogador_2 = 18;
-            gameOver = false;
 
             // comunicacao socket
-            com = new Comunicacao(portaLocal, AppendMessage);
+            com = new Comunicacao(portaLocal, AppendMessage, MoveAsPecas, SetGameOver, ConexaoFechada, GameOver);
             if(jogador == 1)
             {
                 // quando se inicia o jogo
+                player = 1;
                 com.Comecar();
             }
             else
             {
+                player = 2;
                 //quando conecta-se com alguem
                 com.ConectaComPlayer(endereco);
             }
 
+        }
+
+        public void SetGameOver(bool g)
+        {
+            gameOver = g;
         }
 
         private void AddTurno()
@@ -134,7 +141,7 @@ namespace Bizingo
         {
             if (jogador == 1)
             {
-                if (num_pecas_jogador_1 > 2)
+                if (num_pecas_jogador_1 > 17)
                 {
                     num_pecas_jogador_1--;
                     return 1;
@@ -146,7 +153,7 @@ namespace Bizingo
             }
             else
             {
-                if (num_pecas_jogador_2 > 2)
+                if (num_pecas_jogador_2 > 3)
                 {
                     num_pecas_jogador_2--;
                     return 1;
@@ -161,11 +168,44 @@ namespace Bizingo
         private void GameOver(int jogador)
         {
             gameOver = true;
+            string mensagem;
+            if(player == jogador)
+            {
+                mensagem = "Voce perdeu!!!";
+                Console.WriteLine("fim de jogo do lado do perdedor");
+                com.FimDeJogo(jogador);
+                Dialog dialog = new MessageDialog(this,
+                                  DialogFlags.Modal | DialogFlags.DestroyWithParent,
+                                  MessageType.Info,
+                                  ButtonsType.Ok,
+                                  mensagem);
+                dialog.Run();
+                dialog.Hide();
+
+
+            }
+            else
+            {
+                mensagem = "Voce ganhou!!!";
+                Console.WriteLine("fim de jogo do lado do vencedor");
+                Dialog dialog = new MessageDialog(this,
+                                  DialogFlags.Modal | DialogFlags.DestroyWithParent,
+                                  MessageType.Info,
+                                  ButtonsType.Ok,
+                                  mensagem);
+                dialog.Run();
+                dialog.Hide();
+            }
+        }
+
+        public void ConexaoFechada(int jogador)
+        {
+            gameOver = true;
             Dialog dialog = new MessageDialog(this,
                                   DialogFlags.Modal | DialogFlags.DestroyWithParent,
                                   MessageType.Info,
                                   ButtonsType.Ok,
-                                  $"Jogador {jogador} perdeu!");
+                                  $"Jogador adversario saiu da jogo!");
             dialog.Run();
             dialog.Hide();
         }
@@ -713,12 +753,13 @@ namespace Bizingo
             com.Disconnect();
             Application.Quit();
             args.RetVal = true;
+            com.ArregarSend();
             this.Destroy();
         }
 
         protected void OnDaTabuleiroButtonPressEvent(object o, ButtonPressEventArgs args)
         {
-            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+
             int x, y;
             ModifierType state;
             args.Event.Window.GetPointer(out x, out y, out state);
@@ -726,142 +767,190 @@ namespace Bizingo
 
             if (!gameOver)
             {
-                GetCasaTabuleiro(x, y);
-
-                // se for o turno do primeiro jogador
-                if (turno % 2 == 0)
-                {
-                    // mostrar caminhos possiveis da peça
-                    if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.vermelho)
-                    {
-                        EncerrarSelecao();
-                        PecaSelecionada();
-                    }
-                    else if (casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado)
-                    {
-                        //+13 -20
-                        //a casa atual é a que a peça deve se deslocar para
-                        // como ela esta selecionada deve-se pinta-la de branco
-
-                        //Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
-                        casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
-                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
-                        ct.Paint();
-                        // coloca a peça na casa atual
-
-                        casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                        if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
-                            ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                        else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_1)
-                            ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
-                        ct.Paint();
-                        // a ultima casa selecionada agora deve estar sem peças
-                        casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                        ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1] - 40);
-                        ct.Paint();
-
-                        casa_selecionada_atual = casas[0, 0];
-                        ultima_casa_selecionada = casas[0, 0];
-                        /*
-                        //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
-                        Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
-                        */
-                        Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
-                        EncerrarSelecao();
-                        List<int> pecaEliminada;
-                        pecaEliminada = CheckPecaVermelhaCercada();
-
-                        if (pecaEliminada.Any())
-                        {
-                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
-                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
-                            {
-                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
-                            }
-                        }
-                        pecaEliminada.Clear();
-                        pecaEliminada = CheckVermelhaEliminou();
-                        if (pecaEliminada.Any())
-                        {
-                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
-                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
-                            {
-                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
-                            }
-                        }
-
-                        pecaEliminada.Clear();
-                        AddTurno();
-                    }
-                    else
-                    {
-                        EncerrarSelecao();
-                    }
-                }
-                else if (turno % 2 == 1)
-                {
-                    if (casa_selecionada_atual.peca != TabuleiroPecas.vazio && casa_selecionada_atual.casa == TabuleiroCasas.branco)
-                    {
-                        EncerrarSelecao();
-                        PecaSelecionada();
-                    }
-                    else if (casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado)
-                    {
-                        //a casa atual é a que a peça deve se deslocar para
-                        // como ela esta selecionada deve-se pinta-la de branco
-                        casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
-                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
-                        ct.Paint();
-                        // coloca a peça na casa atual
-                        casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
-                        if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
-                            ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                        else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
-                            ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
-                        ct.Paint();
-                        // a ultima casa selecionada agora deve estar sem peças
-                        casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
-                        ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
-                        ct.Paint();
-
-                        casa_selecionada_atual = casas[0, 0];
-                        ultima_casa_selecionada = casas[0, 0];
-                        Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
-
-                        EncerrarSelecao();
-
-                        List<int> pecaEliminada;
-                        pecaEliminada = CheckPecaBrancaCercada();
-
-                        if (pecaEliminada.Any())
-                        {
-                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
-                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
-                            {
-                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
-                            }
-                        }
-                        pecaEliminada.Clear();
-                        pecaEliminada = CheckBrancaEliminou();
-                        if (pecaEliminada.Any())
-                        {
-                            Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
-                            for (int i = 0; i < pecaEliminada.Count(); i += 2)
-                            {
-                                ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
-                            }
-                        }
-
-                        pecaEliminada.Clear();
-                        AddTurno();
-                    }
-                    else
-                    {
-                        EncerrarSelecao();
-                    }
-                }
+                if (turno % 2 == 0 && player == 1)
+                    MoveAsPecas(x, y);
+                else if(turno % 2 == 1 && player == 2)
+                    MoveAsPecas(x, y);
             }
         }
+
+        private void TurnoPlayerUm(int x,int y)
+        {
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+            GetCasaTabuleiro(x, y);
+            // mostrar caminhos possiveis da peça
+            if (
+                casa_selecionada_atual.peca != TabuleiroPecas.vazio 
+                && 
+                casa_selecionada_atual.casa == TabuleiroCasas.vermelho
+                )
+            {
+                EncerrarSelecao();
+                PecaSelecionada();
+
+            }
+            else if (
+                casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado
+                )
+            {
+                //a casa atual é a que a peça deve se deslocar para
+                // como ela esta selecionada deve-se pinta-la de branco
+
+                //Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
+                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
+                ct.Paint();
+                // coloca a peça na casa atual
+
+                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
+                    ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_1)
+                    ct.SetSourceSurface(images[(int)Imagens.peça_time_1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
+                ct.Paint();
+                // a ultima casa selecionada agora deve estar sem peças
+                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1] - 40);
+                ct.Paint();
+
+                casa_selecionada_atual = casas[0, 0];
+                ultima_casa_selecionada = casas[0, 0];
+                /*
+                //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
+                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
+                */
+                Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
+                EncerrarSelecao();
+                List<int> pecaEliminada;
+                pecaEliminada = CheckPecaVermelhaCercada();
+
+                if (pecaEliminada.Any())
+                {
+                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                    for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                    {
+                        ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                    }
+                }
+                pecaEliminada.Clear();
+                pecaEliminada = CheckVermelhaEliminou();
+                if (pecaEliminada.Any())
+                {
+                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                    for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                    {
+                        ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                    }
+                }
+
+                pecaEliminada.Clear();
+                AddTurno();
+            }
+            else
+            {
+                EncerrarSelecao();
+            }
+        }
+
+        private void TurnoPlayerDois(int x, int y)
+        {
+            Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+            GetCasaTabuleiro(x, y);
+            if (
+                casa_selecionada_atual.peca != TabuleiroPecas.vazio 
+                && 
+                casa_selecionada_atual.casa == TabuleiroCasas.branco
+                )
+            {
+                EncerrarSelecao();
+                PecaSelecionada();
+            }
+            else if (
+                casa_selecionada_atual.casa == TabuleiroCasas.branco_selecionado
+                )
+            {
+                //a casa atual é a que a peça deve se deslocar para
+                // como ela esta selecionada deve-se pinta-la de branco
+                casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.branco;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1]);
+                ct.Paint();
+                // coloca a peça na casa atual
+                casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
+                if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.captao_time2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                else if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.peca_time_2)
+                    ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] + 8);
+                ct.Paint();
+                // a ultima casa selecionada agora deve estar sem peças
+                casas[ultimo_x_selecionado, ultimo_y_selecionado].peca = TabuleiroPecas.vazio;
+                ct.SetSourceSurface(images[(int)Imagens.triangulo_branco], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0], casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]);
+                ct.Paint();
+
+                casa_selecionada_atual = casas[0, 0];
+                ultima_casa_selecionada = casas[0, 0];
+                Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
+
+                EncerrarSelecao();
+
+                List<int> pecaEliminada;
+                pecaEliminada = CheckPecaBrancaCercada();
+
+                if (pecaEliminada.Any())
+                {
+                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                    for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                    {
+                        ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                    }
+                }
+                pecaEliminada.Clear();
+                pecaEliminada = CheckBrancaEliminou();
+                if (pecaEliminada.Any())
+                {
+                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
+                    for (int i = 0; i < pecaEliminada.Count(); i += 2)
+                    {
+                        ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
+                    }
+                }
+
+                pecaEliminada.Clear();
+                AddTurno();
+            }
+            else
+            {
+                EncerrarSelecao();
+            }
+        }
+
+        public void MoveAsPecas(int x, int y)
+        {
+
+            // se for o turno do primeiro jogador
+            if (turno % 2 == 0 && player == 1)
+            {
+
+                TurnoPlayerUm(x, y);
+                com.JogadaSend(x, y);
+            }
+            else if (turno % 2 == 0 && player == 2)
+            {
+                // player 2 está vendo o que o player 1 esta fazendo
+                TurnoPlayerUm(x, y);
+            }
+            else if (turno % 2 == 1 && player == 2)
+            {
+                TurnoPlayerDois(x, y);
+                com.JogadaSend(x, y);
+            }
+
+            else if (turno % 2 == 1 && player == 1)
+            {
+                // player 1 está vendo o que o player 2 esta fazendo
+                TurnoPlayerDois(x, y);
+            }
+        }
+
         private bool Capitao1Cercado3(int x, int y)
         {
             //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y + 1].peca}");
@@ -1583,24 +1672,24 @@ namespace Bizingo
                             }
                         }
                     }
-                    // em cima
-                    if (casas[x_selecionado, y_selecionado - 1].peca != TabuleiroPecas.vazio)
+                    // em baixo
+                    if (casas[x_selecionado, y_selecionado + 1].peca != TabuleiroPecas.vazio)
                     {
-                        if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.peca_time_2)
+                        if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.peca_time_2)
                         {
 
-                            if (PecaBrancaCercado3(x_selecionado - 1, y_selecionado - 1))
+                            if (PecaBrancaCercado3(x_selecionado - 1 , y_selecionado + 1))
                             {
                                 pecaEliminada.Add(x_selecionado);
-                                pecaEliminada.Add(y_selecionado - 1);
+                                pecaEliminada.Add(y_selecionado + 1);
                             }
                         }
-                        else if (casas[x_selecionado, y_selecionado - 1].peca == TabuleiroPecas.captao_time_2)
+                        else if (casas[x_selecionado, y_selecionado + 1].peca == TabuleiroPecas.captao_time_2)
                         {
-                            if (Capitao2Cercado3(x_selecionado - 1, y_selecionado - 1))
+                            if (Capitao2Cercado3(x_selecionado - 1, y_selecionado + 1))
                             {
-                                pecaEliminada.Add(x_selecionado - 1);
-                                pecaEliminada.Add(y_selecionado - 1);
+                                pecaEliminada.Add(x_selecionado);
+                                pecaEliminada.Add(y_selecionado + 1);
                             }
 
                         }

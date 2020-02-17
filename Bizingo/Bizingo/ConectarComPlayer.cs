@@ -30,6 +30,7 @@ namespace Bizingo
             var ip = eIpRemoto.Text;
             var porta = ePortaRemota.Text;
             entrandoJogo(int.Parse(porta), ip);
+            this.Destroy();
         }
     }
 }

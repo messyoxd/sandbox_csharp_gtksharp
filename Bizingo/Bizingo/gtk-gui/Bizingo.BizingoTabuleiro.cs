@@ -137,6 +137,7 @@ namespace Bizingo
 			}
 			this.DefaultWidth = 800;
 			this.DefaultHeight = 500;
+			this.btnReset.Hide();
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.daTabuleiro.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnTabuleiroExposeEvent);
