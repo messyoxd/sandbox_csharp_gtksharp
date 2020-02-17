@@ -25,13 +25,19 @@ namespace Bizingo
         Action<bool> setGameOver;
         Action<int> conexaoFechada;
         Action<int> gameOver;
+        Action resetRequest;
+        Action<int> resetJogo;
+        Action<string> mensagemDialog;
 
         public Comunicacao(int porta, 
             Action<string> AppendMessage, 
             Action<int,int> MoveAsPecas,
             Action<bool> SetGameOver,
             Action<int> ConexaoFechada,
-            Action<int> GameOver
+            Action<int> GameOver,
+            Action ResetRequest,
+            Action<int> ResetJogo,
+            Action<string> MensagemDialog
             )
         {
             _port = porta;
@@ -43,13 +49,44 @@ namespace Bizingo
             _commandHandlers["comando"] = _handleCommand;
             _commandHandlers["mensagem"] = _handleMessage;
             _commandHandlers["gameOver"] = _handleGameOver;
+            _commandHandlers["reset"] = _handleReset;
 
             appendMessage = AppendMessage;
             moveAsPecas = MoveAsPecas;
             setGameOver = SetGameOver;
             conexaoFechada = ConexaoFechada;
             gameOver = GameOver;
+            resetRequest = ResetRequest;
+            resetJogo = ResetJogo;
+            mensagemDialog = MensagemDialog;
         }
+
+        public async void ResetSend(string mensagem)
+        {
+
+            Pacote pct = new Pacote(comando: "reset", mensagem: mensagem);
+            await MandarPacote(pct);
+        }
+
+        private Task _handleReset(string arg)
+        {
+            //ativar a janela de aceitar reset
+            if (arg.Equals("reset plz"))
+                resetRequest();
+            else if (arg.Equals("0"))
+            {
+                //aceitou o pedido
+                resetJogo(1);
+            }
+            else if (arg.Equals("2") || arg.Equals("1"))
+            {
+                //negou o pedido
+                //gameOver(int.Parse(arg));
+                mensagemDialog($"Pedido negado pelo player {arg}!");
+            }
+            return Task.FromResult(0);
+        }
+
 
         private Task _handleGameOver(string arg)
         {

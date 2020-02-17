@@ -110,7 +110,7 @@ namespace Bizingo
             num_pecas_jogador_2 = 18;
 
             // comunicacao socket
-            com = new Comunicacao(portaLocal, AppendMessage, MoveAsPecas, SetGameOver, ConexaoFechada, GameOver);
+            com = new Comunicacao(portaLocal, AppendMessage, MoveAsPecas, SetGameOver, ConexaoFechada, GameOver, ResetRequest, MensagemDialog);
             if(jogador == 1)
             {
                 // quando se inicia o jogo
@@ -2317,8 +2317,13 @@ namespace Bizingo
                 return true;
             return false;
         }
-        /*
+
         protected void OnBtnResetClicked(object sender, EventArgs e)
+        {
+            com.ResetSend("reset plz");
+        }
+
+        private void resetJogo(int mensagem)
         {
             PreencheVariaveisTabuleiro();
             casa_selecionada_atual = casas[0, 0];
@@ -2332,8 +2337,42 @@ namespace Bizingo
             turno = 0;
             lbTurno.Text = (turno + 1).ToString();
             DesenhaTabuleiro();
+
+            // se for o jogador que aceitou o pedido
+            // e precisa mandar devolta
+            if (mensagem == 1)
+            {
+                // 2 indica que o pedido foi aceito
+                com.ResetSend("0");
+            }
+            else if(mensagem == 0)
+            {
+                //aqui deve-se mandar o numero do jogador
+                // que solicitou
+                if(player == 1)
+                    com.ResetSend("2");
+                else
+                    com.ResetSend("1");
+            }
         }
-        */
+
+        private void MensagemDialog(string mensagem)
+        {
+            Dialog dialog = new MessageDialog(this,
+                                  DialogFlags.Modal,
+                                  MessageType.Info,
+                                  ButtonsType.Ok,
+                                  mensagem);
+            dialog.Run();
+            dialog.Hide();
+        }
+
+
+        private void ResetRequest()
+        {
+            var reset = new ResetRequest(resetJogo);
+        }
+
         protected void OnBtnSendMessageClicked(object sender, EventArgs e)
         {
             if(eMensagem.Text != "")

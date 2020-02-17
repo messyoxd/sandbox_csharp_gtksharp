@@ -76,6 +76,8 @@
     <Compile Include="Pacote.cs" />
     <Compile Include="ConectarComPlayer.cs" />
     <Compile Include="gtk-gui\Bizingo.ConectarComPlayer.cs" />
+    <Compile Include="ResetRequest.cs" />
+    <Compile Include="gtk-gui\Bizingo.ResetRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />
