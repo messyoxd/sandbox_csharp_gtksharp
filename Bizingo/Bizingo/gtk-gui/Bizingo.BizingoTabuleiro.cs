@@ -12,8 +12,6 @@ namespace Bizingo
 
 		private global::Gtk.Label lbTurno;
 
-		private global::Gtk.Button btnReset;
-
 		private global::Gtk.VBox vbox1;
 
 		private global::Gtk.ScrolledWindow scrolledwindow1;
@@ -65,16 +63,6 @@ namespace Bizingo
 			w3.X = 83;
 			w3.Y = 473;
 			// Container child fixed4.Gtk.Fixed+FixedChild
-			this.btnReset = new global::Gtk.Button();
-			this.btnReset.CanFocus = true;
-			this.btnReset.Name = "btnReset";
-			this.btnReset.UseUnderline = true;
-			this.btnReset.Label = global::Mono.Unix.Catalog.GetString("Resetar");
-			this.fixed4.Add(this.btnReset);
-			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.btnReset]));
-			w4.X = 152;
-			w4.Y = 465;
-			// Container child fixed4.Gtk.Fixed+FixedChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.WidthRequest = 300;
 			this.vbox1.HeightRequest = 450;
@@ -86,17 +74,17 @@ namespace Bizingo
 			this.scrolledwindow1.Name = "scrolledwindow1";
 			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w5 = new global::Gtk.Viewport();
-			w5.ShadowType = ((global::Gtk.ShadowType)(0));
+			global::Gtk.Viewport w4 = new global::Gtk.Viewport();
+			w4.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.vbox2 = new global::Gtk.VBox();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
-			w5.Add(this.vbox2);
-			this.scrolledwindow1.Add(w5);
+			w4.Add(this.vbox2);
+			this.scrolledwindow1.Add(w4);
 			this.vbox1.Add(this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.scrolledwindow1]));
-			w8.Position = 1;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.scrolledwindow1]));
+			w7.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
@@ -108,8 +96,8 @@ namespace Bizingo
 			this.eMensagem.IsEditable = true;
 			this.eMensagem.InvisibleChar = '•';
 			this.hbox1.Add(this.eMensagem);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.eMensagem]));
-			w9.Position = 1;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.eMensagem]));
+			w8.Position = 1;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.btnSendMessage = new global::Gtk.Button();
 			this.btnSendMessage.CanFocus = true;
@@ -117,19 +105,19 @@ namespace Bizingo
 			this.btnSendMessage.UseUnderline = true;
 			this.btnSendMessage.Label = global::Mono.Unix.Catalog.GetString("Mandar");
 			this.hbox1.Add(this.btnSendMessage);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.btnSendMessage]));
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.btnSendMessage]));
+			w9.Position = 2;
+			w9.Expand = false;
+			w9.Fill = false;
+			this.vbox1.Add(this.hbox1);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
 			w10.Position = 2;
 			w10.Expand = false;
 			w10.Fill = false;
-			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
 			this.fixed4.Add(this.vbox1);
-			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.vbox1]));
-			w12.X = 470;
-			w12.Y = 10;
+			global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.vbox1]));
+			w11.X = 470;
+			w11.Y = 10;
 			this.Add(this.fixed4);
 			if ((this.Child != null))
 			{
@@ -137,12 +125,10 @@ namespace Bizingo
 			}
 			this.DefaultWidth = 800;
 			this.DefaultHeight = 500;
-			this.btnReset.Hide();
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.daTabuleiro.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnTabuleiroExposeEvent);
 			this.daTabuleiro.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.OnDaTabuleiroButtonPressEvent);
-			this.btnReset.Clicked += new global::System.EventHandler(this.OnBtnResetClicked);
 			this.btnSendMessage.Clicked += new global::System.EventHandler(this.OnBtnSendMessageClicked);
 		}
 	}

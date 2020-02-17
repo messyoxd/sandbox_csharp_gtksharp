@@ -1,16 +1,12 @@
 ﻿<Properties StartupConfiguration="{B9120C5B-080E-43FC-B55F-2545504FC227}|Default">
   <MonoDevelop.Ide.ItemProperties.Bizingo PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Bizingo/Comunicacao.cs">
-    <Files>
-      <File FileName="Bizingo/BizingoTabuleiro.cs" Line="2336" Column="11" />
-      <File FileName="Bizingo/Comunicacao.cs" Line="42" Column="36" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Bizingo" expanded="True">
             <Node name="Bizingo" expanded="True">
-              <Node name="Comunicacao.cs" selected="True" />
+              <Node name="BizingoTabuleiro.cs" selected="True" />
             </Node>
           </Node>
         </State>
