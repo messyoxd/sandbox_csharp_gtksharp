@@ -110,13 +110,14 @@ namespace Bizingo
             num_pecas_jogador_2 = 18;
 
             // comunicacao socket
-            com = new Comunicacao(portaLocal, 
+            com = new Comunicacao(portaLocal,
                 AppendMessage, 
                 MoveAsPecas, 
                 SetGameOver, 
                 ConexaoFechada, 
                 GameOver, 
-                ResetRequest, 
+                ResetRequest,
+                resetJogo, 
                 MensagemDialog);
             if(jogador == 1)
             {
