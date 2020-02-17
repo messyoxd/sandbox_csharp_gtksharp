@@ -10,5 +10,5 @@ Ubuntu 18
 ## install
 
 1. install Monodevelop IDE following the steps from https://www.monodevelop.com/download/ (may take a while)
-2. download this project and open it as a solution
+2. download this project and open the "Bizingo.sln" as a solution
 3. run the project
