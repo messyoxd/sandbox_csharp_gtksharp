@@ -16,12 +16,14 @@ namespace Bizingo
         {
             //negar
             resetJogo(0);
+            this.Destroy();
         }
 
         protected void OnButton3Clicked(object sender, EventArgs e)
         {
             //aceitar
             resetJogo(1);
+            this.Destroy();
         }
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)
