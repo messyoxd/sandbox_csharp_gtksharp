@@ -1,5 +1,0 @@
-/home/msb/Projects/tcpChat/tcpChat/bin/Debug/tcpChat.exe
-/home/msb/Projects/tcpChat/tcpChat/bin/Debug/tcpChat.pdb
-/home/msb/Projects/tcpChat/tcpChat/obj/x86/Debug/tcpChatServer.csproj.CoreCompileInputs.cache
-/home/msb/Projects/tcpChat/tcpChat/obj/x86/Debug/tcpChat.exe
-/home/msb/Projects/tcpChat/tcpChat/obj/x86/Debug/tcpChat.pdb

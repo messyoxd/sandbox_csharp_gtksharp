@@ -1,9 +1,0 @@
-/home/msb/Projects/Bizingo/Bizingo/bin/Debug/Bizingo.exe
-/home/msb/Projects/Bizingo/Bizingo/bin/Debug/Bizingo.pdb
-/home/msb/Projects/Bizingo/Bizingo/obj/x86/Debug/Bizingo.csprojAssemblyReference.cache
-/home/msb/Projects/Bizingo/Bizingo/obj/x86/Debug/Bizingo.csproj.CoreCompileInputs.cache
-/home/msb/Projects/Bizingo/Bizingo/obj/x86/Debug/Bizingo.exe
-/home/msb/Projects/Bizingo/Bizingo/obj/x86/Debug/Bizingo.pdb
-/home/msb/Projects/Bizingo/Bizingo/bin/Debug/Newtonsoft.Json.dll
-/home/msb/Projects/Bizingo/Bizingo/bin/Debug/Newtonsoft.Json.xml
-/home/msb/Projects/Bizingo/Bizingo/obj/x86/Debug/Bizingo.csproj.CopyComplete

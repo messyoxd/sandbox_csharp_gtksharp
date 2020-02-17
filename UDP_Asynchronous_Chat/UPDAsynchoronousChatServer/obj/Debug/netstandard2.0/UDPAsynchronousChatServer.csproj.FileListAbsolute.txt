@@ -1,9 +1,0 @@
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/bin/Debug/netstandard2.0/UDPAsynchronousChatServer.deps.json
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/bin/Debug/netstandard2.0/UDPAsynchronousChatServer.dll
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/bin/Debug/netstandard2.0/UDPAsynchronousChatServer.pdb
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.csprojAssemblyReference.cache
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.csproj.CoreCompileInputs.cache
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.AssemblyInfoInputs.cache
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.AssemblyInfo.cs
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.dll
-/home/msb/Projects/UDP_Asynchronous_Chat/UPDAsynchoronousChatServer/obj/Debug/netstandard2.0/UDPAsynchronousChatServer.pdb
