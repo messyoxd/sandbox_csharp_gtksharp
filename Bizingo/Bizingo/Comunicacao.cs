@@ -54,13 +54,13 @@ namespace Bizingo
         private Task _handleGameOver(string arg)
         {
             gameOver(int.Parse(arg));
+            Disconnect();
             return Task.FromResult(0);
         }
 
         private Task _handleMessage(string arg)
         {
             // lidar com mensagens
-            //Console.Write(arg);
             appendMessage($"{_adversario.Client.RemoteEndPoint} -> {arg}");
             return Task.FromResult(0);
         }
@@ -70,15 +70,9 @@ namespace Bizingo
             int x = int.Parse(arg.Split(',')[0]);
             int y = int.Parse(arg.Split(',')[1]);
 
-            Console.Write($"{arg} x: {x} y: {y}{Environment.NewLine}");
+            //Console.Write($"{arg} x: {x} y: {y}{Environment.NewLine}");
 
             moveAsPecas(x, y);
-            // ler mensagem à ser enviado pelo chat
-            //string responseMsg = Console.ReadLine();
-
-            // Send the response
-            //Pacote resp = new Pacote("chat", responseMsg);
-            //await MandarPacote(resp);
         }
 
         private Task _handleCloseConnection(string arg)
@@ -86,8 +80,15 @@ namespace Bizingo
             // o adversario está se desconectando e mandou uma
             // mensagem avisando
             Disconnect();
-            conexaoFechada(1);
+            conexaoFechada(int.Parse(arg));
             return Task.FromResult(0);
+        }
+
+        public void Disconnect()
+        {
+            running = false;
+            _listener.Stop();
+            FecharConexao();
         }
 
         private void FecharConexao()
@@ -100,7 +101,7 @@ namespace Bizingo
         {
             players = 1;
             _listener.Start();
-            Console.WriteLine("Começamos a ouvir");
+            //Console.WriteLine("Começamos a ouvir");
             await PlayerConectaComVoce();
 
         }
@@ -118,9 +119,9 @@ namespace Bizingo
             await MandarPacote(pct);
         }
 
-        public async void ArregarSend()
+        public async void ArregarSend(int jogador)
         {
-            Pacote pct = new Pacote(comando: "tchau", mensagem:"");
+            Pacote pct = new Pacote(comando: "tchau", mensagem: jogador.ToString());
             await MandarPacote(pct);
         }
 
@@ -134,7 +135,7 @@ namespace Bizingo
         {
             while (running)
             {
-                // tentar receber mensagens a cada 10 ms
+                // tentar receber pacotes a cada 10 ms
                 t.Add(ReceberPacote());
                 Thread.Sleep(10);
             }
@@ -249,11 +250,6 @@ namespace Bizingo
             }
         }
 
-        public void Disconnect()
-        {
-            running = false;
-            _listener.Stop();
-            FecharConexao();
-        }
+
     }
 }

@@ -141,7 +141,7 @@ namespace Bizingo
         {
             if (jogador == 1)
             {
-                if (num_pecas_jogador_1 > 17)
+                if (num_pecas_jogador_1 > 3)
                 {
                     num_pecas_jogador_1--;
                     return 1;
@@ -750,10 +750,10 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
+            com.ArregarSend(player);
             com.Disconnect();
             Application.Quit();
             args.RetVal = true;
-            com.ArregarSend();
             this.Destroy();
         }
 
@@ -2317,7 +2317,7 @@ namespace Bizingo
                 return true;
             return false;
         }
-
+        /*
         protected void OnBtnResetClicked(object sender, EventArgs e)
         {
             PreencheVariaveisTabuleiro();
@@ -2333,7 +2333,7 @@ namespace Bizingo
             lbTurno.Text = (turno + 1).ToString();
             DesenhaTabuleiro();
         }
-
+        */
         protected void OnBtnSendMessageClicked(object sender, EventArgs e)
         {
             if(eMensagem.Text != "")

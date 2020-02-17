@@ -194,21 +194,6 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Button" id="btnReset">
-            <property name="MemberName" />
-            <property name="Visible">False</property>
-            <property name="CanFocus">True</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Resetar</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnBtnResetClicked" />
-          </widget>
-          <packing>
-            <property name="X">152</property>
-            <property name="Y">465</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.VBox" id="vbox1">
             <property name="MemberName" />
             <property name="WidthRequest">300</property>
