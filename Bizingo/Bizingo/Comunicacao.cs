@@ -28,6 +28,7 @@ namespace Bizingo
         Action resetRequest;
         Action<int> resetJogo;
         Action<string> mensagemDialog;
+        private int portaLocal;
 
         public Comunicacao(int porta, 
             Action<string> AppendMessage, 
@@ -59,6 +60,18 @@ namespace Bizingo
             resetRequest = ResetRequest;
             resetJogo = ResetJogo;
             mensagemDialog = MensagemDialog;
+        }
+
+        public Comunicacao(int portaLocal, Action<string> appendMessage, Action<int, int> moveAsPecas, Action<bool> setGameOver, Action<int> conexaoFechada, Action<int> gameOver, Action resetRequest, Action<string> mensagemDialog)
+        {
+            this.portaLocal = portaLocal;
+            this.appendMessage = appendMessage;
+            this.moveAsPecas = moveAsPecas;
+            this.setGameOver = setGameOver;
+            this.conexaoFechada = conexaoFechada;
+            this.gameOver = gameOver;
+            this.resetRequest = resetRequest;
+            this.mensagemDialog = mensagemDialog;
         }
 
         public async void ResetSend(string mensagem)

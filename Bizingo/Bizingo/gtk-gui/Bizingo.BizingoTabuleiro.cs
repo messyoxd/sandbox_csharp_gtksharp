@@ -24,6 +24,8 @@ namespace Bizingo
 
 		private global::Gtk.Button btnSendMessage;
 
+		private global::Gtk.Button BtnReset;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -118,6 +120,16 @@ namespace Bizingo
 			global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.vbox1]));
 			w11.X = 470;
 			w11.Y = 10;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.BtnReset = new global::Gtk.Button();
+			this.BtnReset.CanFocus = true;
+			this.BtnReset.Name = "BtnReset";
+			this.BtnReset.UseUnderline = true;
+			this.BtnReset.Label = global::Mono.Unix.Catalog.GetString("Pedir para resetar");
+			this.fixed4.Add(this.BtnReset);
+			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.BtnReset]));
+			w12.X = 180;
+			w12.Y = 463;
 			this.Add(this.fixed4);
 			if ((this.Child != null))
 			{
@@ -130,6 +142,7 @@ namespace Bizingo
 			this.daTabuleiro.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnTabuleiroExposeEvent);
 			this.daTabuleiro.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.OnDaTabuleiroButtonPressEvent);
 			this.btnSendMessage.Clicked += new global::System.EventHandler(this.OnBtnSendMessageClicked);
+			this.BtnReset.Clicked += new global::System.EventHandler(this.OnBtnResetClicked);
 		}
 	}
 }
