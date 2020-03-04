@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpcHelloWorld", "RpcHelloWorld\RpcHelloWorld.csproj", "{68BCA8F6-4F5D-4D5B-B02E-26E05F9F1E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpcHelloWorldServer", "RpcHelloWorldServer\RpcHelloWorldServer.csproj", "{0ECED190-1AB0-4758-9277-27E941714281}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpcHelloWorldClient", "RpcHelloWorldClient\RpcHelloWorldClient.csproj", "{232A499C-AC3F-49FF-8B9C-3DFD65507584}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68BCA8F6-4F5D-4D5B-B02E-26E05F9F1E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68BCA8F6-4F5D-4D5B-B02E-26E05F9F1E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68BCA8F6-4F5D-4D5B-B02E-26E05F9F1E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68BCA8F6-4F5D-4D5B-B02E-26E05F9F1E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECED190-1AB0-4758-9277-27E941714281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECED190-1AB0-4758-9277-27E941714281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECED190-1AB0-4758-9277-27E941714281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECED190-1AB0-4758-9277-27E941714281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232A499C-AC3F-49FF-8B9C-3DFD65507584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232A499C-AC3F-49FF-8B9C-3DFD65507584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232A499C-AC3F-49FF-8B9C-3DFD65507584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232A499C-AC3F-49FF-8B9C-3DFD65507584}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

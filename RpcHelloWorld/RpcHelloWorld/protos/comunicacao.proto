@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+service Comunicao{
+    rpc SendCoordinates(Casa) returns (Mensagem) {}
+}
+
+message Casa{
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message Mensagem{
+    string m = 3;
+}

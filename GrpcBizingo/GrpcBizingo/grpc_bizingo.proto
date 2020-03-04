@@ -1,0 +1,20 @@
+﻿syntax="proto3";
+
+service BizingoRpc{
+    rpc SendCoord(Casa) returns (Mensagem) {}
+    rpc SendMessage(Mensagem) returns (Mensagem) {}
+    rpc GameOver(Flag) returns (Mensagem) {}
+    rpc ResetRequest(Flag) returns (Mensagem) {}
+    rpc FecharConexao(Flag) returns (Mensagem) {}
+}
+
+message Casa{
+    int32 x = 1;
+    int32 y = 2;
+}
+message Mensagem{
+    string m = 1;
+}
+message Flag{
+    bool g = 1;
+}
