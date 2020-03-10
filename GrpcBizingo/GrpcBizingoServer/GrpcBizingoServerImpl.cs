@@ -9,6 +9,15 @@ namespace GrpcBizingoServer
         public GrpcBizingoServerImpl()
         {
         }
+        public override Task<Mensagem> MandarDialog(Mensagem request, ServerCallContext context)
+        {
+            Console.WriteLine("O adversario se mandou alguma coisa pro dialog!");
+            return Task.FromResult(TratarMandarDialog(request));
+        }
+        public Mensagem TratarMandarDialog(Mensagem request)
+        {
+            return new Mensagem { M = "Seu adversario sabe que voce mandou alguma coisa pro dialog dele" };
+        }
         public override Task<Mensagem> FecharConexao(Flag request, ServerCallContext context)
         {
             Console.WriteLine("O adversario se desconectou!");
@@ -29,27 +38,27 @@ namespace GrpcBizingoServer
         }
         public override Task<Mensagem> GameOver(Flag request, ServerCallContext context)
         {
-            return Task.FromResult(GameOver());
+            return Task.FromResult(TratarGameOver());
         }
-        public Mensagem GameOver()
+        public Mensagem TratarGameOver()
         {
             Console.WriteLine("O adversario se rendeu!");
             return new Mensagem { M = "Seu adversario sabe que voce se rendeu!" };
         }
         public override Task<Mensagem> SendMessage(Mensagem request, ServerCallContext context)
         {
-            return Task.FromResult(CheckMensagem(request));
+            return Task.FromResult(TratarSendMensagem(request));
         }
-        public Mensagem CheckMensagem(Mensagem m)
+        public Mensagem TratarSendMensagem(Mensagem m)
         {
             Console.WriteLine($"{m.M}");
             return new Mensagem { M = "Mensagem recebida" };
         }
         public override Task<Mensagem> SendCoord(Casa request, ServerCallContext context)
         {
-            return Task.FromResult(CheckCasa(request));
+            return Task.FromResult(TratarSendCoord(request));
         }
-        public Mensagem CheckCasa(Casa c)
+        public Mensagem TratarSendCoord(Casa c)
         {
             Console.WriteLine($"x: {c.X} y: {c.Y}");
             return new Mensagem { M = $"x: {c.X} y: {c.Y}" };

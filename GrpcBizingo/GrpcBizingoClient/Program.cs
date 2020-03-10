@@ -14,6 +14,27 @@ namespace GrpcBizingoClient
             {
                 this.client = c;
             }
+            public void MandarDialog()
+            {
+                try
+                {
+                    Mensagem c = new Mensagem { M = "Teste dialog" };
+                    Mensagem m = client.MandarDialog(c);
+                    if (m.M.Length > 0)
+                    {
+                        Console.WriteLine(m.M);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nao funcionou");
+                    }
+                }
+                catch (RpcException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
             public void FecharConexao()
             {
                 try
@@ -131,6 +152,7 @@ namespace GrpcBizingoClient
             client.GameOver();
             client.ResetRequest();
             client.FecharConexao();
+            client.MandarDialog();
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();

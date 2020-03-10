@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GrpcBizingoClient\GrpcBizingoClient.csproj" />
+    <ProjectReference Include="..\GrpcBizingoServer\GrpcBizingoServer.csproj" />
+  </ItemGroup>
+</Project>

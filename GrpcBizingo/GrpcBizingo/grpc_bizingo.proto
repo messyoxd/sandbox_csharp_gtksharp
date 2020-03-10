@@ -6,6 +6,7 @@ service BizingoRpc{
     rpc GameOver(Flag) returns (Mensagem) {}
     rpc ResetRequest(Flag) returns (Mensagem) {}
     rpc FecharConexao(Flag) returns (Mensagem) {}
+    rpc MandarDialog(Mensagem) returns (Mensagem) {}
 }
 
 message Casa{
