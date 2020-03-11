@@ -4,7 +4,7 @@ service BizingoRpc{
     rpc SendCoord(Casa) returns (Mensagem) {}
     rpc SendMessage(Mensagem) returns (Mensagem) {}
     rpc GameOver(Flag) returns (Mensagem) {}
-    rpc ResetRequest(Flag) returns (Mensagem) {}
+    rpc ResetRequest(Flag) returns (Flag) {}
     rpc FecharConexao(Flag) returns (Mensagem) {}
     rpc MandarDialog(Mensagem) returns (Mensagem) {}
 }
