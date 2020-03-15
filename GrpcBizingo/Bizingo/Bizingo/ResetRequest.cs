@@ -3,31 +3,31 @@ namespace Bizingo
 {
     public partial class ResetRequest : Gtk.Window
     {
-        Action<int> resetJogo;
+        Action<bool> _mandarDecisaoReset;
 
-        public ResetRequest(Action<int> ResetJogo) :
+        public ResetRequest(Action<bool> MandarDecisaoReset, string adversarioNome) :
                 base(Gtk.WindowType.Toplevel)
         {
-            resetJogo = ResetJogo;
+            _mandarDecisaoReset = MandarDecisaoReset;
             this.Build();
-        }
-
-        protected void OnButton2Clicked(object sender, EventArgs e)
-        {
-            //negar
-            resetJogo(0);
-            this.Destroy();
-        }
-
-        protected void OnButton3Clicked(object sender, EventArgs e)
-        {
-            //aceitar
-            resetJogo(1);
-            this.Destroy();
+            lTexto.Text = $"O adversario {adversarioNome} pediu para reiniciar a partida!";
         }
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)
         {
+            _mandarDecisaoReset(false);
+            this.Destroy();
+        }
+
+        protected void OnBRecusarClicked(object sender, EventArgs e)
+        {
+            _mandarDecisaoReset(false);
+            this.Destroy();
+        }
+
+        protected void OnBAceitarClicked(object sender, EventArgs e)
+        {
+            _mandarDecisaoReset(true);
             this.Destroy();
         }
     }

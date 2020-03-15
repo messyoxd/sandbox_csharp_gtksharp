@@ -74,11 +74,11 @@ namespace Bizingo
         private string _enderecoRemoto;
         private string _enderecoLocal;
         private string _apelido;
+        private int _jogador;
         int turno;
         int player;
 
         bool gameOver = true;
-
         //Comunicacao com;
         GrpcComunicacao com;
 
@@ -121,6 +121,8 @@ namespace Bizingo
             _enderecoRemoto = enderecoRemoto;
             _enderecoLocal = enderecoLocal;
             _apelido = apelido;
+            _jogador = jogador;
+
             // comunicacao socket
             /*
             com = new Comunicacao(portaLocal,
@@ -148,6 +150,7 @@ namespace Bizingo
             //Comunicacao Grpc
             com = new GrpcComunicacao(
                 ResetRequest,
+                resetJogo,
                 AppendMessage,
                 SetGameOver,
                 MoveAsPecas,
@@ -176,12 +179,28 @@ namespace Bizingo
         public void SetGameOver(bool g)
         {
             gameOver = g;
+            if (gameOver == false) {
+                if ((turno % 2 == 0 && _jogador == 1) || (turno % 2 == 1 && _jogador == 2))
+                    lVez.Text = "Sua Vez De Jogar!";
+                else if ((turno % 2 == 0 && _jogador == 2) || (turno % 2 == 1 && _jogador == 1))
+                    lVez.Text = "Vez Do Adversario!";
+            }
+            else
+            {
+                lVez.Text = "Fim do Jogo!";
+            }
         }
 
         private void AddTurno()
         {
             turno++;
             lbTurno.Text = (turno + 1).ToString();
+            if ((turno % 2 == 0 && _jogador == 1) || (turno % 2 == 1 && _jogador == 2))
+                lVez.Text = "Sua Vez De Jogar!";
+            else if ((turno % 2 == 0 && _jogador == 2) || (turno % 2 == 1 && _jogador == 1))
+                lVez.Text = "Vez Do Adversario!";
+            else
+                lVez.Text = "";
         }
 
         private int DecrementaNumPecas(int jogador)
@@ -814,17 +833,25 @@ namespace Bizingo
 
             if (!gameOver)
             {
-                if (turno % 2 == 0 && player == 1)
+                Console.WriteLine("eh aqui? 1");
+                //turno do player 1
+                if (turno % 2 == 0 && player == 1 && x != 0 && y != 0)
                     MoveAsPecas(x, y);
-                else if(turno % 2 == 1 && player == 2)
+                // turno do player 2
+                else if(turno % 2 == 1 && player == 2 && x != 0 && y != 0)
                     MoveAsPecas(x, y);
+                x = 0;
+                y = 0;
             }
         }
 
         private void TurnoPlayerUm(int x,int y)
         {
             Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
+
+            // pega a casa que foi clicada
             GetCasaTabuleiro(x, y);
+
             // mostrar caminhos possiveis da peça
             if (
                 casa_selecionada_atual.peca != TabuleiroPecas.vazio 
@@ -832,23 +859,23 @@ namespace Bizingo
                 casa_selecionada_atual.casa == TabuleiroCasas.vermelho
                 )
             {
+                // se foi clicado numa peça vermelha então deve-se 
+                // pintar devolta casas selecionadas de vermelho
+                // e pintar de vermelho acinzentado as novas casas
+                Console.WriteLine("O erro e aqui?");
                 EncerrarSelecao();
                 PecaSelecionada();
-
             }
             else if (
                 casa_selecionada_atual.casa == TabuleiroCasas.vermelho_selecionado
                 )
             {
-                //a casa atual é a que a peça deve se deslocar para
+                // a casa atual é a que a peça deve se deslocar para
                 // como ela esta selecionada deve-se pinta-la de branco
-
-                //Console.WriteLine($"ultima casa x: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[0]} ultima casa y: {casas[ultimo_x_selecionado, ultimo_y_selecionado].t.a[1]}");
                 casas[x_selecionado, y_selecionado].casa = TabuleiroCasas.vermelho;
                 ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho], casas[x_selecionado, y_selecionado].t.a[0], casas[x_selecionado, y_selecionado].t.a[1] - 40);
                 ct.Paint();
                 // coloca a peça na casa atual
-
                 casas[x_selecionado, y_selecionado].peca = casas[ultimo_x_selecionado, ultimo_y_selecionado].peca;
                 if (casas[ultimo_x_selecionado, ultimo_y_selecionado].peca == TabuleiroPecas.captao_time_1)
                     ct.SetSourceSurface(images[(int)Imagens.captao_time1], casas[x_selecionado, y_selecionado].t.a[0] + 13, casas[x_selecionado, y_selecionado].t.a[1] - 20);
@@ -976,24 +1003,28 @@ namespace Bizingo
             // se for o turno do primeiro jogador
             if (turno % 2 == 0 && player == 1)
             {
-
+                Console.WriteLine("altos bugs");
                 TurnoPlayerUm(x, y);
                 //com.JogadaSend(x, y);
+                com.EnviarJogada(x, y);
             }
             else if (turno % 2 == 0 && player == 2)
             {
+                Console.WriteLine("altos bugs 2");
                 // player 2 está vendo o que o player 1 esta fazendo
                 TurnoPlayerUm(x, y);
             }
             else if (turno % 2 == 1 && player == 2)
             {
+                Console.WriteLine("altos bugs 3");
                 TurnoPlayerDois(x, y);
-                //com.JogadaSend(x, y);
+                com.EnviarJogada(x, y);
             }
 
             else if (turno % 2 == 1 && player == 1)
             {
                 // player 1 está vendo o que o player 2 esta fazendo
+                Console.WriteLine("altos bugs 4");
                 TurnoPlayerDois(x, y);
             }
         }
@@ -2093,7 +2124,6 @@ namespace Bizingo
             int aux;
             if (y_axis >= 0 && y_axis <= 10)
             {
-                //e se x não pertense a nenhum triangulo?
                 for (int i = 0; i < numero_de_triangulos_por_linha; i++)
                 {
                     if (y_axis == 8 || y_axis == 9)
@@ -2368,40 +2398,26 @@ namespace Bizingo
         protected void OnBtnResetClicked(object sender, EventArgs e)
         {
             //com.ResetSend("reset plz");
+            com.PedirParaReiniciar();
         }
 
-        private void resetJogo(int mensagem)
+        private void resetJogo()
         {
             PreencheVariaveisTabuleiro();
+            Console.WriteLine("Reiniciando");
+            DesenhaTabuleiro();
+            Console.WriteLine("Quase lá");
+            gameOver = false;
+            turno = 0;
+            lbTurno.Text = (turno + 1).ToString();
+
             casa_selecionada_atual = casas[0, 0];
             ultima_casa_selecionada = casas[0, 0];
             x_selecionado = 0;
             y_selecionado = 0;
             ultimo_x_selecionado = 0;
             ultimo_y_selecionado = 0;
-
-            gameOver = false;
-            turno = 0;
-            lbTurno.Text = (turno + 1).ToString();
-            DesenhaTabuleiro();
-
-            // se for o jogador que aceitou o pedido
-            // e precisa mandar devolta
-            if (mensagem == 1)
-            {
-                // 2 indica que o pedido foi aceito
-                //com.ResetSend("0");
-            }
-            else if(mensagem == 0)
-            {
-                //aqui deve-se mandar o numero do jogador
-                // que solicitou
-                //if(player == 1)
-                    //com.ResetSend("2");
-
-                //else
-                    //com.ResetSend("1");
-            }
+            Console.WriteLine("Pronto");
         }
 
         private void MensagemDialog(string mensagem)
@@ -2416,9 +2432,9 @@ namespace Bizingo
         }
 
 
-        private void ResetRequest()
+        private void ResetRequest(string nomeAdversario)
         {
-            var reset = new ResetRequest(resetJogo);
+            var reset = new ResetRequest(com.MandarDecisaoReset, nomeAdversario);
         }
 
         protected void OnBtnSendMessageClicked(object sender, EventArgs e)

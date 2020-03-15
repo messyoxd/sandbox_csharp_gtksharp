@@ -26,6 +26,8 @@ namespace Bizingo
 
 		private global::Gtk.Button BtnReset;
 
+		private global::Gtk.Label lVez;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -125,11 +127,20 @@ namespace Bizingo
 			this.BtnReset.CanFocus = true;
 			this.BtnReset.Name = "BtnReset";
 			this.BtnReset.UseUnderline = true;
-			this.BtnReset.Label = global::Mono.Unix.Catalog.GetString("Pedir para resetar");
+			this.BtnReset.Label = global::Mono.Unix.Catalog.GetString("Pedir para reiniciar");
 			this.fixed4.Add(this.BtnReset);
 			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.BtnReset]));
 			w12.X = 180;
 			w12.Y = 463;
+			// Container child fixed4.Gtk.Fixed+FixedChild
+			this.lVez = new global::Gtk.Label();
+			this.lVez.WidthRequest = 260;
+			this.lVez.HeightRequest = 26;
+			this.lVez.Name = "lVez";
+			this.fixed4.Add(this.lVez);
+			global::Gtk.Fixed.FixedChild w13 = ((global::Gtk.Fixed.FixedChild)(this.fixed4[this.lVez]));
+			w13.X = 362;
+			w13.Y = 470;
 			this.Add(this.fixed4);
 			if ((this.Child != null))
 			{

@@ -15,8 +15,7 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
-            Application.Quit();
-            args.RetVal = true;
+            this.Destroy();
         }
 
         protected void OnBtnCancelarClicked(object sender, EventArgs e)
@@ -29,11 +28,10 @@ namespace Bizingo
             var porta = ePortaLocal.Text;
             var apelido = eApelido.Text;
             var ipLocal = eIpLocal.Text;
-            iniciandoJogo(int.Parse(porta), ipLocal, apelido);
-            this.Destroy();
-            /*if (porta.Length > 0 && apelido.Length > 0)
+
+            if (porta.Length > 0 && apelido.Length > 0)
             {
-                iniciandoJogo(int.Parse(porta), apelido);
+                iniciandoJogo(int.Parse(porta), ipLocal, apelido);
                 this.Destroy();
             }
             else
@@ -45,7 +43,7 @@ namespace Bizingo
                                   "Por favor preencha a porta e o apelido");
                 dialog.Run();
                 dialog.Hide();
-            }*/
+            }
         }
     }
 }

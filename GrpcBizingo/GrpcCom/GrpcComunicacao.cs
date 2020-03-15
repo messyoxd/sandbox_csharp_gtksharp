@@ -14,13 +14,15 @@ namespace GrpcCom
         private Server _server;
         private GrpcBizingoClient.GrpcBizingoClientImpl _client;
 
-        Action _resetRequest;
+        Action<string> _resetRequest;
+        Action _resetJogo;
         Action<string> _appendMessage;
         Action<bool> _setGameOver;
         Action<int, int> _moveAsPecas;
 
         public GrpcComunicacao(
-            Action resetRequest,
+            Action<string> resetRequest,
+            Action resetJogo,
             Action<string> appendMessage,
             Action<bool> setGameOver,
             Action<int, int> moveAsPecas,
@@ -39,6 +41,7 @@ namespace GrpcCom
             _meuNome = meuNome;
             // janela de dialog que retorna true ou false
             _resetRequest = resetRequest;
+            _resetJogo = resetJogo;
             // colocar mensagem no chat
             _appendMessage = appendMessage;
             // controla variavel que inicia ou termina o jogo
@@ -54,19 +57,19 @@ namespace GrpcCom
         */
         public void iniciarConexao()
         {
-            Thread servidor = new Thread(()=>IniciarServidor());
+            Thread servidor = new Thread(() => IniciarServidor());
             servidor.Start();
         }
         private void IniciarServidor()
         {
             try
             {
-
                 _server = new Server
                 {
 
                     Services = { BizingoRpc.BindService(new GrpcBizingoServer.GrpcBizingoServerImpl(
                     _resetRequest,
+                    _resetJogo,
                     _appendMessage,
                     _setGameOver,
                     _moveAsPecas,
@@ -140,7 +143,7 @@ namespace GrpcCom
                 // chamada rpc para testar a conexao
                 MensagemConexao resposta = _client.Conectar(_ipLocal, _ipRemoto, _portaLocal, _portaRemota, _meuNome);
                 // comecar o proprio servidor para que o outro jogador tambem se conecte
-                Thread t = new Thread( () => IniciarServidor());
+                Thread t = new Thread(() => IniciarServidor());
                 t.Start();
                 //fazer chamada rpc que faz com que o outro jogador se conecte
                 Console.WriteLine("Fazendo o adversario se conectar devolta");
@@ -163,16 +166,75 @@ namespace GrpcCom
             try
             {
                 var response = _client.SendMessage(mensagem);
-                if(response.Equals("Mensagem recebida"))
+                if (response.Equals("Mensagem recebida"))
                 {
                     _appendMessage($"{_meuNome}: {mensagem}");
                 }
                 else
                 {
-                    _appendMessage("Erro ao enviar a mensagem!!");
+                    _appendMessage(response);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void EnviarJogada(int x, int y)
+        {
+            try
+            {
+                var response = _client.SendCoord(x, y);
+                if (response.Equals("ok"))
+                {
+                    Console.WriteLine("ok");
+                }
+                else
+                {
+                    _appendMessage(response);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public void PedirParaReiniciar()
+        {
+            try
+            {
+                var response = _client.ResetRequest();
+                if (response)
+                {
+                    _appendMessage("Pedido de reiniciar partida mandado. Aguardando resposta...");
+                }
+                else
+                {
+                    Console.WriteLine("Erro na comunicação");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public void MandarDecisaoReset(bool g)
+        {
+            try
+            {
+                var response = _client.MandarDecisaoReset(g);
+                if (response)
+                {
+                    _appendMessage("Reiniciando partida...");
+                    _resetJogo();
+                }
+                else
+                {
+                    _appendMessage("Pedido de reiniciar a partida recusado!");
+                }
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }

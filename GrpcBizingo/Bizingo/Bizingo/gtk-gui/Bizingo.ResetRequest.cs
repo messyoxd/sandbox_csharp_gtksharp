@@ -4,68 +4,59 @@ namespace Bizingo
 {
 	public partial class ResetRequest
 	{
-		private global::Gtk.VBox vbox1;
+		private global::Gtk.Fixed fixed2;
 
-		private global::Gtk.Label label1;
+		private global::Gtk.Label lTexto;
 
-		private global::Gtk.HBox hbox1;
+		private global::Gtk.Button bRecusar;
 
-		private global::Gtk.Button button3;
-
-		private global::Gtk.Button button2;
+		private global::Gtk.Button bAceitar;
 
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
 			// Widget Bizingo.ResetRequest
+			this.WidthRequest = 270;
+			this.HeightRequest = 270;
 			this.Name = "Bizingo.ResetRequest";
 			this.Title = global::Mono.Unix.Catalog.GetString("ResetRequest");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			// Container child Bizingo.ResetRequest.Gtk.Container+ContainerChild
-			this.vbox1 = new global::Gtk.VBox();
-			this.vbox1.Name = "vbox1";
-			this.vbox1.Spacing = 6;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString("Pedido de reiniciar a partida recebido. Aceitar?");
-			this.vbox1.Add(this.label1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label1]));
-			w1.Position = 1;
-			w1.Expand = false;
-			w1.Fill = false;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.button3 = new global::Gtk.Button();
-			this.button3.CanFocus = true;
-			this.button3.Name = "button3";
-			this.button3.UseUnderline = true;
-			this.button3.Label = global::Mono.Unix.Catalog.GetString("Negar");
-			this.hbox1.Add(this.button3);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.button3]));
-			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.button2 = new global::Gtk.Button();
-			this.button2.CanFocus = true;
-			this.button2.Name = "button2";
-			this.button2.UseUnderline = true;
-			this.button2.Label = global::Mono.Unix.Catalog.GetString("Aceitar");
-			this.hbox1.Add(this.button2);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.button2]));
-			w3.Position = 2;
-			w3.Expand = false;
-			w3.Fill = false;
-			this.vbox1.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
-			w4.Position = 2;
-			w4.Expand = false;
-			w4.Fill = false;
-			this.Add(this.vbox1);
+			this.fixed2 = new global::Gtk.Fixed();
+			this.fixed2.Name = "fixed2";
+			this.fixed2.HasWindow = false;
+			// Container child fixed2.Gtk.Fixed+FixedChild
+			this.lTexto = new global::Gtk.Label();
+			this.lTexto.Name = "lTexto";
+			this.fixed2.Add(this.lTexto);
+			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed2[this.lTexto]));
+			w1.X = 181;
+			w1.Y = 68;
+			// Container child fixed2.Gtk.Fixed+FixedChild
+			this.bRecusar = new global::Gtk.Button();
+			this.bRecusar.WidthRequest = 100;
+			this.bRecusar.HeightRequest = 33;
+			this.bRecusar.CanFocus = true;
+			this.bRecusar.Name = "bRecusar";
+			this.bRecusar.UseUnderline = true;
+			this.bRecusar.Label = global::Mono.Unix.Catalog.GetString("Recusar");
+			this.fixed2.Add(this.bRecusar);
+			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.fixed2[this.bRecusar]));
+			w2.X = 75;
+			w2.Y = 143;
+			// Container child fixed2.Gtk.Fixed+FixedChild
+			this.bAceitar = new global::Gtk.Button();
+			this.bAceitar.WidthRequest = 100;
+			this.bAceitar.HeightRequest = 33;
+			this.bAceitar.CanFocus = true;
+			this.bAceitar.Name = "bAceitar";
+			this.bAceitar.UseUnderline = true;
+			this.bAceitar.Label = global::Mono.Unix.Catalog.GetString("Aceitar");
+			this.fixed2.Add(this.bAceitar);
+			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.fixed2[this.bAceitar]));
+			w3.X = 238;
+			w3.Y = 143;
+			this.Add(this.fixed2);
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
@@ -74,8 +65,8 @@ namespace Bizingo
 			this.DefaultHeight = 300;
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
-			this.button3.Clicked += new global::System.EventHandler(this.OnButton3Clicked);
-			this.button2.Clicked += new global::System.EventHandler(this.OnButton2Clicked);
+			this.bRecusar.Clicked += new global::System.EventHandler(this.OnBRecusarClicked);
+			this.bAceitar.Clicked += new global::System.EventHandler(this.OnBAceitarClicked);
 		}
 	}
 }

@@ -310,13 +310,24 @@
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Pedir para resetar</property>
+            <property name="Label" translatable="yes">Pedir para reiniciar</property>
             <property name="UseUnderline">True</property>
             <signal name="Clicked" handler="OnBtnResetClicked" />
           </widget>
           <packing>
             <property name="X">180</property>
             <property name="Y">463</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="lVez">
+            <property name="MemberName" />
+            <property name="WidthRequest">260</property>
+            <property name="HeightRequest">26</property>
+          </widget>
+          <packing>
+            <property name="X">362</property>
+            <property name="Y">470</property>
           </packing>
         </child>
       </widget>
@@ -474,73 +485,54 @@
   </widget>
   <widget class="Gtk.Window" id="Bizingo.ResetRequest" design-size="400 300">
     <property name="MemberName" />
+    <property name="WidthRequest">270</property>
+    <property name="HeightRequest">270</property>
     <property name="Title" translatable="yes">ResetRequest</property>
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <widget class="Gtk.VBox" id="vbox1">
+      <widget class="Gtk.Fixed" id="fixed2">
         <property name="MemberName" />
-        <property name="Spacing">6</property>
+        <property name="HasWindow">False</property>
         <child>
-          <placeholder />
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="label1">
+          <widget class="Gtk.Label" id="lTexto">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Pedido de reiniciar a partida recebido. Aceitar?</property>
           </widget>
           <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="X">181</property>
+            <property name="Y">68</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HBox" id="hbox1">
+          <widget class="Gtk.Button" id="bRecusar">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Button" id="button3">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">Negar</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnButton3Clicked" />
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="button2">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">Aceitar</property>
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnButton2Clicked" />
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
+            <property name="WidthRequest">100</property>
+            <property name="HeightRequest">33</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Recusar</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnBRecusarClicked" />
           </widget>
           <packing>
-            <property name="Position">2</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
+            <property name="X">75</property>
+            <property name="Y">143</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="bAceitar">
+            <property name="MemberName" />
+            <property name="WidthRequest">100</property>
+            <property name="HeightRequest">33</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Aceitar</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnBAceitarClicked" />
+          </widget>
+          <packing>
+            <property name="X">238</property>
+            <property name="Y">143</property>
           </packing>
         </child>
       </widget>

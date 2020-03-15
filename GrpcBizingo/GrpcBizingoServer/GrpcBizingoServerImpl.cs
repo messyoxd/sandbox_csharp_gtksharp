@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
 
@@ -12,13 +13,15 @@ namespace GrpcBizingoServer
         private string _ipLocal;
         private string _meuNome;
         private string _nomeAdversario;
-        Action _resetRequest;
+        Action<string> _resetRequest;
+        Action _resetJogo;
         Action<string> _appendMessage;
         Action<bool> _setGameOver;
         Action<int, int> _moveAsPecas;
         Action<string, string, int, int, string> _conectarDevolta;
         public GrpcBizingoServerImpl(
-            Action resetRequest,
+            Action<string> resetRequest,
+            Action resetJogo,
             Action<string> appendMessage,
             Action<bool> setGameOver,
             Action<int, int> moveAsPecas,
@@ -33,6 +36,7 @@ namespace GrpcBizingoServer
 
             // janela de dialog que retorna true ou false
             _resetRequest = resetRequest;
+            _resetJogo = resetJogo;
             // colocar mensagem no chat
             _appendMessage = appendMessage;
             // controla variavel que inicia ou termina o jogo
@@ -109,6 +113,27 @@ namespace GrpcBizingoServer
         {
             return new Mensagem { M = "Seu adversario sabe que voce se desconectou" };
         }
+        public override Task<Flag> ResetJogo(Flag request, ServerCallContext context)
+        {
+            Console.WriteLine("O adversario mandou sua resposta quanto a reiniciar a partida");
+            return Task.FromResult(TratarResetJogo(request));
+        }
+        public Flag TratarResetJogo(Flag request)
+        {
+            if (request.G)
+            {
+                _resetJogo();
+                _appendMessage("Reiniciando partida...");
+                return new Flag { G = true };
+            }
+            else
+            {
+                _appendMessage("Pedido de reiniciar a partida recusado!");
+                return new Flag { G = false };
+            }
+
+        }
+
         public override Task<Flag> ResetRequest(Flag request, ServerCallContext context)
         {
             Console.WriteLine("O adversario pediu para reiniciar a partida!");
@@ -116,9 +141,8 @@ namespace GrpcBizingoServer
         }
         public Flag TratarResetRequest()
         {
-            bool decisao = false;
-            _resetRequest();
-            return new Flag { G = decisao };
+            _resetRequest(_nomeAdversario);
+            return new Flag { G = true };
         }
         public override Task<Mensagem> GameOver(Flag request, ServerCallContext context)
         {
@@ -153,8 +177,7 @@ namespace GrpcBizingoServer
         }
         public Mensagem TratarSendCoord(Casa c)
         {
-            Console.WriteLine($"x: {c.X} y: {c.Y}");
-            _appendMessage($"x: {c.X} y: {c.Y}");
+            Console.WriteLine($"lolololl x: {c.X} y: {c.Y}");
             _moveAsPecas(c.X, c.Y);
             return new Mensagem { M = $"x: {c.X} y: {c.Y}" };
         }

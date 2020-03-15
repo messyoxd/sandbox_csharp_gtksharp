@@ -15,8 +15,7 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)
         {
-            Application.Quit();
-            args.RetVal = true;
+            this.Destroy();
         }
 
         protected void OnButton2Clicked(object sender, EventArgs e)
@@ -32,28 +31,28 @@ namespace Bizingo
             var portaRemota = ePortaRemota.Text;
             var apelido = eApelido.Text;
             var portaLocal = ePortaLocal.Text;
-            entrandoJogo(int.Parse(portaRemota), int.Parse(portaLocal), ipRemoto, iplocal, apelido);
-            this.Destroy();
-            /*
+
+
             if (
-            ip.Length > 0 &&
+            iplocal.Length > 0 &&
+            ipRemoto.Length > 0 &&
             portaRemota.Length > 0 &&
             apelido.Length > 0 &&
             portaLocal.Length > 0)
             {
-                if (portaRemota.Equals(portaLocal))
+                if (portaRemota.Equals(portaLocal) && ipRemoto.Equals(iplocal))
                 {
                     Dialog dialog = new MessageDialog(this,
                                   DialogFlags.Modal,
                                   MessageType.Error,
                                   ButtonsType.Ok,
-                                  "A porta remota não pode ser a mesma porta que a local!");
+                                  "A porta remota não pode ser a mesma porta que a local nesse caso!");
                     dialog.Run();
                     dialog.Hide();
                 }
                 else
                 {
-                    entrandoJogo(int.Parse(portaRemota), int.Parse(portaLocal), ip, apelido);
+                    entrandoJogo(int.Parse(portaRemota), int.Parse(portaLocal), ipRemoto, iplocal, apelido);
                     this.Destroy();
                 }
             }
@@ -66,7 +65,7 @@ namespace Bizingo
                                   "Por favor preencha todos os campos");
                 dialog.Run();
                 dialog.Hide();
-            }*/
+            }
         }
     }
 }
