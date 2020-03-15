@@ -137,6 +137,28 @@
             <property name="Y">150</property>
           </packing>
         </child>
+        <child>
+          <widget class="Gtk.Label" id="label3">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Apelido:</property>
+          </widget>
+          <packing>
+            <property name="X">102</property>
+            <property name="Y">30</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="eApelido">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">165</property>
+            <property name="Y">24</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>
@@ -300,7 +322,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="Bizingo.ConectarComPlayer" design-size="374 210">
+  <widget class="Gtk.Window" id="Bizingo.ConectarComPlayer" design-size="374 234">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Conectar com player</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -316,7 +338,7 @@
           </widget>
           <packing>
             <property name="X">89</property>
-            <property name="Y">66</property>
+            <property name="Y">130</property>
           </packing>
         </child>
         <child>
@@ -326,7 +348,7 @@
           </widget>
           <packing>
             <property name="X">61</property>
-            <property name="Y">104</property>
+            <property name="Y">163</property>
           </packing>
         </child>
         <child>
@@ -338,7 +360,7 @@
           </widget>
           <packing>
             <property name="X">165</property>
-            <property name="Y">59</property>
+            <property name="Y">127</property>
           </packing>
         </child>
         <child>
@@ -350,7 +372,7 @@
           </widget>
           <packing>
             <property name="X">165</property>
-            <property name="Y">95</property>
+            <property name="Y">159</property>
           </packing>
         </child>
         <child>
@@ -364,7 +386,7 @@
           </widget>
           <packing>
             <property name="X">55</property>
-            <property name="Y">150</property>
+            <property name="Y">195</property>
           </packing>
         </child>
         <child>
@@ -378,7 +400,73 @@
           </widget>
           <packing>
             <property name="X">248</property>
-            <property name="Y">150</property>
+            <property name="Y">195</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="eApelido">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">165</property>
+            <property name="Y">25</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label3">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Apelido:</property>
+          </widget>
+          <packing>
+            <property name="X">103</property>
+            <property name="Y">32</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="ePortaLocal">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">165</property>
+            <property name="Y">92</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label4">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Porta Local:</property>
+          </widget>
+          <packing>
+            <property name="X">80</property>
+            <property name="Y">99</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label5">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Ip Local:</property>
+          </widget>
+          <packing>
+            <property name="X">102</property>
+            <property name="Y">66</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="eIpLocal">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">•</property>
+          </widget>
+          <packing>
+            <property name="X">165</property>
+            <property name="Y">59</property>
           </packing>
         </child>
       </widget>

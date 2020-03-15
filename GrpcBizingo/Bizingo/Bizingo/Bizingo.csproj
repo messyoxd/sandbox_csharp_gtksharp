@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Grpc.Tools.2.27.0\build\Grpc.Tools.props" Condition="Exists('..\..\packages\Grpc.Tools.2.27.0\build\Grpc.Tools.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -56,6 +57,30 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>..\..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>..\..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api">
+      <HintPath>..\..\packages\Grpc.Core.Api.2.27.0\lib\net45\Grpc.Core.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Grpc.Core">
+      <HintPath>..\..\packages\Grpc.Core.2.27.0\lib\net45\Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\..\packages\Google.Protobuf.3.11.4\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -93,5 +118,25 @@
     <None Include="images\triangulo_branco_selecionado.png" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GrpcCom\GrpcCom.csproj">
+      <Project>{363BF7F7-72C1-419D-BC1D-674F66972A18}</Project>
+      <Name>GrpcCom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GrpcBizingoServer\GrpcBizingoServer.csproj">
+      <Project>{FC5EA9B8-848A-4621-B5C1-5B96FE506876}</Project>
+      <Name>GrpcBizingoServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GrpcBizingoClient\GrpcBizingoClient.csproj">
+      <Project>{53DBD698-C94C-433E-AE1A-2127ED9108BA}</Project>
+      <Name>GrpcBizingoClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GrpcBizingo\GrpcBizingo.csproj">
+      <Project>{A2C7A299-E77C-4A18-BB16-079FE1BA8006}</Project>
+      <Name>GrpcBizingo</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Grpc.Core.2.27.0\build\net45\Grpc.Core.targets" Condition="Exists('..\..\packages\Grpc.Core.2.27.0\build\net45\Grpc.Core.targets')" />
+  <Import Project="..\..\packages\Grpc.Tools.2.27.0\build\Grpc.Tools.targets" Condition="Exists('..\..\packages\Grpc.Tools.2.27.0\build\Grpc.Tools.targets')" />
 </Project>

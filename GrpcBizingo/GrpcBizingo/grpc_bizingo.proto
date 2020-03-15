@@ -7,6 +7,16 @@ service BizingoRpc{
     rpc ResetRequest(Flag) returns (Flag) {}
     rpc FecharConexao(Flag) returns (Mensagem) {}
     rpc MandarDialog(Mensagem) returns (Mensagem) {}
+    rpc Conectar(MensagemConexao) returns (MensagemConexao) {}
+    rpc ConectarDevolta(MensagemConexao) returns (Flag) {}
+}
+
+message MensagemConexao {
+    string ipLocal = 1;
+    string ipRemoto = 2;
+    int32 portaLocal = 3;
+    int32 portaRemota = 4;
+    string meuNome = 5;
 }
 
 message Casa{

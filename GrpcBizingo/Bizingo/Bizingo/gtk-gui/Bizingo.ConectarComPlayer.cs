@@ -18,6 +18,18 @@ namespace Bizingo
 
 		private global::Gtk.Button button3;
 
+		private global::Gtk.Entry eApelido;
+
+		private global::Gtk.Label label3;
+
+		private global::Gtk.Entry ePortaLocal;
+
+		private global::Gtk.Label label4;
+
+		private global::Gtk.Label label5;
+
+		private global::Gtk.Entry eIpLocal;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -36,7 +48,7 @@ namespace Bizingo
 			this.fixed1.Add(this.label1);
 			global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label1]));
 			w1.X = 89;
-			w1.Y = 66;
+			w1.Y = 130;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.label2 = new global::Gtk.Label();
 			this.label2.Name = "label2";
@@ -44,7 +56,7 @@ namespace Bizingo
 			this.fixed1.Add(this.label2);
 			global::Gtk.Fixed.FixedChild w2 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label2]));
 			w2.X = 61;
-			w2.Y = 104;
+			w2.Y = 163;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.eIpRemoto = new global::Gtk.Entry();
 			this.eIpRemoto.CanFocus = true;
@@ -54,7 +66,7 @@ namespace Bizingo
 			this.fixed1.Add(this.eIpRemoto);
 			global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.eIpRemoto]));
 			w3.X = 165;
-			w3.Y = 59;
+			w3.Y = 127;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.ePortaRemota = new global::Gtk.Entry();
 			this.ePortaRemota.CanFocus = true;
@@ -64,7 +76,7 @@ namespace Bizingo
 			this.fixed1.Add(this.ePortaRemota);
 			global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.ePortaRemota]));
 			w4.X = 165;
-			w4.Y = 95;
+			w4.Y = 159;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.button2 = new global::Gtk.Button();
 			this.button2.CanFocus = true;
@@ -74,7 +86,7 @@ namespace Bizingo
 			this.fixed1.Add(this.button2);
 			global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.button2]));
 			w5.X = 55;
-			w5.Y = 150;
+			w5.Y = 195;
 			// Container child fixed1.Gtk.Fixed+FixedChild
 			this.button3 = new global::Gtk.Button();
 			this.button3.CanFocus = true;
@@ -84,14 +96,68 @@ namespace Bizingo
 			this.fixed1.Add(this.button3);
 			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.button3]));
 			w6.X = 248;
-			w6.Y = 150;
+			w6.Y = 195;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.eApelido = new global::Gtk.Entry();
+			this.eApelido.CanFocus = true;
+			this.eApelido.Name = "eApelido";
+			this.eApelido.IsEditable = true;
+			this.eApelido.InvisibleChar = '•';
+			this.fixed1.Add(this.eApelido);
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.eApelido]));
+			w7.X = 165;
+			w7.Y = 25;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.label3 = new global::Gtk.Label();
+			this.label3.Name = "label3";
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString("Apelido:");
+			this.fixed1.Add(this.label3);
+			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label3]));
+			w8.X = 103;
+			w8.Y = 32;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.ePortaLocal = new global::Gtk.Entry();
+			this.ePortaLocal.CanFocus = true;
+			this.ePortaLocal.Name = "ePortaLocal";
+			this.ePortaLocal.IsEditable = true;
+			this.ePortaLocal.InvisibleChar = '•';
+			this.fixed1.Add(this.ePortaLocal);
+			global::Gtk.Fixed.FixedChild w9 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.ePortaLocal]));
+			w9.X = 165;
+			w9.Y = 92;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.label4 = new global::Gtk.Label();
+			this.label4.Name = "label4";
+			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("Porta Local:");
+			this.fixed1.Add(this.label4);
+			global::Gtk.Fixed.FixedChild w10 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label4]));
+			w10.X = 80;
+			w10.Y = 99;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.label5 = new global::Gtk.Label();
+			this.label5.Name = "label5";
+			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString("Ip Local:");
+			this.fixed1.Add(this.label5);
+			global::Gtk.Fixed.FixedChild w11 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label5]));
+			w11.X = 102;
+			w11.Y = 66;
+			// Container child fixed1.Gtk.Fixed+FixedChild
+			this.eIpLocal = new global::Gtk.Entry();
+			this.eIpLocal.CanFocus = true;
+			this.eIpLocal.Name = "eIpLocal";
+			this.eIpLocal.IsEditable = true;
+			this.eIpLocal.InvisibleChar = '•';
+			this.fixed1.Add(this.eIpLocal);
+			global::Gtk.Fixed.FixedChild w12 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.eIpLocal]));
+			w12.X = 165;
+			w12.Y = 59;
 			this.Add(this.fixed1);
 			if ((this.Child != null))
 			{
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 374;
-			this.DefaultHeight = 210;
+			this.DefaultHeight = 234;
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.button2.Clicked += new global::System.EventHandler(this.OnButton2Clicked);

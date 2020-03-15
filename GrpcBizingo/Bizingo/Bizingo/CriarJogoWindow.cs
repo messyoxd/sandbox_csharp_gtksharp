@@ -5,8 +5,8 @@ namespace Bizingo
 {
     public partial class CriarJogoWindow : Gtk.Window
     {
-        Action<int> iniciandoJogo;
-        public CriarJogoWindow(Action<int> IniciandoJogo) :
+        Action<int, string, string> iniciandoJogo;
+        public CriarJogoWindow(Action<int, string, string> IniciandoJogo) :
                 base(Gtk.WindowType.Toplevel)
         {
             iniciandoJogo = IniciandoJogo;
@@ -27,8 +27,25 @@ namespace Bizingo
         protected void OnBtnCriarClicked(object sender, EventArgs e)
         {
             var porta = ePortaLocal.Text;
-            iniciandoJogo(int.Parse(porta));
+            var apelido = eApelido.Text;
+            var ipLocal = eIpLocal.Text;
+            iniciandoJogo(int.Parse(porta), ipLocal, apelido);
             this.Destroy();
+            /*if (porta.Length > 0 && apelido.Length > 0)
+            {
+                iniciandoJogo(int.Parse(porta), apelido);
+                this.Destroy();
+            }
+            else
+            {
+                Dialog dialog = new MessageDialog(this,
+                                  DialogFlags.Modal,
+                                  MessageType.Error,
+                                  ButtonsType.Ok,
+                                  "Por favor preencha a porta e o apelido");
+                dialog.Run();
+                dialog.Hide();
+            }*/
         }
     }
 }

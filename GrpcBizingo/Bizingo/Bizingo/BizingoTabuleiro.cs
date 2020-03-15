@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Cairo;
 using Gtk;
 using Gdk;
+using GrpcCom;
 
 namespace Bizingo
 {
@@ -68,14 +69,20 @@ namespace Bizingo
 
         int num_pecas_jogador_1;
         int num_pecas_jogador_2;
+        private int _portaLocal;
+        private int _portaRemota;
+        private string _enderecoRemoto;
+        private string _enderecoLocal;
+        private string _apelido;
         int turno;
         int player;
 
         bool gameOver = true;
 
-        Comunicacao com;
+        //Comunicacao com;
+        GrpcComunicacao com;
 
-        public BizingoTabuleiro(int portaLocal, string endereco, int jogador) :
+        public BizingoTabuleiro(int portaLocal, string enderecoLocal, int jogador, string apelido, string enderecoRemoto="127.0.0.1", int portaRemota=50051) :
                 base(Gtk.WindowType.Toplevel)
         {
             // constroi os widgets e a tela
@@ -109,7 +116,13 @@ namespace Bizingo
             num_pecas_jogador_1 = 18;
             num_pecas_jogador_2 = 18;
 
+            _portaLocal = portaLocal;
+            _portaRemota = portaRemota;
+            _enderecoRemoto = enderecoRemoto;
+            _enderecoLocal = enderecoLocal;
+            _apelido = apelido;
             // comunicacao socket
+            /*
             com = new Comunicacao(portaLocal,
                 AppendMessage, 
                 MoveAsPecas, 
@@ -131,7 +144,33 @@ namespace Bizingo
                 //quando conecta-se com alguem
                 com.ConectaComPlayer(endereco);
             }
-
+            */
+            //Comunicacao Grpc
+            com = new GrpcComunicacao(
+                ResetRequest,
+                AppendMessage,
+                SetGameOver,
+                MoveAsPecas,
+                _apelido,
+                _portaLocal,
+                _portaRemota,
+                _enderecoRemoto,
+                _enderecoLocal
+                );
+            if (jogador == 1)
+            {
+                // quando se inicia o jogo
+                player = 1;
+                com.iniciarConexao();
+                AppendMessage("Aguardando algum jogador para iniciar partida");
+            }
+            else
+            {
+                player = 2;
+                //quando conecta-se com alguem
+                Console.WriteLine("entrando");
+                com.ConectarComAdversario();
+            }
         }
 
         public void SetGameOver(bool g)
@@ -181,7 +220,7 @@ namespace Bizingo
             {
                 mensagem = "Voce perdeu!!!";
                 Console.WriteLine("fim de jogo do lado do perdedor");
-                com.FimDeJogo(jogador);
+                //com.FimDeJogo(jogador);
                 Dialog dialog = new MessageDialog(this,
                                   DialogFlags.Modal | DialogFlags.DestroyWithParent,
                                   MessageType.Info,
@@ -758,8 +797,8 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
-            com.ArregarSend(player);
-            com.Disconnect();
+            //com.ArregarSend(player);
+            //com.Disconnect();
             Application.Quit();
             args.RetVal = true;
             this.Destroy();
@@ -939,7 +978,7 @@ namespace Bizingo
             {
 
                 TurnoPlayerUm(x, y);
-                com.JogadaSend(x, y);
+                //com.JogadaSend(x, y);
             }
             else if (turno % 2 == 0 && player == 2)
             {
@@ -949,7 +988,7 @@ namespace Bizingo
             else if (turno % 2 == 1 && player == 2)
             {
                 TurnoPlayerDois(x, y);
-                com.JogadaSend(x, y);
+                //com.JogadaSend(x, y);
             }
 
             else if (turno % 2 == 1 && player == 1)
@@ -2328,7 +2367,7 @@ namespace Bizingo
 
         protected void OnBtnResetClicked(object sender, EventArgs e)
         {
-            com.ResetSend("reset plz");
+            //com.ResetSend("reset plz");
         }
 
         private void resetJogo(int mensagem)
@@ -2351,16 +2390,17 @@ namespace Bizingo
             if (mensagem == 1)
             {
                 // 2 indica que o pedido foi aceito
-                com.ResetSend("0");
+                //com.ResetSend("0");
             }
             else if(mensagem == 0)
             {
                 //aqui deve-se mandar o numero do jogador
                 // que solicitou
-                if(player == 1)
-                    com.ResetSend("2");
-                else
-                    com.ResetSend("1");
+                //if(player == 1)
+                    //com.ResetSend("2");
+
+                //else
+                    //com.ResetSend("1");
             }
         }
 
@@ -2385,11 +2425,14 @@ namespace Bizingo
         {
             if(eMensagem.Text != "")
             {
+                /*
                 Gtk.Label l = new Gtk.Label("voce -> "+eMensagem.Text);
                 l.UseMarkup = true;
                 vbox2.PackStart(l, false, false, 0);
                 ShowAll();
-                com.ChatSender(eMensagem.Text);
+                //com.ChatSender(eMensagem.Text);
+                */
+                com.EnviarMensagemPeloChat(eMensagem.Text);
                 eMensagem.Text = "";
             }
         }

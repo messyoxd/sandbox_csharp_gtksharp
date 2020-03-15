@@ -39,16 +39,16 @@ public partial class MainWindow : Gtk.Window
         Build();
     }
 
-    public void IniciandoJogo(int portaLocal)
+    public void IniciandoJogo(int portaLocal, string ipLocal, string apelido)
     {
-        b = new BizingoTabuleiro(portaLocal,"", 1);
+        b = new BizingoTabuleiro(portaLocal, ipLocal, 1, apelido);
         b.Show();
         this.Destroy();
     }
 
-    public void EntrandoEmJogo(int portaRemota, string endereco)
+    public void EntrandoEmJogo(int portaRemota, int portaLocal, string enderecoRemoto, string enderecoLocal, string apelido)
     {
-        b = new BizingoTabuleiro(portaRemota, endereco, 2);
+        b = new BizingoTabuleiro(portaLocal, enderecoLocal, 2, apelido, enderecoRemoto, portaRemota);
         b.Show();
         this.Destroy();
     }

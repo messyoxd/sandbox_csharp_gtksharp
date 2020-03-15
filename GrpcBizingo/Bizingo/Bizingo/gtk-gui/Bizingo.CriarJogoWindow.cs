@@ -18,6 +18,10 @@ namespace Bizingo
 
 		private global::Gtk.Button btnCriar;
 
+		private global::Gtk.Label label3;
+
+		private global::Gtk.Entry eApelido;
+
 		protected virtual void Build()
 		{
 			global::Stetic.Gui.Initialize(this);
@@ -89,6 +93,24 @@ namespace Bizingo
 			global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed3[this.btnCriar]));
 			w6.X = 248;
 			w6.Y = 150;
+			// Container child fixed3.Gtk.Fixed+FixedChild
+			this.label3 = new global::Gtk.Label();
+			this.label3.Name = "label3";
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString("Apelido:");
+			this.fixed3.Add(this.label3);
+			global::Gtk.Fixed.FixedChild w7 = ((global::Gtk.Fixed.FixedChild)(this.fixed3[this.label3]));
+			w7.X = 102;
+			w7.Y = 30;
+			// Container child fixed3.Gtk.Fixed+FixedChild
+			this.eApelido = new global::Gtk.Entry();
+			this.eApelido.CanFocus = true;
+			this.eApelido.Name = "eApelido";
+			this.eApelido.IsEditable = true;
+			this.eApelido.InvisibleChar = '•';
+			this.fixed3.Add(this.eApelido);
+			global::Gtk.Fixed.FixedChild w8 = ((global::Gtk.Fixed.FixedChild)(this.fixed3[this.eApelido]));
+			w8.X = 165;
+			w8.Y = 24;
 			this.Add(this.fixed3);
 			if ((this.Child != null))
 			{

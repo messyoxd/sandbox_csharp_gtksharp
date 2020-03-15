@@ -6,16 +6,31 @@ namespace GrpcBizingoServer
 {
     public class GrpcBizingoServerImpl : BizingoRpc.BizingoRpcBase
     {
-        Action<bool> _resetRequest;
+        private int _portaLocal;
+        private int _portaRemota;
+        private string _ipRemoto;
+        private string _ipLocal;
+        private string _meuNome;
+        private string _nomeAdversario;
+        Action _resetRequest;
         Action<string> _appendMessage;
         Action<bool> _setGameOver;
         Action<int, int> _moveAsPecas;
+        Action<string, string, int, int, string> _conectarDevolta;
         public GrpcBizingoServerImpl(
-            Action<bool> resetRequest,
+            Action resetRequest,
             Action<string> appendMessage,
             Action<bool> setGameOver,
-            Action<int, int> moveAsPecas)
+            Action<int, int> moveAsPecas,
+            Action<string, string, int, int, string> conectarDevolta,
+            string meuNome,
+            int portaLocal = 50052,
+            int portaRemota = 50051,
+            string ipRemoto = "127.0.0.1",
+            string ipLocal = "localhost"
+            )
         {
+
             // janela de dialog que retorna true ou false
             _resetRequest = resetRequest;
             // colocar mensagem no chat
@@ -24,7 +39,57 @@ namespace GrpcBizingoServer
             _setGameOver = setGameOver;
             // move as pecas do tabuleiro
             _moveAsPecas = moveAsPecas;
+            // conecta devolta com o jogador que se conectou
+            _conectarDevolta = conectarDevolta;
 
+            // variaveis de conexao
+            _portaLocal = portaLocal;
+            _portaRemota = portaRemota;
+            _ipRemoto = ipRemoto;
+            _ipLocal = ipLocal;
+            _meuNome = meuNome;
+
+        }
+        public override Task<Flag> ConectarDevolta(MensagemConexao request, ServerCallContext context)
+        {
+            Console.WriteLine("O adversario pediu para conectar com ele!");
+            return Task.FromResult(TratarConectarDevolta(request));
+        }
+        public Flag TratarConectarDevolta(MensagemConexao request)
+        {
+            // conectar com adversario
+            _conectarDevolta(_ipLocal, _ipRemoto, _portaLocal, _portaRemota, _meuNome);
+            // mensagem de quando um player se conecta com outro
+            //_appendMessage($"conectou-se com {request.MeuNome} de {request.IpLocal}:{request.PortaLocal}!");
+            // iniciar partida
+            //_setGameOver(false);
+            return new Flag
+            {
+                G = true
+            };
+        }
+        public override Task<MensagemConexao> Conectar(MensagemConexao request, ServerCallContext context)
+        {
+            Console.WriteLine("O adversario se conectou conosco!");
+            return Task.FromResult(TratarConectar(request));
+        }
+        public MensagemConexao TratarConectar(MensagemConexao request)
+        {
+            // mensagem de quando um player se conecta com outro
+            //_appendMessage($"{request.MeuNome} conectou-se de {request.IpLocal}!");
+            // iniciar partida
+            //_setGameOver(false);
+            _portaRemota = request.PortaLocal;
+            _ipRemoto = request.IpLocal;
+            _nomeAdversario = request.MeuNome;
+            return new MensagemConexao
+            {
+                IpLocal = _ipLocal,
+                IpRemoto = _ipRemoto,
+                PortaLocal = _portaLocal,
+                PortaRemota = _portaRemota,
+                MeuNome = _meuNome
+            };
         }
         public override Task<Mensagem> MandarDialog(Mensagem request, ServerCallContext context)
         {
@@ -52,7 +117,7 @@ namespace GrpcBizingoServer
         public Flag TratarResetRequest()
         {
             bool decisao = false;
-            _resetRequest(decisao);
+            _resetRequest();
             return new Flag { G = decisao };
         }
         public override Task<Mensagem> GameOver(Flag request, ServerCallContext context)
@@ -66,23 +131,20 @@ namespace GrpcBizingoServer
         }
         public override Task<Mensagem> SendMessage(Mensagem request, ServerCallContext context)
         {
-            return Task.FromResult(TratarSendMensagem(request));
+            try
+            {
+                return Task.FromResult(TratarSendMensagem(request));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public Mensagem TratarSendMensagem(Mensagem m)
         {
             Console.WriteLine($"{m.M}");
-            switch (m.M)
-            {
-                case "84eb93488832f124221ab2c1bd802d47":
-                    // mensagem de quando um player se conecta com outro
-                    _appendMessage("Player conectou-se!");
-                    // iniciar partida
-                    _setGameOver(false);
-                    break;
-                default:
-                    _appendMessage(m.M);
-                    break;
-            }
+            _appendMessage($"{_nomeAdversario}: {m.M}");
             return new Mensagem { M = "Mensagem recebida" };
         }
         public override Task<Mensagem> SendCoord(Casa request, ServerCallContext context)
@@ -92,6 +154,7 @@ namespace GrpcBizingoServer
         public Mensagem TratarSendCoord(Casa c)
         {
             Console.WriteLine($"x: {c.X} y: {c.Y}");
+            _appendMessage($"x: {c.X} y: {c.Y}");
             _moveAsPecas(c.X, c.Y);
             return new Mensagem { M = $"x: {c.X} y: {c.Y}" };
         }

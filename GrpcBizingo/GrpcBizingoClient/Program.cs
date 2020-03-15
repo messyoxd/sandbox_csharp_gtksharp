@@ -11,6 +11,61 @@ namespace GrpcBizingoClient
         {
             this.client = c;
         }
+        public Flag ConectarDevolta(
+            string ipLocal,
+            string ipRemoto,
+            int portaLocal,
+            int portaRemota,
+            string meuNome
+            )
+        {
+            try
+            {
+                MensagemConexao c = new MensagemConexao
+                {
+                    IpLocal = ipLocal,
+                    IpRemoto = ipRemoto,
+                    PortaLocal = portaLocal,
+                    PortaRemota = portaRemota,
+                    MeuNome = meuNome
+                };
+                Flag f = client.ConectarDevolta(c);
+                return f;
+            }
+            catch (RpcException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public MensagemConexao Conectar(
+            string ipLocal,
+            string ipRemoto,
+            int portaLocal,
+            int portaRemota,
+            string meuNome
+            )
+        {
+            try
+            {
+                MensagemConexao c = new MensagemConexao
+                {
+                    IpLocal = ipLocal,
+                    IpRemoto = ipRemoto,
+                    PortaLocal = portaLocal,
+                    PortaRemota = portaRemota,
+                    MeuNome = meuNome
+                };
+                MensagemConexao m = client.Conectar(c);
+                Console.WriteLine($"conectou-se com {m.IpLocal} | {m.IpRemoto} | {m.PortaLocal} | {m.PortaRemota} | {m.MeuNome}");
+                return m;
+            }
+            catch (RpcException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
         public void MandarDialog()
         {
             try
@@ -95,7 +150,7 @@ namespace GrpcBizingoClient
                 throw;
             }
         }
-        public void SendMessage(string s)
+        public string SendMessage(string s)
         {
             try
             {
@@ -104,10 +159,12 @@ namespace GrpcBizingoClient
                 if (m.M.Length > 0)
                 {
                     Console.WriteLine(m.M);
+                    return m.M;
                 }
                 else
                 {
-                    Console.WriteLine("Nao funcionou");
+                    Console.WriteLine("Mensagem Vazia!");
+                    return m.M;
                 }
             }
             catch (RpcException e)
@@ -143,18 +200,8 @@ namespace GrpcBizingoClient
     {
         static void Main(string[] args)
         {
-            var channel = new Channel("127.0.0.1:50052", ChannelCredentials.Insecure);
-            var client = new GrpcBizingoClientImpl(new BizingoRpc.BizingoRpcClient(channel));
 
-            client.SendCoord(200, 300);
-            client.SendMessage("Teste");
-            client.GameOver();
-            client.ResetRequest();
-            client.FecharConexao();
-            client.MandarDialog();
-
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+            Console.WriteLine("So pra ter static Main no projeto");
         }
     }
 
