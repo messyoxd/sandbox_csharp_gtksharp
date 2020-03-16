@@ -22,7 +22,7 @@ sudo apt update
 
 sudo apt-get install monodevelop
 ```
-# 2. download dotnet 2.1
+# 2. download dotnet core 2.1
 ## For ubuntu 18
 ```
 wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
