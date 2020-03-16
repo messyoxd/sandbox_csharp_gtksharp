@@ -10,6 +10,7 @@ namespace GrpcBizingoClient
         {
             this.client = c;
         }
+
         public Flag ConectarDevolta(
             string ipLocal,
             string ipRemoto,
@@ -37,6 +38,7 @@ namespace GrpcBizingoClient
                 throw;
             }
         }
+
         public MensagemConexao Conectar(
             string ipLocal,
             string ipRemoto,
@@ -56,7 +58,6 @@ namespace GrpcBizingoClient
                     MeuNome = meuNome
                 };
                 MensagemConexao m = client.Conectar(c);
-                Console.WriteLine($"conectou-se com {m.IpLocal} | {m.IpRemoto} | {m.PortaLocal} | {m.PortaRemota} | {m.MeuNome}");
                 return m;
             }
             catch (RpcException e)
@@ -65,48 +66,7 @@ namespace GrpcBizingoClient
                 throw;
             }
         }
-        public void MandarDialog()
-        {
-            try
-            {
-                Mensagem c = new Mensagem { M = "Teste dialog" };
-                Mensagem m = client.MandarDialog(c);
-                if (m.M.Length > 0)
-                {
-                    Console.WriteLine(m.M);
-                }
-                else
-                {
-                    Console.WriteLine("Nao funcionou");
-                }
-            }
-            catch (RpcException e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-        public void FecharConexao()
-        {
-            try
-            {
-                Flag c = new Flag { G = true };
-                Mensagem m = client.FecharConexao(c);
-                if (m.M.Length > 0)
-                {
-                    Console.WriteLine(m.M);
-                }
-                else
-                {
-                    Console.WriteLine("Nao funcionou");
-                }
-            }
-            catch (RpcException e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
+
         public bool ResetRequest()
         {
             try
@@ -115,12 +75,10 @@ namespace GrpcBizingoClient
                 Flag m = client.ResetRequest(c);
                 if (m.G)
                 {
-                    Console.WriteLine(m.G);
                     return m.G;
                 }
                 else
                 {
-                    Console.WriteLine("False");
                     return m.G;
                 }
             }
@@ -138,12 +96,10 @@ namespace GrpcBizingoClient
                 Flag m = client.ResetJogo(c);
                 if (m.G)
                 {
-                    Console.WriteLine("Aceito!");
                     return m.G;
                 }
                 else
                 {
-                    Console.WriteLine("Recusado!");
                     return m.G;
                 }
             }
@@ -153,20 +109,12 @@ namespace GrpcBizingoClient
                 throw;
             }
         }
-        public void GameOver()
+        public void Desconectar()
         {
             try
             {
                 Flag c = new Flag { G = true };
-                Mensagem m = client.GameOver(c);
-                if (m.M.Length > 0)
-                {
-                    Console.WriteLine(m.M);
-                }
-                else
-                {
-                    Console.WriteLine("Nao funcionou");
-                }
+                Mensagem m = client.FecharConexao(c);
             }
             catch (RpcException e)
             {
@@ -174,6 +122,7 @@ namespace GrpcBizingoClient
                 throw;
             }
         }
+
         public string SendMessage(string s)
         {
             try
@@ -182,12 +131,10 @@ namespace GrpcBizingoClient
                 Mensagem m = client.SendMessage(c);
                 if (m.M.Length > 0)
                 {
-                    Console.WriteLine(m.M);
                     return m.M;
                 }
                 else
                 {
-                    Console.WriteLine("Mensagem Vazia!");
                     return "Erro ao enviar a mensagem!!";
                 }
             }

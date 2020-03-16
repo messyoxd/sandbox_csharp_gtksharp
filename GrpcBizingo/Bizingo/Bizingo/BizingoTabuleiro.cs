@@ -123,30 +123,6 @@ namespace Bizingo
             _apelido = apelido;
             _jogador = jogador;
 
-            // comunicacao socket
-            /*
-            com = new Comunicacao(portaLocal,
-                AppendMessage, 
-                MoveAsPecas, 
-                SetGameOver, 
-                ConexaoFechada, 
-                GameOver, 
-                ResetRequest,
-                resetJogo, 
-                MensagemDialog);
-            if(jogador == 1)
-            {
-                // quando se inicia o jogo
-                player = 1;
-                com.Comecar();
-            }
-            else
-            {
-                player = 2;
-                //quando conecta-se com alguem
-                com.ConectaComPlayer(endereco);
-            }
-            */
             //Comunicacao Grpc
             com = new GrpcComunicacao(
                 ResetRequest,
@@ -171,7 +147,6 @@ namespace Bizingo
             {
                 player = 2;
                 //quando conecta-se com alguem
-                Console.WriteLine("entrando");
                 com.ConectarComAdversario();
             }
         }
@@ -231,34 +206,26 @@ namespace Bizingo
             }
         }
 
-        private void GameOver(int jogador)
+        private void GameOver(int jogadorGanhador)
         {
-            gameOver = true;
-            string mensagem;
-            if(player == jogador)
+            SetGameOver(true);
+            if (player == jogadorGanhador)
             {
-                mensagem = "Voce perdeu!!!";
-                Console.WriteLine("fim de jogo do lado do perdedor");
-                //com.FimDeJogo(jogador);
                 Dialog dialog = new MessageDialog(this,
-                                  DialogFlags.Modal | DialogFlags.DestroyWithParent,
+                                  DialogFlags.Modal,
                                   MessageType.Info,
                                   ButtonsType.Ok,
-                                  mensagem);
+                                  "Voce perdeu!");
                 dialog.Run();
                 dialog.Hide();
-
-
             }
             else
             {
-                mensagem = "Voce ganhou!!!";
-                Console.WriteLine("fim de jogo do lado do vencedor");
                 Dialog dialog = new MessageDialog(this,
-                                  DialogFlags.Modal | DialogFlags.DestroyWithParent,
+                                  DialogFlags.Modal,
                                   MessageType.Info,
                                   ButtonsType.Ok,
-                                  mensagem);
+                                  "Voce ganhou!");
                 dialog.Run();
                 dialog.Hide();
             }
@@ -359,7 +326,6 @@ namespace Bizingo
                     if (i == 10)
                     {
                         num++;
-                        //Console.WriteLine($"aux: {aux} num:{num}");
                     }
                     for (int j = 0; j < triangulos; j++)
                     {
@@ -430,7 +396,6 @@ namespace Bizingo
                     if (i == 10)
                     {
                         //num++;
-                        //Console.WriteLine($"aux: {aux} num:{num}");
                     }
                     for (int j = 0; j < triangulos; j++)
                     {
@@ -492,7 +457,6 @@ namespace Bizingo
                         casas[w, k].peca = TabuleiroPecas.vazio;
                         casas[w, k].t = InitTrianguloVazio();
                     }
-                    //Console.WriteLine($"linha: {k} coluna:{w} casa:{casas[w, k].casa} x:{casas[w, k].t.a[0]} y:{casas[w, k].t.a[1]}");
 
                 }
             }
@@ -593,7 +557,6 @@ namespace Bizingo
                         num++;
                     for (int j = 0; j < triangulos; j++)
                     {
-                        //Console.WriteLine($"{40 * (num + j)} {40 * (i)}");
                         if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                             ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j), 40 * i);
                         else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -607,7 +570,6 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            //Console.WriteLine($"{40 * (num + j) - 20} {40 * (i)}");
                             if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                                 ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j) - 20, 40 * i);
                             else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -621,7 +583,6 @@ namespace Bizingo
                     {
                         for (int j = 0; j < triangulos; j++)
                         {
-                            //Console.WriteLine($"{40 * (num + j) + 20} {40 * (i)}");
                             if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho_selecionado)
                                 ct.SetSourceSurface(images[(int)Imagens.triangulo_vermelho_selecionado], 40 * (num + j) + 20, 40 * i);
                             else if (casas[(8 - aux) + (2 * j), i].casa == TabuleiroCasas.vermelho)
@@ -794,9 +755,6 @@ namespace Bizingo
                         num_de_pecas_na_linha = aux2;
                         for (int p = 0; p < num_de_pecas_na_linha; p++)
                         {
-
-                            //Console.WriteLine($"x: {n + (p * 2) } y: {m}");
-
                             ct.SetSourceSurface(images[(int)Imagens.peça_time_2], casas[n + (p * 2), m].t.a[0] + 13, casas[n + (p * 2), m].t.a[1] + 8);
                             ct.Paint();
                         }
@@ -816,8 +774,7 @@ namespace Bizingo
 
         protected void OnDeleteEvent(object o, DeleteEventArgs args)
         {
-            //com.ArregarSend(player);
-            //com.Disconnect();
+            com.Desconectar();
             Application.Quit();
             args.RetVal = true;
             this.Destroy();
@@ -829,11 +786,8 @@ namespace Bizingo
             int x, y;
             ModifierType state;
             args.Event.Window.GetPointer(out x, out y, out state);
-            //Console.WriteLine($"x: {x} y:{y} state: {state}");
-
             if (!gameOver)
             {
-                Console.WriteLine("eh aqui? 1");
                 //turno do player 1
                 if (turno % 2 == 0 && player == 1 && x != 0 && y != 0)
                     MoveAsPecas(x, y);
@@ -862,7 +816,6 @@ namespace Bizingo
                 // se foi clicado numa peça vermelha então deve-se 
                 // pintar devolta casas selecionadas de vermelho
                 // e pintar de vermelho acinzentado as novas casas
-                Console.WriteLine("O erro e aqui?");
                 EncerrarSelecao();
                 PecaSelecionada();
             }
@@ -889,18 +842,13 @@ namespace Bizingo
 
                 casa_selecionada_atual = casas[0, 0];
                 ultima_casa_selecionada = casas[0, 0];
-                /*
-                //Console.WriteLine($"x: {x_selecionado} | y: {y_selecionado} |casa:{casa_selecionada_atual.casa} |peça: {casa_selecionada_atual.peca} | x1:{casa_selecionada_atual.t.a[0]} y1:{casa_selecionada_atual.t.a[1]} | x2:{casa_selecionada_atual.t.b[0]} y2:{casa_selecionada_atual.t.b[1]} | x3:{casa_selecionada_atual.t.c[0]} y3:{casa_selecionada_atual.t.c[1]}|");
-                Console.WriteLine($"casa atual: {casa_selecionada_atual.peca} | ultima casa: {ultima_casa_selecionada.peca}");
-                */
-                Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
+
                 EncerrarSelecao();
                 List<int> pecaEliminada;
                 pecaEliminada = CheckPecaVermelhaCercada();
 
                 if (pecaEliminada.Any())
                 {
-                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
                     for (int i = 0; i < pecaEliminada.Count(); i += 2)
                     {
                         ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
@@ -910,7 +858,6 @@ namespace Bizingo
                 pecaEliminada = CheckVermelhaEliminou();
                 if (pecaEliminada.Any())
                 {
-                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
                     for (int i = 0; i < pecaEliminada.Count(); i += 2)
                     {
                         ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
@@ -962,7 +909,6 @@ namespace Bizingo
 
                 casa_selecionada_atual = casas[0, 0];
                 ultima_casa_selecionada = casas[0, 0];
-                Console.WriteLine($"x atual: {x_selecionado} y atual: {y_selecionado}");
 
                 EncerrarSelecao();
 
@@ -971,7 +917,6 @@ namespace Bizingo
 
                 if (pecaEliminada.Any())
                 {
-                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
                     for (int i = 0; i < pecaEliminada.Count(); i += 2)
                     {
                         ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
@@ -981,7 +926,6 @@ namespace Bizingo
                 pecaEliminada = CheckBrancaEliminou();
                 if (pecaEliminada.Any())
                 {
-                    Console.WriteLine($"pecas: {pecaEliminada.Count() / 2} x: {pecaEliminada[0]} y: {pecaEliminada[1]}");
                     for (int i = 0; i < pecaEliminada.Count(); i += 2)
                     {
                         ExcluiPeca(pecaEliminada[i], pecaEliminada[i + 1]);
@@ -1003,20 +947,16 @@ namespace Bizingo
             // se for o turno do primeiro jogador
             if (turno % 2 == 0 && player == 1)
             {
-                Console.WriteLine("altos bugs");
                 TurnoPlayerUm(x, y);
-                //com.JogadaSend(x, y);
                 com.EnviarJogada(x, y);
             }
             else if (turno % 2 == 0 && player == 2)
             {
-                Console.WriteLine("altos bugs 2");
                 // player 2 está vendo o que o player 1 esta fazendo
                 TurnoPlayerUm(x, y);
             }
             else if (turno % 2 == 1 && player == 2)
             {
-                Console.WriteLine("altos bugs 3");
                 TurnoPlayerDois(x, y);
                 com.EnviarJogada(x, y);
             }
@@ -1024,14 +964,12 @@ namespace Bizingo
             else if (turno % 2 == 1 && player == 1)
             {
                 // player 1 está vendo o que o player 2 esta fazendo
-                Console.WriteLine("altos bugs 4");
                 TurnoPlayerDois(x, y);
             }
         }
 
         private bool Capitao1Cercado3(int x, int y)
         {
-            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y + 1].peca}");
             if (
                 (
                     casas[x, y].peca == TabuleiroPecas.captao_time_2 &&
@@ -1061,7 +999,6 @@ namespace Bizingo
         }
         private bool Capitao2Cercado3(int x, int y)
         {
-            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
             if (
                 (
                     casas[x, y].peca == TabuleiroPecas.captao_time_1 &&
@@ -1091,7 +1028,6 @@ namespace Bizingo
         }
         private bool PecaVermelhaCercado3(int x, int y)
         {
-            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
             if (
                 casas[x, y].peca != TabuleiroPecas.vazio &&
                 casas[x + 2, y].peca != TabuleiroPecas.vazio &&
@@ -1107,7 +1043,6 @@ namespace Bizingo
         }
         private bool PecaBrancaCercado3(int x, int y)
         {
-            //Console.WriteLine($"{casas[x, y].peca}{casas[x + 2, y].peca}{casas[x + 1, y - 1].peca}");
             if (
                 casas[x, y].peca != TabuleiroPecas.vazio &&
                 casas[x + 2, y].peca != TabuleiroPecas.vazio &&
@@ -1151,7 +1086,6 @@ namespace Bizingo
                 //y == 10
                 if (x + (y - 3) == 8 || x - (y - 3) == 12)
                 {
-                    Console.WriteLine("lool");
                     return true;
                 }
                 else
@@ -1831,7 +1765,6 @@ namespace Bizingo
                 else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_2)
                 {
                     // se for uma peca normal, então basta estar cercada
-                    //Console.WriteLine($"checando se a peça ta cercada por 3: {PecaCercado3(x_selecionado - 1, y_selecionado)}");
                     if (PecaBrancaCercado3(x_selecionado - 1, y_selecionado))
                     {
                         // se tem peças cercando então aquela peça tem que ser excluida
@@ -1955,7 +1888,6 @@ namespace Bizingo
                 else if (casas[x_selecionado, y_selecionado].peca == TabuleiroPecas.peca_time_1)
                 {
                     // se for uma peca normal, então basta estar cercada
-                    //Console.WriteLine($"checando se a peça ta cercada por 3: {PecaCercado3(x_selecionado - 1, y_selecionado)}");
                     if (PecaVermelhaCercado3(x_selecionado - 1, y_selecionado))
                     {
                         // se tem peças cercando então aquela peça tem que ser excluida
@@ -2261,13 +2193,10 @@ namespace Bizingo
         private void PecaSelecionada()
         {
             Cairo.Context ct = Gdk.CairoHelper.Create(daTabuleiro.GdkWindow);
-            //Console.WriteLine($"x: {x_selecionado} y:{y_selecionado}");
-            //Console.WriteLine($"x selecionado: {casas[x_selecionado, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado, y_selecionado].t.a[1]}");
             if (x_selecionado > 1)
             {
                 if (Check_movimento_valido(x_selecionado - 2, y_selecionado))
                 {
-                    //Console.WriteLine($"x selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado - 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
@@ -2287,7 +2216,6 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado + 2, y_selecionado))
                 {
-                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[0]} Y selecionado: {casas[x_selecionado + 2, y_selecionado].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 2, y_selecionado].casa = TabuleiroCasas.branco_selecionado;
@@ -2308,10 +2236,8 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado + 1))
                 {
-                    //Console.WriteLine($"x: {x_selecionado - 1} x selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado + 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
-                        //Console.WriteLine(casas[x_selecionado - 1, y_selecionado + 1].t.a[0]);
                         casas[x_selecionado - 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
                         ct.SetSourceSurface(images[(int)Imagens.triangulo_branco_selecionado], casas[x_selecionado - 1, y_selecionado + 1].t.a[0], casas[x_selecionado - 1, y_selecionado + 1].t.a[1]);
                         ct.Paint();
@@ -2328,7 +2254,6 @@ namespace Bizingo
             {
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado + 1))
                 {
-                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado + 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado + 1].casa = TabuleiroCasas.branco_selecionado;
@@ -2348,7 +2273,6 @@ namespace Bizingo
 
                 if (Check_movimento_valido(x_selecionado - 1, y_selecionado - 1))
                 {
-                    //Console.WriteLine($"x selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado - 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado - 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
@@ -2367,7 +2291,6 @@ namespace Bizingo
             {
                 if (Check_movimento_valido(x_selecionado + 1, y_selecionado - 1))
                 {
-                    //Console.WriteLine($"x selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[0]} Y selecionado: {casas[x_selecionado + 1, y_selecionado - 1].t.a[1]}");
                     if (casa_selecionada_atual.casa == TabuleiroCasas.branco)
                     {
                         casas[x_selecionado + 1, y_selecionado - 1].casa = TabuleiroCasas.branco_selecionado;
@@ -2397,19 +2320,28 @@ namespace Bizingo
 
         protected void OnBtnResetClicked(object sender, EventArgs e)
         {
-            //com.ResetSend("reset plz");
             com.PedirParaReiniciar();
         }
 
-        private void resetJogo()
+        private void resetJogo(bool inverterJogadores)
         {
             PreencheVariaveisTabuleiro();
-            Console.WriteLine("Reiniciando");
             DesenhaTabuleiro();
-            Console.WriteLine("Quase lá");
             gameOver = false;
             turno = 0;
             lbTurno.Text = (turno + 1).ToString();
+            if (inverterJogadores)
+            {
+                Console.WriteLine("Invertendo jogadores");
+                if (_jogador == 1)
+                    _jogador = 2;
+                else
+                    _jogador = 1;
+            }
+            if ((turno % 2 == 0 && _jogador == 1) || (turno % 2 == 1 && _jogador == 2))
+                lVez.Text = "Sua Vez De Jogar!";
+            else if ((turno % 2 == 0 && _jogador == 2) || (turno % 2 == 1 && _jogador == 1))
+                lVez.Text = "Vez Do Adversario!";
 
             casa_selecionada_atual = casas[0, 0];
             ultima_casa_selecionada = casas[0, 0];
@@ -2417,7 +2349,6 @@ namespace Bizingo
             y_selecionado = 0;
             ultimo_x_selecionado = 0;
             ultimo_y_selecionado = 0;
-            Console.WriteLine("Pronto");
         }
 
         private void MensagemDialog(string mensagem)
@@ -2441,13 +2372,6 @@ namespace Bizingo
         {
             if(eMensagem.Text != "")
             {
-                /*
-                Gtk.Label l = new Gtk.Label("voce -> "+eMensagem.Text);
-                l.UseMarkup = true;
-                vbox2.PackStart(l, false, false, 0);
-                ShowAll();
-                //com.ChatSender(eMensagem.Text);
-                */
                 com.EnviarMensagemPeloChat(eMensagem.Text);
                 eMensagem.Text = "";
             }

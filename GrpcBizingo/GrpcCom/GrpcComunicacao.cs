@@ -15,18 +15,18 @@ namespace GrpcCom
         private GrpcBizingoClient.GrpcBizingoClientImpl _client;
 
         Action<string> _resetRequest;
-        Action _resetJogo;
+        Action<bool> _resetJogo;
         Action<string> _appendMessage;
         Action<bool> _setGameOver;
         Action<int, int> _moveAsPecas;
 
         public GrpcComunicacao(
             Action<string> resetRequest,
-            Action resetJogo,
+            Action<bool> resetJogo,
             Action<string> appendMessage,
             Action<bool> setGameOver,
+            //Action<int> gameOver,
             Action<int, int> moveAsPecas,
-
             string meuNome,
             int portaLocal = 50052,
             int portaRemota = 50051,
@@ -39,15 +39,21 @@ namespace GrpcCom
             _ipRemoto = ipRemoto;
             _ipLocal = ipLocal;
             _meuNome = meuNome;
-            // janela de dialog que retorna true ou false
+
+            // janela para aceitar ou recusar um pedido de reiniciar
+            // a partida
             _resetRequest = resetRequest;
             _resetJogo = resetJogo;
+
             // colocar mensagem no chat
             _appendMessage = appendMessage;
+
             // controla variavel que inicia ou termina o jogo
             _setGameOver = setGameOver;
+
             // move as pecas do tabuleiro
             _moveAsPecas = moveAsPecas;
+
         }
 
         /*
@@ -80,7 +86,6 @@ namespace GrpcCom
                     _ipRemoto
                     )) },
                     Ports = { new ServerPort(_ipLocal, _portaLocal, ServerCredentials.Insecure) }
-                    //Ports = { new ServerPort("localhost", 50052, ServerCredentials.Insecure) }
                 };
                 _server.Start();
                 Console.ReadKey();
@@ -146,7 +151,6 @@ namespace GrpcCom
                 Thread t = new Thread(() => IniciarServidor());
                 t.Start();
                 //fazer chamada rpc que faz com que o outro jogador se conecte
-                Console.WriteLine("Fazendo o adversario se conectar devolta");
                 Flag f = _client.ConectarDevolta(resposta.IpLocal, resposta.IpRemoto, resposta.PortaLocal, resposta.PortaRemota, resposta.MeuNome);
                 // mensagem de quando um player se conecta com outro
                 _appendMessage($"conectou-se com jogador {resposta.MeuNome} de {resposta.IpLocal}:{resposta.PortaLocal}!");
@@ -188,7 +192,7 @@ namespace GrpcCom
                 var response = _client.SendCoord(x, y);
                 if (response.Equals("ok"))
                 {
-                    Console.WriteLine("ok");
+                    //
                 }
                 else
                 {
@@ -227,12 +231,25 @@ namespace GrpcCom
                 if (response)
                 {
                     _appendMessage("Reiniciando partida...");
-                    _resetJogo();
+                    _resetJogo(false);
                 }
                 else
                 {
                     _appendMessage("Pedido de reiniciar a partida recusado!");
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void Desconectar()
+        {
+            try
+            {
+                _client.Desconectar();
+                _server.ShutdownAsync().Wait();
             }
             catch (Exception e)
             {
