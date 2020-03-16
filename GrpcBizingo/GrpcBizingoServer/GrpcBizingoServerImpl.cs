@@ -119,8 +119,8 @@ namespace GrpcBizingoServer
             _appendMessage("Seu adversario se desconectou.");
             _appendMessage("O jogo será finalizado.");
             _setGameOver(true);
-            _resetJogo(true);
-            _appendMessage("Aguardando novo jogador");
+            //_resetJogo(true);
+            //_appendMessage("Aguardando novo jogador");
             return new Mensagem { M = "Seu adversario sabe que voce se desconectou" };
         }
         public override Task<Flag> ResetJogo(Flag request, ServerCallContext context)
