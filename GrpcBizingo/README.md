@@ -42,7 +42,7 @@ sudo apt-get install dotnet-sdk-2.1
 ![Imagem 1](./readme_src/imagem1.png)
 ## Choose the .sln file
 ![Imagem 2](./readme_src/imagem2.png)
-## Wait for the download of the packages
+## Wait for the packages download
 ![Imagem 3](./readme_src/imagem3.png)
 ![Imagem 4](./readme_src/imagem4.png)
 4. run the project
